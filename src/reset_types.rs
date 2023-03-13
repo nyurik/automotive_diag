@@ -1,6 +1,6 @@
 /// Options for resetting the ECU
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub enum UdsReset {
+pub enum ResetType {
     /// Signals the ECU to perform a hard-reset,
     /// simulating a forceful power off/on cycle
     ///
@@ -34,15 +34,15 @@ pub enum UdsReset {
     Other(u8),
 }
 
-impl From<UdsReset> for u8 {
-    fn from(from: UdsReset) -> Self {
+impl From<ResetType> for u8 {
+    fn from(from: ResetType) -> Self {
         match from {
-            UdsReset::HardReset => 0x01,
-            UdsReset::KeyOffReset => 0x02,
-            UdsReset::SoftReset => 0x03,
-            UdsReset::EnableRapidPowerShutDown => 0x04,
-            UdsReset::DisableRapidPowerShutDown => 0x05,
-            UdsReset::Other(x) => x,
+            ResetType::HardReset => 0x01,
+            ResetType::KeyOffReset => 0x02,
+            ResetType::SoftReset => 0x03,
+            ResetType::EnableRapidPowerShutDown => 0x04,
+            ResetType::DisableRapidPowerShutDown => 0x05,
+            ResetType::Other(x) => x,
         }
     }
 }
