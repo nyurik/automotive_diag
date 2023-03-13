@@ -1,0 +1,14 @@
+[package]
+name = "auto_uds"
+description = "Core definitions of the Unified Diagnostic Services specification for road vehicles ISO-14229"
+authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashconm@outlook.com>"]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+keywords = ["uds", "iso14229", "automotive", "no_std"]
+
+[features]
+default = []
+std = []
+
+[dependencies]
