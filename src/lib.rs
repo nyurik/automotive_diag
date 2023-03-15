@@ -20,6 +20,7 @@ mod session_types;
 
 pub use commands::*;
 pub use communication_control::*;
+pub use communication_level::*;
 pub use errors::*;
 pub use read_dtc_information::*;
 pub use reset_types::*;
