@@ -42,7 +42,7 @@ impl From<ResetType> for u8 {
             ResetType::SoftReset => 0x03,
             ResetType::EnableRapidPowerShutDown => 0x04,
             ResetType::DisableRapidPowerShutDown => 0x05,
-            ResetType::Other(x) => x,
+            ResetType::Other(v) => v,
         }
     }
 }

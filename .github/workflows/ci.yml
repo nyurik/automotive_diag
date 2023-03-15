@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - run: |
+            rustc --version
+            cargo --version
+            cargo fmt --all -- --check
+            cargo clippy -- -D warnings
+            cargo build
+            cargo build --no-default-features
+            cargo test
+            cargo test --no-default-features
+            cargo test --doc

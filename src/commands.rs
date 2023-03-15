@@ -38,8 +38,8 @@ pub enum Command {
 }
 
 impl From<u8> for Command {
-    fn from(sid: u8) -> Self {
-        match sid {
+    fn from(value: u8) -> Self {
+        match value {
             0x10 => Command::DiagnosticSessionControl,
             0x11 => Command::ECUReset,
             0x27 => Command::SecurityAccess,
@@ -65,14 +65,14 @@ impl From<u8> for Command {
             0x35 => Command::RequestUpload,
             0x36 => Command::TransferData,
             0x37 => Command::RequestTransferExit,
-            _ => Command::Other(sid),
+            _ => Command::Other(value),
         }
     }
 }
 
 impl From<Command> for u8 {
-    fn from(cmd: Command) -> Self {
-        match cmd {
+    fn from(value: Command) -> Self {
+        match value {
             Command::DiagnosticSessionControl => 0x10,
             Command::ECUReset => 0x11,
             Command::SecurityAccess => 0x27,
@@ -98,7 +98,7 @@ impl From<Command> for u8 {
             Command::RequestUpload => 0x35,
             Command::TransferData => 0x36,
             Command::RequestTransferExit => 0x37,
-            Command::Other(s) => s,
+            Command::Other(v) => v,
         }
     }
 }

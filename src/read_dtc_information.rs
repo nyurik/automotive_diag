@@ -1,6 +1,6 @@
-/// ReadDTCInformation sub-function definitions
-#[derive(Debug, Copy, Clone)]
+/// [`crate::DtcSubFunction::ReadDtcInformation`] sub-function definitions
 #[repr(u8)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask
     ReportNumberOfDTCByStatusMask = 0x01,

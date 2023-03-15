@@ -1,12 +1,15 @@
-//! Module for UDS (Unified diagnostic services - ISO14229)
+//! Module for UDS (Unified diagnostic services - ISO 14229-1)
 //!
 //! Theoretically, this module should be compliant with any ECU which implements
 //! UDS (Typically any ECU produced after 2006 supports this)
 
 #![cfg_attr(not(feature = "std"), no_std)]
+#![deny(clippy::all, clippy::pedantic)]
+#![allow(clippy::missing_errors_doc)]
 
 mod commands;
 mod communication_control;
+mod communication_level;
 mod errors;
 mod read_dtc_information;
 mod reset_types;

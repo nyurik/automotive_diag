@@ -6,10 +6,14 @@ authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashco
 repository = "https://github.com/nyurik/auto_uds"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-keywords = ["uds", "iso14229", "automotive", "no_std"]
+keywords = ["uds", "iso14229", "iso_14229_1", "automotive", "no_std"]
 
 [features]
 default = []
 std = []
 
 [dependencies]
+
+
+[dev-dependencies]
+cargo-husky = { version = "1", features = ["user-hooks"], default-features = false }

@@ -1,5 +1,5 @@
 /// Scaling byte high nibble encoding
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ScalingByteHigh {
     /// Unsigned numeric integer
     UnsignedNumeric {
@@ -39,20 +39,20 @@ pub enum ScalingByteHigh {
 }
 
 impl From<u8> for ScalingByteHigh {
-    fn from(x: u8) -> Self {
-        match x & 0xF0 {
+    fn from(value: u8) -> Self {
+        match value & 0xF0 {
             0x00 => Self::UnsignedNumeric {
-                num_bytes: x & 0x0F,
+                num_bytes: value & 0x0F,
             },
             0x01 => Self::SignedNumeric {
-                num_bytes: x & 0x0F,
+                num_bytes: value & 0x0F,
             },
             0x02 => Self::BitMappingWithoutMask,
             0x03 => Self::BitMappingWithMask,
             0x04 => Self::BCD,
             0x05 => Self::StateEncodedVariable,
             0x06 => Self::ASCII {
-                num_bytes: x & 0x0F,
+                num_bytes: value & 0x0F,
             },
             0x07 => Self::SignedFloatingPoint,
             0x08 => Self::Packet,

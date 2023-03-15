@@ -5,9 +5,9 @@
 /// 3. Unit scale prefixes
 ///
 /// Due to this, each value specifies if it will return a Postfix or prefix.
-/// Use [ScalingByteExtension::get_postfix] to return the optional postfix of the scaling byte,
-/// or [ScalingByteExtension::get_prefix] to return the optional prefix of the scaling byte.
-#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+/// Use [`ScalingByteExtension::get_postfix`] to return the optional postfix of the scaling byte,
+/// or [`ScalingByteExtension::get_prefix`] to return the optional prefix of the scaling byte.
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ScalingByteExtension {
     /// No unit or presentation
     NoUnit,
@@ -191,7 +191,10 @@ pub enum ScalingByteExtension {
 
 impl ScalingByteExtension {
     /// Returns the optional postfix of the scaling byte
+    #[must_use]
     pub fn get_postfix(&self) -> Option<&'static str> {
+        // FIXME - move allow attrib to specific items
+        #[allow(clippy::match_same_arms)]
         match self {
             ScalingByteExtension::Meter => Some("m"),
             ScalingByteExtension::Foot => Some("ft"),
@@ -257,7 +260,10 @@ impl ScalingByteExtension {
     }
 
     /// Returns the optional prefix of the scaling byte
+    #[must_use]
     pub fn get_prefix(&self) -> Option<&'static str> {
+        // FIXME - move allow attrib to specific items
+        #[allow(clippy::match_same_arms)]
         match self {
             ScalingByteExtension::Exa => Some("E"),
             ScalingByteExtension::Peta => Some("P"),
@@ -282,6 +288,8 @@ impl ScalingByteExtension {
 
 impl From<u8> for ScalingByteExtension {
     fn from(x: u8) -> Self {
+        // FIXME - move allow attrib to specific items
+        #[allow(clippy::match_same_arms)]
         match x {
             0x01 => Self::Meter,
             0x02 => Self::Foot,
