@@ -34,6 +34,19 @@ pub enum ResetType {
     Other(u8),
 }
 
+impl From<u8> for ResetType {
+    fn from(value: u8) -> Self {
+        match value {
+            0x01 => ResetType::HardReset,
+            0x02 => ResetType::KeyOffReset,
+            0x03 => ResetType::SoftReset,
+            0x04 => ResetType::EnableRapidPowerShutDown,
+            0x05 => ResetType::DisableRapidPowerShutDown,
+            v => ResetType::Other(v),
+        }
+    }
+}
+
 impl From<ResetType> for u8 {
     fn from(from: ResetType) -> Self {
         match from {
@@ -43,6 +56,20 @@ impl From<ResetType> for u8 {
             ResetType::EnableRapidPowerShutDown => 0x04,
             ResetType::DisableRapidPowerShutDown => 0x05,
             ResetType::Other(v) => v,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn encode_decode_enum() {
+        for value in 0_u8..=0xFF {
+            let enum_val = ResetType::from(value);
+            let decoded = u8::from(enum_val);
+            assert_eq!(value, decoded, "0x{value:x} → {enum_val:?} → 0x{decoded:x}");
         }
     }
 }

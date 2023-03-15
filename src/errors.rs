@@ -101,6 +101,56 @@ pub enum UdsError {
     IsoSAEReserved(u8),
 }
 
+impl From<UdsError> for u8 {
+    fn from(v: UdsError) -> Self {
+        match v {
+            UdsError::GeneralReject => 0x10,
+            UdsError::ServiceNotSupported => 0x11,
+            UdsError::SubFunctionNotSupported => 0x12,
+            UdsError::IncorrectMessageLengthOrInvalidFormat => 0x13,
+            UdsError::ResponseTooLong => 0x14,
+            UdsError::BusyRepeatRequest => 0x21,
+            UdsError::ConditionsNotCorrect => 0x22,
+            UdsError::RequestSequenceError => 0x24,
+            UdsError::NoResponseFromSubnetComponent => 0x25,
+            UdsError::FailurePreventsExecutionOfRequestedAction => 0x26,
+            UdsError::RequestOutOfRange => 0x31,
+            UdsError::SecurityAccessDenied => 0x33,
+            UdsError::InvalidKey => 0x35,
+            UdsError::ExceedNumberOfAttempts => 0x36,
+            UdsError::RequiredTimeDelayNotExpired => 0x37,
+            UdsError::UploadDownloadNotAccepted => 0x70,
+            UdsError::TransferDataSuspended => 0x71,
+            UdsError::GeneralProgrammingFailure => 0x72,
+            UdsError::WrongBlockSequenceCounter => 0x73,
+            UdsError::RequestCorrectlyReceivedResponsePending => 0x78,
+            UdsError::SubFunctionNotSupportedInActiveSession => 0x7E,
+            UdsError::ServiceNotSupportedInActiveSession => 0x7F,
+            UdsError::RpmTooHigh => 0x81,
+            UdsError::RpmTooLow => 0x82,
+            UdsError::EngineIsRunning => 0x83,
+            UdsError::EngineIsNotRunning => 0x84,
+            UdsError::EngineRunTimeTooLow => 0x85,
+            UdsError::TemperatureTooHigh => 0x86,
+            UdsError::TemperatureTooLow => 0x87,
+            UdsError::VehicleSpeedTooHigh => 0x88,
+            UdsError::VehicleSpeedTooLow => 0x89,
+            UdsError::ThrottleTooHigh => 0x8A,
+            UdsError::ThrottleTooLow => 0x8B,
+            UdsError::TransmissionRangeNotInNeutral => 0x8C,
+            UdsError::TransmissionRangeNotInGear => 0x8D,
+            UdsError::BrakeSwitchNotClosed => 0x8F,
+            UdsError::ShifterLeverNotInPark => 0x90,
+            UdsError::TorqueConverterClutchLocked => 0x91,
+            UdsError::VoltageTooHigh => 0x92,
+            UdsError::VoltageTooLow => 0x93,
+            UdsError::ReservedForSpecificConditionsNotCorrect(v)
+            | UdsError::ReservedByExtendedDataLinkSecurityDocumentation(v)
+            | UdsError::IsoSAEReserved(v) => v,
+        }
+    }
+}
+
 impl From<u8> for UdsError {
     fn from(v: u8) -> Self {
         match v {
@@ -147,6 +197,20 @@ impl From<u8> for UdsError {
             0x94..=0xFE => Self::ReservedForSpecificConditionsNotCorrect(v),
             0x38..=0x4F => Self::ReservedByExtendedDataLinkSecurityDocumentation(v),
             v => Self::IsoSAEReserved(v),
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn encode_decode_enum() {
+        for value in 0_u8..=0xFF {
+            let enum_val = UdsError::from(value);
+            let decoded = u8::from(enum_val);
+            assert_eq!(value, decoded, "0x{value:x} → {enum_val:?} → 0x{decoded:x}");
         }
     }
 }

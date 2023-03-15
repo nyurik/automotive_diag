@@ -20,6 +20,18 @@ pub enum UdsSessionType {
     Other(u8),
 }
 
+impl From<u8> for UdsSessionType {
+    fn from(value: u8) -> Self {
+        match value {
+            0x01 => UdsSessionType::Default,
+            0x02 => UdsSessionType::Programming,
+            0x03 => UdsSessionType::Extended,
+            0x04 => UdsSessionType::SafetySystem,
+            v => UdsSessionType::Other(v),
+        }
+    }
+}
+
 impl From<UdsSessionType> for u8 {
     fn from(value: UdsSessionType) -> u8 {
         match value {
@@ -28,6 +40,20 @@ impl From<UdsSessionType> for u8 {
             UdsSessionType::Extended => 0x03,
             UdsSessionType::SafetySystem => 0x04,
             UdsSessionType::Other(v) => v,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn encode_decode_enum() {
+        for value in 0_u8..=0xFF {
+            let enum_val = UdsSessionType::from(value);
+            let decoded = u8::from(enum_val);
+            assert_eq!(value, decoded, "0x{value:x} → {enum_val:?} → 0x{decoded:x}");
         }
     }
 }

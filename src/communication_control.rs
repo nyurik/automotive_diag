@@ -21,6 +21,25 @@ pub enum Subnet {
     RxOnly,
 }
 
+/// Decode communication type and subnet from a single byte. If the low 4 bits are not a valid
+/// communication type, the low 4 bits are returned as an error.
+pub fn decode_communication_type(value: u8) -> Result<(CommunicationType, Subnet), u8> {
+    let typ = match value & 0x0F {
+        0x01 => CommunicationType::NormalCommunication,
+        0x02 => CommunicationType::NetworkManagement,
+        0x03 => CommunicationType::All,
+        value => return Err(value),
+    };
+
+    let subnet = match value >> 4 {
+        0x00 => Subnet::All,
+        0x0F => Subnet::RxOnly,
+        x => Subnet::Custom(x),
+    };
+
+    Ok((typ, subnet))
+}
+
 /// Encode communication type and subnet into a single byte
 #[must_use]
 pub fn encode_communication_type(typ: CommunicationType, subnet: Subnet) -> u8 {
@@ -37,4 +56,24 @@ pub fn encode_communication_type(typ: CommunicationType, subnet: Subnet) -> u8 {
     };
 
     typ | (subnet << 4)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn encode_decode_enum() {
+        for value in 0_u8..=0xFF {
+            match decode_communication_type(value) {
+                Ok((typ, sub)) => {
+                    let enc = encode_communication_type(typ, sub);
+                    assert_eq!(value, enc, "0x{value:x} → ({typ:?}, {sub:?}) → 0x{enc:x}");
+                }
+                Err(err) => {
+                    assert_eq!(value & 0x0F, err);
+                }
+            }
+        }
+    }
 }
