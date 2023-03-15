@@ -19,6 +19,7 @@ jobs:
       - run: |
             # TODO: enable after Rust 1.68 is available
             # export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+            set -x
             rustc --version
             cargo --version
             cargo fmt --all -- --check
