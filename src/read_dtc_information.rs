@@ -1,6 +1,8 @@
+use bytenum::Bytenum;
+
 /// [`crate::DtcSubFunction::ReadDtcInformation`] sub-function definitions
 #[repr(u8)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask
     ReportNumberOfDTCByStatusMask = 0x01,
@@ -50,4 +52,15 @@ pub enum DtcSubFunction {
     ReportDTCFaultDetectionCounter = 0x14,
     /// This function take no additional arguments
     ReportDTCWithPermanentStatus = 0x15,
+}
+
+impl From<DtcSubFunction> for u8 {
+    fn from(value: DtcSubFunction) -> Self {
+        value as u8
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    crate::test_encode_decode_enum!(DtcSubFunction);
 }

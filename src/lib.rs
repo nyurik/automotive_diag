@@ -28,3 +28,22 @@ pub use scaling_byte_ext::*;
 pub use scaling_byte_high::*;
 pub use security_access::*;
 pub use session_types::*;
+
+#[cfg(test)]
+mod tests {
+    #[macro_export]
+    macro_rules! test_encode_decode_enum {
+        ($enum:tt) => {
+            #[test]
+            #[allow(non_snake_case)]
+            fn $enum() {
+                for value in 0_u8..=0xFF {
+                    if let Ok(v) = crate::$enum::try_from(value) {
+                        let enc: u8 = v.into();
+                        assert_eq!(value, enc, "0x{value:x} → {v:?} → 0x{enc:x}");
+                    }
+                }
+            }
+        };
+    }
+}
