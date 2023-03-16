@@ -13,11 +13,11 @@ pub enum ScalingType {
     /// Bit mapping encoding to set statuses, with mask
     BitMappingWithMask = 0x30,
     /// Binary coded decimal encoding
-    BCD = 0x40,
+    Bcd = 0x40,
     /// State encoded variable (Enum)
     StateEncodedVariable = 0x50,
     /// ASCII Text. Must be followed by 1..15 bytes, given as a low nibble of the byte.
-    ASCII = 0x60,
+    Ascii = 0x60,
     /// ANSI 754 signed floating point
     SignedFloatingPoint = 0x70,
     /// Multiple values data packet
@@ -64,7 +64,7 @@ impl TryFrom<u8> for ScalingByte {
                     return Err("Invalid number of data bytes for a numeric type, expecting between 1 and 4.");
                 }
             }
-            ScalingType::ASCII => {
+            ScalingType::Ascii => {
                 if !(1..=15).contains(&size) {
                     return Err(
                         "Invalid number of data bytes for ASCII type, expecting between 1 and 15.",
@@ -93,6 +93,6 @@ mod tests {
         assert_eq!(u8::from(ScalingByte::new(SignedNumeric, 4).unwrap()), 0x14);
         assert_eq!(u8::from(ScalingByte::new(SignedNumeric, 1).unwrap()), 0x11);
         assert!(ScalingByte::new(SignedNumeric, 0).is_err());
-        assert!(ScalingByte::new(BCD, 1).is_err());
+        assert!(ScalingByte::new(Bcd, 1).is_err());
     }
 }

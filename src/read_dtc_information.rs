@@ -5,53 +5,53 @@ use bytenum::Bytenum;
 #[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask
-    ReportNumberOfDTCByStatusMask = 0x01,
+    ReportNumberOfDtcByStatusMask = 0x01,
     /// This function takes a 1 byte DTCStatusMask
-    ReportDTCByStatusMask = 0x02,
+    ReportDtcByStatusMask = 0x02,
     /// This function takes a 1 byte DTCStatusMask
-    ReportMirrorMemoryDTCByStatusMask = 0x0F,
+    ReportMirrorMemoryDtcByStatusMask = 0x0F,
     /// This function takes a 1 byte DTCStatusMask
-    ReportNumberOfMirrorMemoryDTCByStatusMask = 0x11,
+    ReportNumberOfMirrorMemoryDtcByStatusMask = 0x11,
     /// This function takes a 1 byte DTCStatusMask
-    ReportNumberOfEmissionsRelatedOBDDTCByStatusMask = 0x12,
+    ReportNumberOfEmissionsRelatedObdDtcByStatusMask = 0x12,
     /// This function takes a 1 byte DTCStatusMask
-    ReportEmissionsRelatedOBDDTCByStatusMask = 0x13,
+    ReportEmissionsRelatedObdDtcByStatusMask = 0x13,
 
     /// This function takes a 3 byte DTCMaskRecord and a 1 byte DTCSnapshotRecordNumber
-    ReportDTCSnapshotIdentifier = 0x03,
+    ReportDtcSnapshotIdentifier = 0x03,
     /// This function takes a 3 byte DTCMaskRecord and a 1 byte DTCSnapshotRecordNumber
-    ReportDTCSnapshotRecordByDTCNumber = 0x04,
+    ReportDtcSnapshotRecordByDtcNumber = 0x04,
 
     /// This function takes a 1 byte DTCSnapshotRecordNumber
-    ReportDTCSnapshotRecordByRecordNumber = 0x05,
+    ReportDtcSnapshotRecordByRecordNumber = 0x05,
 
     /// This function take a 3 byte DTCMaskRecord and a 1 byte DTCExtendedDataRecordNumber
-    ReportDTCExtendedDataRecordByDTCNumber = 0x06,
+    ReportDtcExtendedDataRecordByDtcNumber = 0x06,
     /// This function take a 3 byte DTCMaskRecord and a 1 byte DTCExtendedDataRecordNumber
-    ReportMirrorMemoryDTCExtendedDataRecordByDTCNumber = 0x10,
+    ReportMirrorMemoryDtcExtendedDataRecordByDtcNumber = 0x10,
 
     /// This function takes a 1 byte DTCSeverityMask and a 1 byte DTCStatusMask
-    ReportNumberOfDTCBySeverityMaskRecord = 0x07,
+    ReportNumberOfDtcBySeverityMaskRecord = 0x07,
     /// This function takes a 1 byte DTCSeverityMask and a 1 byte DTCStatusMask
-    ReportDTCBySeverityMaskRecord = 0x08,
+    ReportDtcBySeverityMaskRecord = 0x08,
 
     /// This function takes a 3 byte DTCMaskRecord
-    ReportSeverityInformationOfDTC = 0x09,
+    ReportSeverityInformationOfDtc = 0x09,
 
     /// This function take no additional arguments
-    ReportSupportedDTC = 0x0A,
+    ReportSupportedDtc = 0x0A,
     /// This function take no additional arguments
-    ReportFirstTestFailedDTC = 0x0B,
+    ReportFirstTestFailedDtc = 0x0B,
     /// This function take no additional arguments
-    ReportFirstConfirmedDTC = 0x0C,
+    ReportFirstConfirmedDtc = 0x0C,
     /// This function take no additional arguments
-    ReportMostRecentTestFailedDTC = 0x0D,
+    ReportMostRecentTestFailedDtc = 0x0D,
     /// This function take no additional arguments
-    ReportMostRecentConfirmedDTC = 0x0E,
+    ReportMostRecentConfirmedDtc = 0x0E,
     /// This function take no additional arguments
-    ReportDTCFaultDetectionCounter = 0x14,
+    ReportDtcFaultDetectionCounter = 0x14,
     /// This function take no additional arguments
-    ReportDTCWithPermanentStatus = 0x15,
+    ReportDtcWithPermanentStatus = 0x15,
 }
 
 impl From<DtcSubFunction> for u8 {
