@@ -3,7 +3,8 @@
 //!
 //! Currently, only default seed/key (0x01/0x02) are supported
 
-use crate::{byte_enum, ByteWrapper};
+use crate::byte_enum;
+use crate::utils::ByteWrapper;
 use bytenum::Bytenum;
 
 /// Security operation request

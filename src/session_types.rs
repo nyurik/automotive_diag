@@ -1,4 +1,5 @@
-use crate::{byte_enum, ByteWrapper};
+use crate::byte_enum;
+use crate::utils::ByteWrapper;
 use bytenum::Bytenum;
 
 /// UDS Diagnostic session modes. Handled by SID 0x10

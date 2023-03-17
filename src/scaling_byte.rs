@@ -1,4 +1,5 @@
-use crate::{byte_enum, ByteWrapper};
+use crate::byte_enum;
+use crate::utils::ByteWrapper;
 use bytenum::Bytenum;
 
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.

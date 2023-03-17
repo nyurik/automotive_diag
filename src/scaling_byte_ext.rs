@@ -1,4 +1,5 @@
-use crate::{byte_enum, ByteWrapper};
+use crate::byte_enum;
+use crate::utils::ByteWrapper;
 use bytenum::Bytenum;
 
 /// A macro rule to generate prefix and postfix functions from a single enum
