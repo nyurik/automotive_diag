@@ -1,3 +1,4 @@
+use crate::{byte_enum, ByteWrapper};
 use bytenum::Bytenum;
 
 /// Communication level toggle
@@ -15,13 +16,4 @@ pub enum CommunicationLevel {
     DisableRxAndTx = 0x03,
 }
 
-impl From<CommunicationLevel> for u8 {
-    fn from(value: CommunicationLevel) -> Self {
-        value as u8
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    crate::test_encode_decode_enum!(CommunicationLevel);
-}
+byte_enum!(CommunicationLevel, CommunicationLevelByte);

@@ -1,3 +1,4 @@
+use crate::{byte_enum, ByteWrapper};
 use bytenum::Bytenum;
 
 /// [`crate::DtcSubFunction::ReadDtcInformation`] sub-function definitions
@@ -54,13 +55,4 @@ pub enum DtcSubFunction {
     ReportDtcWithPermanentStatus = 0x15,
 }
 
-impl From<DtcSubFunction> for u8 {
-    fn from(value: DtcSubFunction) -> Self {
-        value as u8
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    crate::test_encode_decode_enum!(DtcSubFunction);
-}
+byte_enum!(DtcSubFunction, DtcSubFunctionByte);

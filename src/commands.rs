@@ -1,3 +1,4 @@
+use crate::{byte_enum, ByteWrapper};
 use bytenum::Bytenum;
 
 /// UDS Command Service IDs
@@ -39,13 +40,4 @@ pub enum UdsCommand {
     RequestTransferExit = 0x37,
 }
 
-impl From<UdsCommand> for u8 {
-    fn from(value: UdsCommand) -> Self {
-        value as u8
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    crate::test_encode_decode_enum!(UdsCommand);
-}
+byte_enum!(UdsCommand, UdsCommandByte);

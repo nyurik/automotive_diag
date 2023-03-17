@@ -1,3 +1,4 @@
+use crate::{byte_enum, ByteWrapper};
 use bytenum::Bytenum;
 
 /// A macro rule to generate prefix and postfix functions from a single enum
@@ -18,7 +19,7 @@ macro_rules! generate_enum {
             $(
                 #[doc = $doc]
                 $(#[doc = concat!(" Prefix `", $prefix, "`")])*
-                $(#[doc = concat!(" Suffix `", $postfix, "`")])*
+                $(#[doc = concat!(" Postfix `", $postfix, "`")])*
                 $variant_name = $variant_value,
             )*
         }
@@ -59,11 +60,11 @@ generate_enum! {
     /// 3. Unit scale prefixes
     ///
     /// Due to this, each value specifies if it will return a Postfix or prefix.
-    /// Use [`ScalingByteExtension::get_postfix`] to return the optional postfix of the scaling byte,
-    /// or [`ScalingByteExtension::get_prefix`] to return the optional prefix of the scaling byte.
+    /// Use [`ScalingExtension::get_postfix`] to return the optional postfix of the scaling byte,
+    /// or [`ScalingExtension::get_prefix`] to return the optional prefix of the scaling byte.
     #[repr(u8)]
     #[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-    pub enum ScalingByteExtension {
+    pub enum ScalingExtension {
         /// No unit or presentation
         NoUnit = 0x00,
         /// Meter - measure of length.
@@ -321,13 +322,4 @@ generate_enum! {
     }
 }
 
-impl From<ScalingByteExtension> for u8 {
-    fn from(value: ScalingByteExtension) -> Self {
-        value as u8
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    crate::test_encode_decode_enum!(ScalingByteExtension);
-}
+byte_enum!(ScalingExtension, ScalingExtensionByte);

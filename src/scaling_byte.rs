@@ -1,6 +1,7 @@
+use crate::{byte_enum, ByteWrapper};
 use bytenum::Bytenum;
 
-/// Scaling byte high nibble encoding
+/// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
 #[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ScalingType {
@@ -30,14 +31,24 @@ pub enum ScalingType {
     StateAndConnectionType = 0xB0,
 }
 
-/// Scaling byte, containing both the [`ScalingType`] and the size of the data.
+/// Scaling value with both the [`ScalingType`] and the size of the data.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub struct ScalingByte {
+pub struct Scaling {
     typ: ScalingType,
     size: u8,
 }
 
-impl ScalingByte {
+byte_enum!(
+    Scaling,
+    ScalingByte,
+    impl From<Scaling> for u8 {
+        fn from(value: Scaling) -> Self {
+            value.typ as u8 | value.size
+        }
+    }
+);
+
+impl Scaling {
     pub fn new(typ: ScalingType, size: u8) -> Result<Self, &'static str> {
         if size > 0x0F {
             return Err("Invalid size, expecting between 0 and 15.");
@@ -46,13 +57,7 @@ impl ScalingByte {
     }
 }
 
-impl From<ScalingByte> for u8 {
-    fn from(value: ScalingByte) -> Self {
-        value.typ as u8 | value.size
-    }
-}
-
-impl TryFrom<u8> for ScalingByte {
+impl TryFrom<u8> for Scaling {
     type Error = &'static str;
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
@@ -82,17 +87,15 @@ impl TryFrom<u8> for ScalingByte {
 }
 
 #[cfg(test)]
-mod tests {
+mod tests2 {
     use super::*;
-
-    crate::test_encode_decode_enum!(ScalingByte);
 
     #[test]
     fn test_scaling_byte() {
         use ScalingType::*;
-        assert_eq!(u8::from(ScalingByte::new(SignedNumeric, 4).unwrap()), 0x14);
-        assert_eq!(u8::from(ScalingByte::new(SignedNumeric, 1).unwrap()), 0x11);
-        assert!(ScalingByte::new(SignedNumeric, 0).is_err());
-        assert!(ScalingByte::new(Bcd, 1).is_err());
+        assert_eq!(u8::from(Scaling::new(SignedNumeric, 4).unwrap()), 0x14);
+        assert_eq!(u8::from(Scaling::new(SignedNumeric, 1).unwrap()), 0x11);
+        assert!(Scaling::new(SignedNumeric, 0).is_err());
+        assert!(Scaling::new(Bcd, 1).is_err());
     }
 }

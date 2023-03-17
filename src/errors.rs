@@ -1,3 +1,4 @@
+use crate::{byte_enum, ByteWrapper};
 use bytenum::Bytenum;
 
 /// UDS Error definitions
@@ -96,21 +97,6 @@ pub enum UdsError {
     VoltageTooHigh = 0x92,
     /// Voltage is too low
     VoltageTooLow = 0x93,
-    // /// (0x94-0xFE) This range is reserved for future definition.
-    // ReservedForSpecificConditionsNotCorrect(u8),
-    // /// (0x38-0x4F) This range of values is reserved for ISO-15765 data link security
-    // ReservedByExtendedDataLinkSecurityDocumentation(u8),
-    // /// Other reserved error code
-    // IsoSAEReserved(u8),
 }
 
-impl From<UdsError> for u8 {
-    fn from(value: UdsError) -> Self {
-        value as u8
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    crate::test_encode_decode_enum!(UdsError);
-}
+byte_enum!(UdsError, UdsErrorByte);
