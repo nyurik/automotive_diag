@@ -1,392 +1,326 @@
-/// Scaling data byte extensions
-/// This enum is used to represent the following:
-/// 1. Measurement units
-/// 2. Format specifiers
-/// 3. Unit scale prefixes
-///
-/// Due to this, each value specifies if it will return a Postfix or prefix.
-/// Use [`ScalingByteExtension::get_postfix`] to return the optional postfix of the scaling byte,
-/// or [`ScalingByteExtension::get_prefix`] to return the optional prefix of the scaling byte.
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub enum ScalingByteExtension {
-    /// No unit or presentation
-    NoUnit,
-    /// Meter - Measure of length. Postfix: `m`
-    Meter,
-    /// Foot - Measure of length. Postfix: `ft`
-    Foot,
-    /// Inch - Measure of length. Postfix: `in`
-    Inch,
-    /// Yard - Measure of length. Postfix: `yd`
-    Yard,
-    /// English mile - Measure of length. Postfix: `mi`
-    EngMile,
-    /// Gram - Measure of mass. Postfix: `g`
-    Gram,
-    /// Metric ton - Measure of mass. Postfix: `t`
-    MetricTon,
-    /// Second - Measure of time. Postfix: `s`
-    Second,
-    /// Minute - Measure of time. Postfix: `min`
-    Minute,
-    /// Hour - Measure of time. Postfix: `h`
-    Hour,
-    /// Day - Measure of time. Postfix: `d`
-    Day,
-    /// Year - Measure of time. Postfix: `y`
-    Year,
-    /// Ampere - Measure of electrical current. Postfix: `A`
-    Ampere,
-    /// Volt - Measure of electrical voltage. Postfix: `V`
-    Volt,
-    /// Coulomb - Measure of electrical charge. Postfix: `C`
-    Coulomb,
-    /// Ohm - Measure of electrical resistance. Postfix: `W`
-    Ohm,
-    /// Farad - Measure of electrical capacitance. Postfix: `F`
-    Farad,
-    /// Henry - Measure of electrical inductance. Postfix: `H`
-    Henry,
-    /// Siemens - Measure of electrical conductance. Postfix: `S`
-    Siemens,
-    /// Weber - Measure of magnetic flux. Postfix: `Wb`
-    Weber,
-    /// Tesla - Measure of magnetic flux density. Postfix: `T`
-    Tesla,
-    /// Kelvin - Measure of thermodynamic temperature. Postfix: `K`
-    Kelvin,
-    /// Kelvin - Measure of thermodynamic temperature. Postfix: `°C`
-    Celsius,
-    /// Kelvin - Measure of thermodynamic temperature. Postfix: `°F`
-    Fahrenheit,
-    /// Candela - Measure of luminous intensity. Postfix: `cd`
-    Candela,
-    /// Radians - Measure of plane angle. Postfix: `Rad`
-    Radian,
-    /// Degrees - Measure of plane angle. Postfix: `°`
-    Degree,
-    /// Hertz - Measure of frequency. Postfix: `Hz`
-    Hertz,
-    /// Joule - Measure of energy. Postfix: `J`
-    Joule,
-    /// Newton - Measure of force. Postfix: `N`
-    Newton,
-    /// Kilo-pond - Measure of force. Postfix: `kp`
-    Kilopond,
-    /// Pound force - Measure of force. Postfix: `lbf`
-    PoundForce,
-    /// Watt - Measure of power. Postfix: `W`
-    Watt,
-    /// Metric horse power - Measure of power. Postfix: `hk`
-    MetricHorsePower,
-    /// US/UK Horse power - Measure of power. Postfix: `hp`
-    UsHorsePower,
-    /// Pascal - Measure of pressure. Postfix: `Pa`
-    Pascal,
-    /// Bar - Measure of pressure. Postfix: `bar`
-    Bar,
-    /// Atmosphere - Measure of pressure. Postfix: `atm`
-    Atmosphere,
-    /// Pound force per square inch - Measure of pressure. Postfix: `psi`
-    Psi,
-    /// Becquerel - Measure of radioactivity. Postfix: `Bq`
-    Becquerel,
-    /// Lumen - Measure of light lux. Postfix: `lm`
-    Lumen,
-    /// Lux - Measure of illuminance. Postfix: `lx`
-    Lux,
-    /// Liter - Measure of volume. Postfix: `l`
-    Liter,
-    /// British gallon - Measure of volume. **No Postfix or prefix is used**
-    UKGallon,
-    /// US liquid gallon - Measure of volume. **No Postfix or prefix is used**
-    USGallon,
-    /// Cubic inch - Measure of volume. Postfix: `cu in`
-    CubicInch,
-    /// Meter per second - Measure of speed. Postfix: `m/s`
-    MeterPerSecond,
-    /// Kilometers per hour - Measure of speed. Postfix: `km/s`
-    KilometrePerHour,
-    /// Miles per hour - Measure of speed. Postfix: `mph`
-    MilePerHour,
-    /// Revolutions per second - Measure of angular velocity. Postfix: `rps`
-    RevolutionsPerSecond,
-    /// Revolutions per minute - Measure of angular velocity. Postfix: `rpm`
-    RevolutionsPerMinute,
-    /// Count. **No Postfix or prefix is used**
-    Counts,
-    /// Percent. Postfix: `%`
-    Percent,
-    /// Milligrams per stroke - Measure of mass per engine stroke. Postfix: `mg/stroke`
-    MilligramsPerStroke,
-    /// Meters per square second - Measure of acceleration. Postfix: `m/s2`
-    MeterPerSquareSecond,
-    /// Newton meter - Measure of torsion moment. Postfix: `Nm`
-    NewtonMeter,
-    /// Liters per minute - Measure of flow. Postfix: `l/min`
-    LiterPerMinute,
-    /// Watts per square meter - Measure of intensity. Postfix: `W/m2`
-    WattPerSquareMeter,
-    /// Bar per second - Measure of pressure change. Postfix: `bar/s`
-    BarPerSecond,
-    /// Radians per second - Measure of angular velocity. Postfix: `rad/s2`
-    RadiansPerSecond,
-    /// Radians per square second - Measure of angular acceleration. Postfix: `rad/s2`
-    RadiansPerSquareSecond,
-    /// Kilograms per square meter - Postfix: `kg/m2`
-    KilogramsPerSquareMeter,
-    /// Exa prefix - Prefix: `E`
-    Exa,
-    /// Peta prefix - Prefix `P`
-    Peta,
-    /// Tera prefix - Prefix `T`
-    Tera,
-    /// Giga prefix - Prefix `G`
-    Giga,
-    /// Mega prefix - Prefix `M`
-    Mega,
-    /// Kilo prefix - Prefix `k`
-    Kilo,
-    /// hecto prefix - Prefix `h`
-    Hecto,
-    /// Deca prefix - Prefix `da`
-    Deca,
-    /// Deci prefix - Prefix `d`
-    Deci,
-    /// Centi prefix - Prefix `c`
-    Centi,
-    /// Milli prefix - Prefix `m`
-    Milli,
-    /// micro prefix - Prefix `m`
-    Micro,
-    /// Nano prefix - Prefix `n`
-    Nano,
-    /// Pico prefix - Prefix `p`
-    Pico,
-    /// Femto prefix - Prefix `f`
-    Femto,
-    /// Atto prefix - Prefix: `a`
-    Atto,
-    /// Year-Month-Day
-    Date1,
-    /// Day / Month / Year
-    Date2,
-    /// Month / Day / Year
-    Date3,
-    /// Calendar week
-    Week,
-    /// UTC Hour / Minute / Second
-    Time1,
-    /// Hour / Minute / Second
-    Time2,
-    /// Second / Minute / Hour / Day / Month / Year
-    DateAndTime1,
-    /// Second / Minute / Hour / Day / Month / Year / Local minute offset / Local hour offset
-    DateAndTime2,
-    /// Second / Minute/ Hour / Day / Month / Year
-    DateAndTime3,
-    /// Second / Minute / Hour / Day / Year / Local minute offset / Local hour offset
-    DateAndTime4,
+use crate::byte_enum;
+use crate::utils::ByteWrapper;
+use bytenum::Bytenum;
+
+/// A macro rule to generate prefix and postfix functions from a single enum
+macro_rules! generate_enum {
+    (
+        $(#[$enum_attr:meta])*
+        $enum_vis:vis enum $enum_name:ident {
+            $(
+                #[doc = $doc:literal]
+                $(#[prefix = $prefix:literal])?
+                $(#[postfix = $postfix:literal])?
+                $variant_name:ident = $variant_value:expr,
+            )*
+        }
+    ) => {
+        $(#[$enum_attr])*
+        $enum_vis enum $enum_name {
+            $(
+                #[doc = $doc]
+                $(#[doc = concat!(" Prefix `", $prefix, "`")])*
+                $(#[doc = concat!(" Postfix `", $postfix, "`")])*
+                $variant_name = $variant_value,
+            )*
+        }
+
+        impl $enum_name {
+            /// Returns the optional postfix of the scaling byte
+            #[must_use]
+            pub fn get_postfix(&self) -> Option<&'static str> {
+                #[allow(clippy::match_same_arms)]
+                match self {
+                    $(
+                        $(Self::$variant_name => Some($postfix),)*
+                    )*
+                    _ => None,
+                }
+            }
+
+            /// Returns the optional prefix of the scaling byte
+            #[must_use]
+            pub fn get_prefix(&self) -> Option<&'static str> {
+                #[allow(clippy::match_same_arms)]
+                match self {
+                    $(
+                        $(Self::$variant_name => Some($prefix),)*
+                    )*
+                    _ => None,
+                }
+            }
+        }
+    };
 }
 
-impl ScalingByteExtension {
-    /// Returns the optional postfix of the scaling byte
-    #[must_use]
-    pub fn get_postfix(&self) -> Option<&'static str> {
-        // FIXME - move allow attrib to specific items
-        #[allow(clippy::match_same_arms)]
-        match self {
-            ScalingByteExtension::Meter => Some("m"),
-            ScalingByteExtension::Foot => Some("ft"),
-            ScalingByteExtension::Inch => Some("in"),
-            ScalingByteExtension::Yard => Some("yd"),
-            ScalingByteExtension::EngMile => Some("mi"),
-            ScalingByteExtension::Gram => Some("g"),
-            ScalingByteExtension::MetricTon => Some("t"),
-            ScalingByteExtension::Second => Some("s"),
-            ScalingByteExtension::Minute => Some("min"),
-            ScalingByteExtension::Hour => Some("h"),
-            ScalingByteExtension::Day => Some("d"),
-            ScalingByteExtension::Year => Some("y"),
-            ScalingByteExtension::Ampere => Some("A"),
-            ScalingByteExtension::Volt => Some("V"),
-            ScalingByteExtension::Coulomb => Some("C"),
-            ScalingByteExtension::Ohm => Some("W"),
-            ScalingByteExtension::Farad => Some("F"),
-            ScalingByteExtension::Henry => Some("H"),
-            ScalingByteExtension::Siemens => Some("S"),
-            ScalingByteExtension::Weber => Some("Wb"),
-            ScalingByteExtension::Tesla => Some("T"),
-            ScalingByteExtension::Kelvin => Some("K"),
-            ScalingByteExtension::Celsius => Some("°C"),
-            ScalingByteExtension::Fahrenheit => Some("°F"),
-            ScalingByteExtension::Candela => Some("cd"),
-            ScalingByteExtension::Radian => Some("rad"),
-            ScalingByteExtension::Degree => Some("°"),
-            ScalingByteExtension::Hertz => Some("Hz"),
-            ScalingByteExtension::Joule => Some("J"),
-            ScalingByteExtension::Newton => Some("N"),
-            ScalingByteExtension::Kilopond => Some("kp"),
-            ScalingByteExtension::PoundForce => Some("lbf"),
-            ScalingByteExtension::Watt => Some("W"),
-            ScalingByteExtension::MetricHorsePower => Some("hk"),
-            ScalingByteExtension::UsHorsePower => Some("hp"),
-            ScalingByteExtension::Pascal => Some("Pa"),
-            ScalingByteExtension::Bar => Some("bar"),
-            ScalingByteExtension::Atmosphere => Some("atm"),
-            ScalingByteExtension::Psi => Some("psi"),
-            ScalingByteExtension::Becquerel => Some("Bq"),
-            ScalingByteExtension::Lumen => Some("lm"),
-            ScalingByteExtension::Lux => Some("lx"),
-            ScalingByteExtension::Liter => Some("l"),
-            ScalingByteExtension::CubicInch => Some("cu in"),
-            ScalingByteExtension::MeterPerSecond => Some("m/s"),
-            ScalingByteExtension::KilometrePerHour => Some("km/h"),
-            ScalingByteExtension::MilePerHour => Some("mph"),
-            ScalingByteExtension::RevolutionsPerSecond => Some("rps"),
-            ScalingByteExtension::RevolutionsPerMinute => Some("rpm"),
-            ScalingByteExtension::Percent => Some("%"),
-            ScalingByteExtension::MilligramsPerStroke => Some("mg/stroke"),
-            ScalingByteExtension::MeterPerSquareSecond => Some("m/s2"),
-            ScalingByteExtension::NewtonMeter => Some("Nm"),
-            ScalingByteExtension::LiterPerMinute => Some("l/min"),
-            ScalingByteExtension::WattPerSquareMeter => Some("W/m2"),
-            ScalingByteExtension::BarPerSecond => Some("bar/s"),
-            ScalingByteExtension::RadiansPerSecond => Some("rad/s"),
-            ScalingByteExtension::RadiansPerSquareSecond => Some("rad/s2"),
-            ScalingByteExtension::KilogramsPerSquareMeter => Some("kg/m2"),
-            _ => None,
-        }
-    }
-
-    /// Returns the optional prefix of the scaling byte
-    #[must_use]
-    pub fn get_prefix(&self) -> Option<&'static str> {
-        // FIXME - move allow attrib to specific items
-        #[allow(clippy::match_same_arms)]
-        match self {
-            ScalingByteExtension::Exa => Some("E"),
-            ScalingByteExtension::Peta => Some("P"),
-            ScalingByteExtension::Tera => Some("T"),
-            ScalingByteExtension::Giga => Some("G"),
-            ScalingByteExtension::Mega => Some("M"),
-            ScalingByteExtension::Kilo => Some("h"),
-            ScalingByteExtension::Hecto => Some("h"),
-            ScalingByteExtension::Deca => Some("da"),
-            ScalingByteExtension::Deci => Some("d"),
-            ScalingByteExtension::Centi => Some("c"),
-            ScalingByteExtension::Milli => Some("m"),
-            ScalingByteExtension::Micro => Some("m"),
-            ScalingByteExtension::Nano => Some("n"),
-            ScalingByteExtension::Pico => Some("p"),
-            ScalingByteExtension::Femto => Some("f"),
-            ScalingByteExtension::Atto => Some("a"),
-            _ => None,
-        }
+generate_enum! {
+    /// Scaling data byte extensions
+    /// This enum is used to represent the following:
+    /// 1. Measurement units
+    /// 2. Format specifiers
+    /// 3. Unit scale prefixes
+    ///
+    /// Due to this, each value specifies if it will return a Postfix or prefix.
+    /// Use [`ScalingExtension::get_postfix`] to return the optional postfix of the scaling byte,
+    /// or [`ScalingExtension::get_prefix`] to return the optional prefix of the scaling byte.
+    #[repr(u8)]
+    #[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+    pub enum ScalingExtension {
+        /// No unit or presentation
+        NoUnit = 0x00,
+        /// Meter - measure of length.
+        #[postfix = "m"]
+        Meter = 0x01,
+        /// Foot - measure of length.
+        #[postfix = "ft"]
+        Foot = 0x02,
+        /// Inch - measure of length.
+        #[postfix = "in"]
+        Inch = 0x03,
+        /// Yard - measure of length.
+        #[postfix = "yd"]
+        Yard = 0x04,
+        /// English mile - measure of length.
+        #[postfix = "mi"]
+        Mile = 0x05,
+        /// Gram - measure of mass.
+        #[postfix = "g"]
+        Gram = 0x06,
+        /// Metric tonne - measure of mass.
+        #[postfix = "t"]
+        Tonne = 0x07,
+        /// Second - measure of time.
+        #[postfix = "s"]
+        Second = 0x08,
+        /// Minute - measure of time.
+        #[postfix = "min"]
+        Minute = 0x09,
+        /// Hour - measure of time.
+        #[postfix = "h"]
+        Hour = 0x0A,
+        /// Day - measure of time.
+        #[postfix = "d"]
+        Day = 0x0B,
+        /// Year - measure of time.
+        #[postfix = "y"]
+        Year = 0x0C,
+        /// Ampere - measure of current.
+        #[postfix = "A"]
+        Ampere = 0x0D,
+        /// Volt - measure of voltage.
+        #[postfix = "V"]
+        Volt = 0x0E,
+        /// Coulomb - measure of electric charge.
+        #[postfix = "C"]
+        Coulomb = 0x0F,
+        /// Ohm - measure of resistance.
+        #[postfix = "W"]
+        Ohm = 0x10,
+        /// Farad - measure of capacitance.
+        #[postfix = "F"]
+        Farad = 0x11,
+        /// Henry - measure of inductance.
+        #[postfix = "H"]
+        Henry = 0x12,
+        /// Siemens - measure of electric conductance.
+        #[postfix = "S"]
+        Siemens = 0x13,
+        /// Weber - measure of magnetic flux.
+        #[postfix = "Wb"]
+        Weber = 0x14,
+        /// Tesla - measure of magnetic flux density.
+        #[postfix = "T"]
+        Tesla = 0x15,
+        /// Kelvin - measure of thermodynamic temperature.
+        #[postfix = "K"]
+        Kelvin = 0x16,
+        /// Celsius - measure of thermodynamic temperature.
+        #[postfix = "°C"]
+        Celsius = 0x17,
+        /// Fahrenheit - measure of thermodynamic temperature.
+        #[postfix = "°F"]
+        Fahrenheit = 0x18,
+        /// Candela - measure of luminous intensity.
+        #[postfix = "cd"]
+        Candela = 0x19,
+        /// Radians - measure of plane angle.
+        #[postfix = "rad"]
+        Radian = 0x1A,
+        /// Degrees - measure of plane angle.
+        #[postfix = "°"]
+        Degree = 0x1B,
+        /// Hertz - measure of frequency.
+        #[postfix = "Hz"]
+        Hertz = 0x1C,
+        /// Joule - measure of energy.
+        #[postfix = "J"]
+        Joule = 0x1D,
+        /// Newton - measure of force.
+        #[postfix = "N"]
+        Newton = 0x1E,
+        /// Kilopond - measure of force.
+        #[postfix = "kp"]
+        Kilopond = 0x1F,
+        /// Pound force - measure of force.
+        #[postfix = "lbf"]
+        PoundForce = 0x20,
+        /// Watt - measure of power.
+        #[postfix = "W"]
+        Watt = 0x21,
+        /// Metric horse power - measure of power.
+        #[postfix = "hk"]
+        HorsePowerMetric = 0x22,
+        /// Imperial horse power - measure of power.
+        #[postfix = "hp"]
+        HorsePowerImperial = 0x23,
+        /// Pascal - measure of pressure.
+        #[postfix = "Pa"]
+        Pascal = 0x24,
+        /// Bar - measure of pressure.
+        #[postfix = "bar"]
+        Bar = 0x25,
+        /// Atmosphere - measure of pressure.
+        #[postfix = "atm"]
+        Atmosphere = 0x26,
+        /// Pound force per square inch - measure of pressure.
+        #[postfix = "psi"]
+        Psi = 0x27,
+        /// Becquerel - measure of radioactivity.
+        #[postfix = "Bq"]
+        Becquerel = 0x28,
+        /// Lumen - measure of light flux.
+        #[postfix = "lm"]
+        Lumen = 0x29,
+        /// Lux - measure of illuminance.
+        #[postfix = "lx"]
+        Lux = 0x2A,
+        /// Liter - measure of volume.
+        #[postfix = "l"]
+        Liter = 0x2B,
+        /// British gallon - measure of volume.
+        GallonImperial = 0x2C,
+        /// US liquid gallon - measure of volume.
+        GallonUs = 0x2D,
+        /// Cubic inch - measure of volume.
+        #[postfix = "cu in"]
+        CubicInch = 0x2E,
+        /// Meter per second - measure of speed.
+        #[postfix = "m/s"]
+        MeterPerSecond = 0x2F,
+        /// Kilometers per hour - measure of speed.
+        #[postfix = "km/h"]
+        KilometerPerHour = 0x30,
+        /// Miles per hour - measure of speed.
+        #[postfix = "mph"]
+        MilePerHour = 0x31,
+        /// Revolutions per second - measure of angular velocity.
+        #[postfix = "rps"]
+        RevolutionsPerSecond = 0x32,
+        /// Revolutions per minute - measure of angular velocity.
+        #[postfix = "rpm"]
+        RevolutionsPerMinute = 0x33,
+        /// Count.
+        Counts = 0x34,
+        /// Percent.
+        #[postfix = "%"]
+        Percent = 0x35,
+        /// Milligram per stroke - measure of mass per engine stroke.
+        #[postfix = "mg/stroke"]
+        MilligramPerStroke = 0x36,
+        /// Meter per square second - measure of acceleration.
+        #[postfix = "m/s²"]
+        MeterPerSquareSecond = 0x37,
+        /// Newton meter - measure of moment (e.g. torsion moment).
+        #[postfix = "Nm"]
+        NewtonMeter = 0x38,
+        /// Liter per minute - measure of flow.
+        #[postfix = "l/min"]
+        LiterPerMinute = 0x39,
+        /// Watt per square meter W/m2 Intensity - measure of Intensity.
+        #[postfix = "W/m²"]
+        WattPerSquareMeter = 0x3A,
+        /// Bar per second - measure of pressure change.
+        #[postfix = "bar/s"]
+        BarPerSecond = 0x3B,
+        /// Radians per second - measure of angular velocity.
+        #[postfix = "rad/s"]
+        RadiansPerSecond = 0x3C,
+        /// Radians per square second - measure of angular acceleration.
+        #[postfix = "rad/s²"]
+        RadiansPerSquareSecond = 0x3D,
+        /// Kilograms per square meter.
+        #[postfix = "kg/m²"]
+        KilogramsPerSquareMeter = 0x3E,
+        /// Exa `10^18`
+        #[prefix = "E"]
+        Exa = 0x40,
+        /// Peta `10^15`
+        #[prefix = "P"]
+        Peta = 0x41,
+        /// Tera `10^12`
+        #[prefix = "T"]
+        Tera = 0x42,
+        /// Giga `10^9`
+        #[prefix = "G"]
+        Giga = 0x43,
+        /// Mega `10^6`
+        #[prefix = "M"]
+        Mega = 0x44,
+        /// Kilo `10^3`
+        #[prefix = "k"]
+        Kilo = 0x45,
+        /// Hecto `10^2`
+        #[prefix = "h"]
+        Hecto = 0x46,
+        /// Deca `10^1`
+        #[prefix = "da"]
+        Deca = 0x47,
+        /// Deci `10^-1`
+        #[prefix = "d"]
+        Deci = 0x48,
+        /// Centi `10^-2`
+        #[prefix = "c"]
+        Centi = 0x49,
+        /// Milli `10^-3`
+        #[prefix = "m"]
+        Milli = 0x4A,
+        /// Micro `10^-6`
+        #[prefix = "m"]
+        Micro = 0x4B,
+        /// Nano `10^-9`
+        #[prefix = "n"]
+        Nano = 0x4C,
+        /// Pico `10^-12`
+        #[prefix = "p"]
+        Pico = 0x4D,
+        /// Femto `10^-15`
+        #[prefix = "f"]
+        Femto = 0x4E,
+        /// Atto `10^-18`
+        #[prefix = "a"]
+        Atto = 0x4F,
+        /// Date in `Year-Month-Day` format.
+        Date1 = 0x50,
+        /// Date in `Day/Month/Year` format.
+        Date2 = 0x51,
+        /// Date in `Month/Day/Year` format.
+        Date3 = 0x52,
+        /// Calendar week.
+        #[postfix = "W"]
+        Week = 0x53,
+        /// Time in UTC `Hour/Minute/Second` format.
+        Time1 = 0x54,
+        /// Time in `Hour/Minute/Second` format.
+        Time2 = 0x55,
+        /// Date and time1 in `Second/Minute/Hour/Day/Month/Year` format.
+        DateAndTime1 = 0x56,
+        /// DateAndTime2 in `Second/Minute/Hour/Day/Month/Year/Local minute offset/Local hour offset` format.
+        DateAndTime2 = 0x57,
+        /// DateAndTime3 in `Second/Minute/Hour/Month/Day/Year` format.
+        DateAndTime3 = 0x58,
+        /// DateAndTime4 in `Second/Minute/Hour/Month/Day/Year/Local minute offset/Local hour offset` format.
+        DateAndTime4 = 0x59,
     }
 }
 
-impl From<u8> for ScalingByteExtension {
-    fn from(x: u8) -> Self {
-        // FIXME - move allow attrib to specific items
-        #[allow(clippy::match_same_arms)]
-        match x {
-            0x01 => Self::Meter,
-            0x02 => Self::Foot,
-            0x03 => Self::Inch,
-            0x04 => Self::Yard,
-            0x05 => Self::EngMile,
-            0x06 => Self::Gram,
-            0x07 => Self::MetricTon,
-            0x08 => Self::Second,
-            0x09 => Self::Minute,
-            0x0A => Self::Hour,
-            0x0B => Self::Day,
-            0x0C => Self::Year,
-            0x0D => Self::Ampere,
-            0x0E => Self::Volt,
-            0x0F => Self::Coulomb,
-
-            0x10 => Self::Ohm,
-            0x11 => Self::Farad,
-            0x12 => Self::Henry,
-            0x13 => Self::Siemens,
-            0x14 => Self::Weber,
-            0x15 => Self::Tesla,
-            0x16 => Self::Kelvin,
-            0x17 => Self::Celsius,
-            0x18 => Self::Fahrenheit,
-            0x19 => Self::Candela,
-            0x1A => Self::Radian,
-            0x1B => Self::Degree,
-            0x1C => Self::Hertz,
-            0x1D => Self::Joule,
-            0x1E => Self::Newton,
-            0x1F => Self::Kilopond,
-
-            0x20 => Self::PoundForce,
-            0x21 => Self::Watt,
-            0x22 => Self::MetricHorsePower,
-            0x23 => Self::UsHorsePower,
-            0x24 => Self::Pascal,
-            0x25 => Self::Bar,
-            0x26 => Self::Atmosphere,
-            0x27 => Self::PoundForce,
-            0x28 => Self::Becquerel,
-            0x29 => Self::Lumen,
-            0x2A => Self::Lux,
-            0x2B => Self::Liter,
-            0x2C => Self::UKGallon,
-            0x2D => Self::USGallon,
-            0x2E => Self::CubicInch,
-            0x2F => Self::MeterPerSecond,
-
-            0x30 => Self::KilometrePerHour,
-            0x31 => Self::MilePerHour,
-            0x32 => Self::RevolutionsPerSecond,
-            0x33 => Self::RevolutionsPerMinute,
-            0x34 => Self::Counts,
-            0x35 => Self::Percent,
-            0x36 => Self::MilligramsPerStroke,
-            0x37 => Self::MeterPerSquareSecond,
-            0x38 => Self::NewtonMeter,
-            0x39 => Self::LiterPerMinute,
-            0x3A => Self::WattPerSquareMeter,
-            0x3B => Self::BarPerSecond,
-            0x3C => Self::RadiansPerSecond,
-            0x3D => Self::RadiansPerSquareSecond,
-            0x3E => Self::KilogramsPerSquareMeter,
-            0x3F => Self::NoUnit, // Reserved
-
-            0x40 => Self::Exa,
-            0x41 => Self::Peta,
-            0x42 => Self::Tera,
-            0x43 => Self::Giga,
-            0x44 => Self::Mega,
-            0x45 => Self::Kilo,
-            0x46 => Self::Hecto,
-            0x47 => Self::Deca,
-            0x48 => Self::Deci,
-            0x49 => Self::Centi,
-            0x4A => Self::Milli,
-            0x4B => Self::Micro,
-            0x4C => Self::Nano,
-            0x4D => Self::Pico,
-            0x4E => Self::Femto,
-            0x4F => Self::Atto,
-
-            0x50 => Self::Date1,
-            0x51 => Self::Date2,
-            0x52 => Self::Date3,
-            0x53 => Self::Week,
-            0x54 => Self::Time1,
-            0x55 => Self::Time2,
-            0x56 => Self::DateAndTime1,
-            0x57 => Self::DateAndTime2,
-            0x58 => Self::DateAndTime3,
-            0x59 => Self::DateAndTime4,
-
-            _ => Self::NoUnit,
-        }
-    }
-}
+byte_enum!(ScalingExtension, ScalingExtensionByte);

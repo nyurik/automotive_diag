@@ -3,20 +3,18 @@
 //!
 //! Currently, only default seed/key (0x01/0x02) are supported
 
+use crate::byte_enum;
+use crate::utils::ByteWrapper;
+use bytenum::Bytenum;
+
 /// Security operation request
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[repr(u8)]
+#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum SecurityOperation {
     /// Asks the ECU for a security seed
-    RequestSeed,
+    RequestSeed = 0x01,
     /// Sends the computed key to the ECU
-    SendKey,
+    SendKey = 0x02,
 }
 
-impl From<SecurityOperation> for u8 {
-    fn from(from: SecurityOperation) -> Self {
-        match from {
-            SecurityOperation::RequestSeed => 0x01,
-            SecurityOperation::SendKey => 0x02,
-        }
-    }
-}
+byte_enum!(SecurityOperation, SecurityOperationByte);
