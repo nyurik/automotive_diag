@@ -29,12 +29,24 @@ pub use scaling_byte_ext::*;
 pub use security_access::*;
 pub use session_types::*;
 
+use core::fmt::Debug;
+
 /// A wrapper around a byte, which can be either an ISO-standardized value for a specific enum,
 /// or an implementation-specific/invalid `NonStandard` value wrapping original byte.
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ByteWrapper<T> {
     Standard(T),
     NonStandard(u8),
+}
+
+impl<T: Debug> Debug for ByteWrapper<T> {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        match self {
+            // For standard values, just delegate to the Debug implementation of the inner type.
+            Self::Standard(v) => Debug::fmt(v, f),
+            Self::NonStandard(v) => write!(f, "NonStandard(0x{v:#02X})"),
+        }
+    }
 }
 
 impl<T: Into<u8>> From<ByteWrapper<T>> for u8 {
