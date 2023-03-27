@@ -16,6 +16,8 @@ pub enum UdsCommand {
     CommunicationControl = 0x28,
     /// The client indicates to the server(s) that it is still present.
     TesterPresent = 0x3E,
+    /// The client requests to access the server(s) with a specific access mode.
+    Authentication = 0x29,
     /// The client uses this service to perform data transmission with an extended data link security.
     SecuredDataTransmission = 0x84,
     /// The client controls the setting of DTCs in the server.
