@@ -7,14 +7,24 @@ use bytenum::Bytenum;
 #[repr(u8)]
 #[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CommunicationLevel {
-    /// Enable both Rx and Tx communication
+    /// This value indicates that the reception and transmission of messages
+    /// shall be enabled for the specified communicationType.
     EnableRxAndTx = 0x00,
-    /// Enable Rx communication and disable Tx communication
+    /// This value indicates that the reception of messages shall be enabled and
+    /// the transmission shall be disabled for the specified communicationType.
     EnableRxDisableTx = 0x01,
-    /// Disable Rx communication and enable Tx communication
+    /// This value indicates that the reception of messages shall be disabled and
+    /// the transmission shall be enabled for the specified communicationType.
     DisableRxEnableTx = 0x02,
-    /// Disable both Rx and Tx communication
+    /// This value indicates that the reception and transmission of messages
+    /// shall be disabled for the specified communicationType.
     DisableRxAndTx = 0x03,
+    /// This value indicates that the addressed bus master shall switch
+    /// the related sub-bus segment to the diagnostic-only scheduling mode.
+    EnableRxAndDisableTxWithEnhancedAddressInformation = 0x04,
+    /// This value indicates that the addressed bus master shall switch
+    /// the related sub-bus segment to the application scheduling mode.
+    EnableRxAndTxWithEnhancedAddressInformation = 0x05,
 }
 
 byte_enum!(CommunicationLevel, CommunicationLevelByte);
