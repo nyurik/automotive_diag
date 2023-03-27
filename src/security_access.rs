@@ -3,13 +3,13 @@
 //!
 //! Currently, only default seed/key (0x01/0x02) are supported
 
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// Security operation request
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum SecurityOperation {
     /// Asks the ECU for a security seed
     RequestSeed = 0x01,
@@ -17,4 +17,4 @@ pub enum SecurityOperation {
     SendKey = 0x02,
 }
 
-byte_enum!(SecurityOperation, SecurityOperationByte);
+enum_wrapper!(SecurityOperation, SecurityOperationByte);

@@ -1,10 +1,10 @@
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// UDS Command Service IDs
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UdsCommand {
     /// The client requests to control a diagnostic session with a server(s).
     DiagnosticSessionControl = 0x10,
@@ -60,4 +60,4 @@ pub enum UdsCommand {
     RequestFileTransfer = 0x38,
 }
 
-byte_enum!(UdsCommand, UdsCommandByte);
+enum_wrapper!(UdsCommand, UdsCommandByte);

@@ -13,7 +13,7 @@ default = ["std"]
 std = []
 
 [dependencies]
-bytenum = "0.1.9"
+enum2repr = "0.1"
 
 [dev-dependencies]
 cargo-husky = { version = "1", features = ["user-hooks"], default-features = false }
