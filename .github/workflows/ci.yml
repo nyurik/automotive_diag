@@ -17,8 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - run: |
-            # TODO: enable after Rust 1.68 is available
-            # export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+            export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
             set -x
             rustc --version
             cargo --version
