@@ -3,7 +3,6 @@ use crate::utils::ByteWrapper;
 use bytenum::Bytenum;
 
 /// Communication level toggle
-#[allow(clippy::enum_variant_names)]
 #[repr(u8)]
 #[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CommunicationLevel {
