@@ -1,12 +1,13 @@
 [package]
 name = "auto_uds"
-version = "0.4.2"
+version = "0.4.3"
 description = "Core definitions of the Unified Diagnostic Services specification for road vehicles ISO-14229"
 authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashconm@outlook.com>"]
 repository = "https://github.com/nyurik/auto_uds"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 keywords = ["uds", "iso14229", "iso_14229_1", "automotive", "no_std"]
+categories = ["embedded", "no-std", "encoding", "parsing"]
 
 [features]
 default = ["std"]
