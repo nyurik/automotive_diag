@@ -1,10 +1,10 @@
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// Communication level toggle
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CommunicationLevel {
     /// This value indicates that the reception and transmission of messages
     /// shall be enabled for the specified communicationType.
@@ -26,4 +26,4 @@ pub enum CommunicationLevel {
     EnableRxAndTxWithEnhancedAddressInformation = 0x05,
 }
 
-byte_enum!(CommunicationLevel, CommunicationLevelByte);
+enum_wrapper!(CommunicationLevel, CommunicationLevelByte);

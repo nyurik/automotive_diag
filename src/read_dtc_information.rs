@@ -1,10 +1,10 @@
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// [`crate::DtcSubFunction::ReadDtcInformation`] sub-function definitions
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask
     ReportNumberOfDtcByStatusMask = 0x01,
@@ -56,4 +56,4 @@ pub enum DtcSubFunction {
     ReportDtcWithPermanentStatus = 0x15,
 }
 
-byte_enum!(DtcSubFunction, DtcSubFunctionByte);
+enum_wrapper!(DtcSubFunction, DtcSubFunctionByte);

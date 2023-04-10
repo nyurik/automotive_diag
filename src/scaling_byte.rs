@@ -1,10 +1,10 @@
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ScalingType {
     /// Unsigned numeric integer. Must be followed by 1..4 bytes, given as a low nibble of the byte.
     UnsignedNumeric = 0x00,
@@ -39,15 +39,13 @@ pub struct Scaling {
     size: u8,
 }
 
-byte_enum!(
-    Scaling,
-    ScalingByte,
-    impl From<Scaling> for u8 {
-        fn from(value: Scaling) -> Self {
-            value.typ as u8 | value.size
-        }
+impl From<Scaling> for u8 {
+    fn from(value: Scaling) -> Self {
+        value.typ as u8 | value.size
     }
-);
+}
+
+enum_wrapper!(Scaling, ScalingByte);
 
 impl Scaling {
     pub fn new(typ: ScalingType, size: u8) -> Result<Self, &'static str> {

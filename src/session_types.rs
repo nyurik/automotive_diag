@@ -1,10 +1,10 @@
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// UDS Diagnostic session modes. Handled by SID 0x10
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UdsSessionType {
     /// Default diagnostic session mode (ECU is normally in this mode on startup)
     /// This session type does not require the diagnostic server to sent TesterPresent messages
@@ -22,4 +22,4 @@ pub enum UdsSessionType {
     SafetySystem = 0x04,
 }
 
-byte_enum!(UdsSessionType, UdsSessionTypeByte);
+enum_wrapper!(UdsSessionType, UdsSessionTypeByte);

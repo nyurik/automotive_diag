@@ -37,24 +37,10 @@ impl<T: TryFrom<u8>> From<u8> for ByteWrapper<T> {
 }
 
 #[macro_export]
-macro_rules! byte_enum {
+macro_rules! enum_wrapper {
     ($enum_name:tt, $enum_wrapper:tt) => {
-        byte_enum!(
-            $enum_name,
-            $enum_wrapper,
-            impl From<$enum_name> for u8 {
-                fn from(value: $enum_name) -> Self {
-                    value as u8
-                }
-            }
-        );
-    };
-
-    ($enum_name:tt, $enum_wrapper:tt, $from_enum_block:item) => {
         /// Stores a single byte, either as a `Standard($enum_name)`, or as an `NonStandard(u8)`.
         pub type $enum_wrapper = ByteWrapper<$enum_name>;
-
-        $from_enum_block
 
         #[cfg(test)]
         mod tests {
@@ -74,7 +60,7 @@ macro_rules! byte_enum {
                 for value in 0x00_u8..=0xFF {
                     let v = $crate::$enum_wrapper::from(value);
                     let enc: u8 = v.into();
-                    assert_eq!(value, enc, "With wrapper: {value:#02X} → {v:?} → {enc:#02X}");
+                    assert_eq!(value, enc, "Wrapped {value:#02X} → {v:?} → {enc:#02X}");
                 }
             }
         }

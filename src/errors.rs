@@ -1,10 +1,10 @@
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// UDS Error definitions
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UdsError {
     /// ECU rejected the request (No specific error)
     GeneralReject = 0x10,
@@ -100,4 +100,4 @@ pub enum UdsError {
     VoltageTooLow = 0x93,
 }
 
-byte_enum!(UdsError, UdsErrorByte);
+enum_wrapper!(UdsError, UdsErrorByte);

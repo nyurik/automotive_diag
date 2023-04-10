@@ -1,10 +1,10 @@
-use crate::byte_enum;
+use crate::enum_wrapper;
 use crate::utils::ByteWrapper;
-use bytenum::Bytenum;
+use enum2repr::EnumRepr;
 
 /// Reset ECU subcommand
 #[repr(u8)]
-#[derive(Bytenum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ResetType {
     /// Signals the ECU to perform a hard-reset,
     /// simulating a forceful power off/on cycle
@@ -36,4 +36,4 @@ pub enum ResetType {
     DisableRapidPowerShutDown = 0x05,
 }
 
-byte_enum!(ResetType, ResetTypeByte);
+enum_wrapper!(ResetType, ResetTypeByte);
