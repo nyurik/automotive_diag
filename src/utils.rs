@@ -60,10 +60,7 @@ macro_rules! enum_wrapper {
                 for value in 0x00_u8..=0xFF {
                     let v = $crate::$enum_wrapper::from(value);
                     let enc: u8 = v.into();
-                    assert_eq!(
-                        value, enc,
-                        "With wrapper: {value:#02X} → {v:?} → {enc:#02X}"
-                    );
+                    assert_eq!(value, enc, "Wrapped {value:#02X} → {v:?} → {enc:#02X}");
                 }
             }
         }
