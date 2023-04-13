@@ -8,20 +8,20 @@
 This crate provides low-level no_std structs and enums of the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) specification for the road vehicles iso-14229-1 in Rust.
 
 ## Usage
-All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using the `From` and `TryFrom` traits.  Additionally, there is a `ByteWrapper<T>` enum that distinguishes between the `Standand(T)` and `NonStandard(u8)` values.
+All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using the `From` and `TryFrom` traits.  Additionally, there is a `ByteWrapper<T>` enum that distinguishes between the `Standand(T)` and `Extended(u8)` values.
 
 ```rust
 use auto_uds::{UdsError, UdsErrorByte};
+use auto_uds::UdsError::*;
 
 fn main() {
-    assert_eq!(UdsError::try_from(0x10), Ok(UdsError::GeneralReject));
-    assert_eq!(UdsErrorByte::from(0x10), UdsErrorByte::Standard(UdsError::GeneralReject));
+    assert_eq!(UdsError::try_from(0x10), Ok(GeneralReject));
+    assert_eq!(UdsErrorByte::from(0x10), UdsErrorByte::Standard(GeneralReject));
 
     assert!(UdsError::try_from(0xA0).is_err());
-    assert_eq!(UdsErrorByte::from(0xA0), UdsErrorByte::NonStandard(0xA0));
+    assert_eq!(UdsErrorByte::from(0xA0), UdsErrorByte::Extended(0xA0));
 }
 ```
-
 
 ## Credits
 The code was forked from the amazing [rnd-ash/ecu_diagnostics](https://github.com/rnd-ash/ecu_diagnostics) project. The code was forked from the last MIT-versioned code before the MIT to GPL license migration.

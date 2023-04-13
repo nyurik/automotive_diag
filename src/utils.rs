@@ -1,11 +1,11 @@
 use core::fmt::Debug;
 
 /// A wrapper around a byte, which can be either an ISO-standardized value for a specific enum,
-/// or an implementation-specific/invalid `NonStandard` value wrapping original byte.
+/// or an implementation-specific/invalid `Extended` value wrapping original byte.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum ByteWrapper<T> {
     Standard(T),
-    NonStandard(u8),
+    Extended(u8),
 }
 
 impl<T: Debug> Debug for ByteWrapper<T> {
@@ -13,7 +13,7 @@ impl<T: Debug> Debug for ByteWrapper<T> {
         match self {
             // For standard values, just delegate to the Debug implementation of the inner type.
             Self::Standard(v) => Debug::fmt(v, f),
-            Self::NonStandard(v) => write!(f, "NonStandard({v:#02X})"),
+            Self::Extended(v) => write!(f, "Extended({v:#02X})"),
         }
     }
 }
@@ -22,7 +22,7 @@ impl<T: Into<u8>> From<ByteWrapper<T>> for u8 {
     fn from(value: ByteWrapper<T>) -> Self {
         match value {
             ByteWrapper::Standard(v) => v.into(),
-            ByteWrapper::NonStandard(v) => v,
+            ByteWrapper::Extended(v) => v,
         }
     }
 }
@@ -31,7 +31,7 @@ impl<T: TryFrom<u8>> From<u8> for ByteWrapper<T> {
     fn from(value: u8) -> Self {
         match T::try_from(value) {
             Ok(v) => ByteWrapper::Standard(v),
-            Err(_) => ByteWrapper::NonStandard(value),
+            Err(_) => ByteWrapper::Extended(value),
         }
     }
 }
@@ -39,7 +39,7 @@ impl<T: TryFrom<u8>> From<u8> for ByteWrapper<T> {
 #[macro_export]
 macro_rules! enum_wrapper {
     ($enum_name:tt, $enum_wrapper:tt) => {
-        /// Stores a single byte, either as a `Standard($enum_name)`, or as an `NonStandard(u8)`.
+        /// Stores a single byte, either as a `Standard($enum_name)`, or as an `Extended(u8)`.
         pub type $enum_wrapper = ByteWrapper<$enum_name>;
 
         #[cfg(test)]
