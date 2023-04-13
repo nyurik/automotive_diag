@@ -8,7 +8,7 @@
 This crate provides low-level no_std structs and enums of the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) specification for the road vehicles iso-14229-1 in Rust.
 
 ## Usage
-All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using the `From` and `TryFrom` traits.  Additionally, there is a `ByteWrapper<T>` enum that distinguishes between the `Standand(T)` and `Extended(u8)` values.
+All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using the `From<T>` and `TryFrom<u8>` traits.  Additionally, there is a `ByteWrapper<T>` enum to handle the non-standard `Extended(u8)` values in addition to the recognized `Standand(T)` ones.
 
 ```rust
 use auto_uds::{UdsError, UdsErrorByte};
