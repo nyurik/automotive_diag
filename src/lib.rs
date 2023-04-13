@@ -1,8 +1,4 @@
-//! Module for UDS (Unified diagnostic services - ISO 14229-1)
-//!
-//! Theoretically, this module should be compliant with any ECU which implements
-//! UDS (Typically any ECU produced after 2006 supports this)
-
+#![doc = include_str!("../README.md")]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(clippy::missing_errors_doc)]
