@@ -11,15 +11,23 @@ This crate provides low-level no_std structs and enums of the [Unified Diagnosti
 All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using the `From<T>` and `TryFrom<u8>` traits.  Additionally, there is a `ByteWrapper<T>` enum to handle the non-standard `Extended(u8)` values in addition to the recognized `Standand(T)` ones.
 
 ```rust
-use auto_uds::{UdsError, UdsErrorByte};
-use auto_uds::UdsError::*;
+use auto_uds::ByteWrapper::{Extended, Standard};
+use auto_uds::UdsCommand::ECUReset;
+use auto_uds::UdsCommandByte;
 
-fn main() {
-    assert_eq!(UdsError::try_from(0x10), Ok(GeneralReject));
-    assert_eq!(UdsErrorByte::from(0x10), UdsErrorByte::Standard(GeneralReject));
-
-    assert!(UdsError::try_from(0xA0).is_err());
-    assert_eq!(UdsErrorByte::from(0xA0), UdsErrorByte::Extended(0xA0));
+/// Handle a single command byte on the ECU side
+fn handle_cmd_byte(cmd: u8) {
+    match UdsCommandByte::from(cmd) {
+        Standard(c) if c == ECUReset => {
+            // handle ECUReset
+        }
+        Extended(c) if c == 0xCF => {
+            // handle custom command 0xCF
+        }
+        _ => {
+            // handle all other commands
+        }
+    }
 }
 ```
 
