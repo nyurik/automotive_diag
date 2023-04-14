@@ -12,18 +12,21 @@ All values are presented as Rust `enum`, and can be converted to/from their unde
 
 ```rust
 use auto_uds::ByteWrapper::{Extended, Standard};
-use auto_uds::UdsCommand::ECUReset;
+use auto_uds::UdsCommand::{DiagnosticSessionControl, ECUReset};
 use auto_uds::UdsCommandByte;
 
 /// Handle a single command byte on the ECU side
 fn handle_cmd_byte(cmd: u8) {
     match UdsCommandByte::from(cmd) {
-        Standard(c) if c == ECUReset => {
-            // handle ECUReset
-        }
-        Extended(c) if c == 0xCF => {
-            // handle custom command 0xCF
-        }
+        Standard(DiagnosticSessionControl) => {
+            // handle_diag_session()
+        },
+        Standard(ECUReset) => {
+            // handle_ecu_reset()
+        },
+        Extended(0xCF) => {
+            // handle_custom_cmd_CF()
+        },
         _ => {
             // handle all other commands
         }
