@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(uds, UdsCommand, UdsCommandByte);
+
 /// UDS Command Service IDs
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -59,5 +61,3 @@ pub enum UdsCommand {
     /// The client requests the negotiation of a file transfer between server and client.
     RequestFileTransfer = 0x38,
 }
-
-enum_wrapper!(uds, UdsCommand, UdsCommandByte);

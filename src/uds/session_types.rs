@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
+
 /// UDS Diagnostic session modes. Handled by SID 0x10
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -20,5 +22,3 @@ pub enum UdsSessionType {
     /// This diagnostic session enables all diagnostic services required to support safety system-related functions
     SafetySystem = 0x04,
 }
-
-enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);

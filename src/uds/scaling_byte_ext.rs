@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);
+
 /// A macro rule to generate prefix and postfix functions from a single enum
 macro_rules! generate_enum {
     (
@@ -321,5 +323,3 @@ generate_enum! {
         DateAndTime4 = 0x59,
     }
 }
-
-enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);

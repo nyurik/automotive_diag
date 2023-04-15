@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(obd2, FuelSystemStatus, FuelSystemStatusByte);
+
 /// Fuel system status enumeration for PID 03
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -19,5 +21,3 @@ pub enum FuelSystemStatus {
     /// Closed loop, using at least one oxygen sensor but there is a fault in the feedback system
     ClosedLoopWithFault = 0x10,
 }
-
-enum_wrapper!(obd2, FuelSystemStatus, FuelSystemStatusByte);

@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(uds, Scaling, ScalingByte);
+
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -44,8 +46,6 @@ impl From<Scaling> for u8 {
         value.typ as u8 | value.size
     }
 }
-
-enum_wrapper!(uds, Scaling, ScalingByte);
 
 impl Scaling {
     pub fn new(typ: ScalingType, size: u8) -> Result<Self, &'static str> {

@@ -1,6 +1,12 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(
+    obd2,
+    CommandedSecondaryAirStatus,
+    CommandedSecondaryAirStatusByte
+);
+
 /// Commanded secondary air status for PID 12
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -15,9 +21,3 @@ pub enum CommandedSecondaryAirStatus {
     /// Pump commanded on for diagnostics
     PumpCommandedForDiagnostics = 0x08,
 }
-
-enum_wrapper!(
-    obd2,
-    CommandedSecondaryAirStatus,
-    CommandedSecondaryAirStatusByte
-);

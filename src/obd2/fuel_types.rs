@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte);
+
 /// Fuel type coding for PID 51
 #[allow(non_camel_case_types)]
 #[repr(u8)]
@@ -56,5 +58,3 @@ pub enum FuelTypeCoding {
     /// Bifuel engine running diesel as primary
     BifuelDiesel = 23,
 }
-
-enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte);

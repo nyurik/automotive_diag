@@ -6,6 +6,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);
+
 /// Security operation request
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -15,5 +17,3 @@ pub enum SecurityOperation {
     /// Sends the computed key to the ECU
     SendKey = 0x02,
 }
-
-enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);

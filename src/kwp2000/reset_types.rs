@@ -3,6 +3,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(kwp2000, ResetType, ResetTypeByte);
+
 /// ECU Reset types
 ///
 /// Command support matrix
@@ -20,5 +22,3 @@ pub enum ResetType {
     /// Just resets Non volatile memory of the ECU, resetting it
     NonVolatileMemoryReset = 0x82,
 }
-
-enum_wrapper!(kwp2000, ResetType, ResetTypeByte);

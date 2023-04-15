@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);
+
 /// Communication level toggle
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -24,5 +26,3 @@ pub enum CommunicationLevel {
     /// the related sub-bus segment to the application scheduling mode.
     EnableRxAndTxWithEnhancedAddressInformation = 0x05,
 }
-
-enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);

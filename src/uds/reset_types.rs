@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(uds, ResetType, ResetTypeByte);
+
 /// Reset ECU subcommand
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -34,5 +36,3 @@ pub enum ResetType {
     /// Disables a rapid power shutdown on the ECU during a key-off cycle.
     DisableRapidPowerShutDown = 0x05,
 }
-
-enum_wrapper!(uds, ResetType, ResetTypeByte);

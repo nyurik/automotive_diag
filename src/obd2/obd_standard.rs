@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(obd2, ObdStandard, ObdStandardByte);
+
 /// OBD Standard for PID 1C
 #[allow(non_camel_case_types)]
 #[repr(u8)]
@@ -64,5 +66,3 @@ pub enum ObdStandard {
     /// Heavy duty Euro OBD Stage VI
     HD_EOBD_IV = 33,
 }
-
-enum_wrapper!(obd2, ObdStandard, ObdStandardByte);

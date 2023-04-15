@@ -4,6 +4,8 @@ use enum2repr::EnumRepr;
 #[cfg(doc)]
 use crate::uds::UdsCommand;
 
+enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);
+
 /// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -58,5 +60,3 @@ pub enum DtcSubFunction {
     /// This function take no additional arguments
     ReportDtcWithPermanentStatus = 0x15,
 }
-
-enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);

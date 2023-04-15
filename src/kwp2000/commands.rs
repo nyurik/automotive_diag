@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
+
 /// KWP Command Service IDs.
 ///
 /// Note. This does not cover both the 'Reserved' range (0x87-0xB9) and
@@ -63,5 +65,3 @@ pub enum KwpCommand {
     ///
     ResponseOnEvent = 0x86,
 }
-
-enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);

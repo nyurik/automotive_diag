@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(obd2, Service09Pid, Service09PidByte);
+
 /// OBD2 service 09 (Request vehicle information) PIDs
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -25,5 +27,3 @@ pub enum Service09Pid {
     /// ECU name
     EcuName = 0x0A,
 }
-
-enum_wrapper!(obd2, Service09Pid, Service09PidByte);
