@@ -1,5 +1,4 @@
 use crate::enum_wrapper;
-use crate::utils::ByteWrapper;
 use enum2repr::EnumRepr;
 
 /// A macro rule to generate prefix and postfix functions from a single enum

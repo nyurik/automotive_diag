@@ -4,7 +4,6 @@
 //! Currently, only default seed/key (0x01/0x02) are supported
 
 use crate::enum_wrapper;
-use crate::utils::ByteWrapper;
 use enum2repr::EnumRepr;
 
 /// Security operation request

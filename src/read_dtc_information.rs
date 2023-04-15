@@ -1,5 +1,4 @@
 use crate::enum_wrapper;
-use crate::utils::ByteWrapper;
 use enum2repr::EnumRepr;
 
 /// [`crate::DtcSubFunction::ReadDtcInformation`] sub-function definitions

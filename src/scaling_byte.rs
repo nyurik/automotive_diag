@@ -1,5 +1,4 @@
 use crate::enum_wrapper;
-use crate::utils::ByteWrapper;
 use enum2repr::EnumRepr;
 
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
