@@ -35,4 +35,4 @@ pub enum KwpSessionType {
     ExtendedDiagnostics = 0x92,
 }
 
-enum_wrapper!(kwp2k, KwpSessionType, KwpSessionTypeByte);
+enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);

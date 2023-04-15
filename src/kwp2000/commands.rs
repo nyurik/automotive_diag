@@ -64,4 +64,4 @@ pub enum KwpCommand {
     ResponseOnEvent = 0x86,
 }
 
-enum_wrapper!(kwp2k, KwpCommand, KwpCommandByte);
+enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);

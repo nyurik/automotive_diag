@@ -3,8 +3,8 @@
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(clippy::missing_errors_doc)]
 
-#[cfg(feature = "with-kwp2k")]
-pub mod kwp2k;
+#[cfg(feature = "with-kwp2000")]
+pub mod kwp2000;
 #[cfg(feature = "with-obd2")]
 pub mod obd2;
 #[cfg(feature = "with-uds")]
