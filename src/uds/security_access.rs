@@ -16,4 +16,4 @@ pub enum SecurityOperation {
     SendKey = 0x02,
 }
 
-enum_wrapper!(SecurityOperation, SecurityOperationByte);
+enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);

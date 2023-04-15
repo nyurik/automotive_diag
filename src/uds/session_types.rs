@@ -21,4 +21,4 @@ pub enum UdsSessionType {
     SafetySystem = 0x04,
 }
 
-enum_wrapper!(UdsSessionType, UdsSessionTypeByte);
+enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);

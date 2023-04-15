@@ -4,6 +4,7 @@ use enum2repr::EnumRepr;
 /// UDS Command Service IDs
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum UdsCommand {
     /// The client requests to control a diagnostic session with a server(s).
     DiagnosticSessionControl = 0x10,
@@ -59,4 +60,4 @@ pub enum UdsCommand {
     RequestFileTransfer = 0x38,
 }
 
-enum_wrapper!(UdsCommand, UdsCommandByte);
+enum_wrapper!(uds, UdsCommand, UdsCommandByte);

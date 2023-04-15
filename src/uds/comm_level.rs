@@ -25,4 +25,4 @@ pub enum CommunicationLevel {
     EnableRxAndTxWithEnhancedAddressInformation = 0x05,
 }
 
-enum_wrapper!(CommunicationLevel, CommunicationLevelByte);
+enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);

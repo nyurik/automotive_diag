@@ -10,11 +10,21 @@ keywords = ["uds", "iso14229", "iso_14229_1", "automotive", "no_std"]
 categories = ["embedded", "no-std", "encoding", "parsing"]
 
 [features]
-default = ["std"]
+default = ["std", "display", "with-kwp2k", "with-obd2", "with-uds"]
+# Include support for std library. Without this feature, uses `no_std` attribute
 std = []
+# Add Display implementation for all enums, using doc comments as display strings
+display = ["displaydoc"]
+# Include support for Keyword protocol 2000 - ISO142330
+with-kwp2k = []
+# Include support for On-board diagnostics
+with-obd2 = []
+# Include support for Unified Diagnostic Services
+with-uds = []
 
 [dependencies]
 enum2repr = "0.1"
+displaydoc = { version = "0.2", optional = true }
 
 [dev-dependencies]
 cargo-husky = { version = "1", features = ["user-hooks"], default-features = false }

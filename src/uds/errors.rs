@@ -2,7 +2,7 @@ use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
 #[cfg(doc)]
-use crate::SecurityOperation;
+use crate::uds::SecurityOperation;
 
 /// UDS Error definitions
 #[repr(u8)]
@@ -102,4 +102,4 @@ pub enum UdsError {
     VoltageTooLow = 0x93,
 }
 
-enum_wrapper!(UdsError, UdsErrorByte);
+enum_wrapper!(uds, UdsError, UdsErrorByte);
