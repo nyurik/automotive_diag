@@ -34,6 +34,7 @@ enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte);
 /// so for now we just have a test here. In the future, it should be clarified as individual constants above.
 impl Obd2ErrorByte {
     /// Returns true if the error is one of the well known "not supported" errors
+    #[must_use]
     pub fn is_not_supported(&self) -> bool {
         matches!(self, Obd2ErrorByte::Extended(v) if *v == 0x11 || *v == 0x12 || *v == 0x7E || *v == 0x7F)
     }
