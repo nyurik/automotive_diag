@@ -7,10 +7,10 @@ use enum2repr::EnumRepr;
 ///
 /// Command support matrix
 ///
-/// | ResetMode | Support by ECUs |
+/// | `ResetType` | Support by ECUs |
 /// |--|--|
-/// |[ResetMode::PowerOnReset]|Mandatory|
-/// |[ResetMode::NonVolatileMemoryReset]|Optional|
+/// |[`ResetType::PowerOnReset`]|Mandatory|
+/// |[`ResetType::NonVolatileMemoryReset`]|Optional|
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]

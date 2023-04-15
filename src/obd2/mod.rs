@@ -5,7 +5,7 @@ mod commands;
 mod data_pids;
 mod errors;
 mod fuel_system_status;
-mod fuel_type;
+mod fuel_types;
 mod obd_standard;
 mod service09;
 
@@ -14,6 +14,6 @@ pub use commands::*;
 pub use data_pids::*;
 pub use errors::*;
 pub use fuel_system_status::*;
-pub use fuel_type::*;
+pub use fuel_types::*;
 pub use obd_standard::*;
 pub use service09::*;

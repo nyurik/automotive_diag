@@ -5,13 +5,13 @@ use enum2repr::EnumRepr;
 ///
 /// Session support matrix
 ///
-/// | KwpSessionType | Support by ECUs |
+/// | `KwpSessionType` | Support by ECUs |
 /// |--|--|
-/// |[KwpSessionType::Normal] | Mandatory |
-/// |[KwpSessionType::Reprogramming] | Optional (Only ECUs which implement the ECU-Flash reprogramming specification) |
-/// |[KwpSessionType::Standby] | Optional |
-/// |[KwpSessionType::Passive] | Optional (Only intended for ECU development) |
-/// |[KwpSessionType::ExtendedDiagnostics] | Mandatory |
+/// |[`KwpSessionType::Normal`] | Mandatory |
+/// |[`KwpSessionType::Reprogramming`] | Optional (Only ECUs which implement the ECU-Flash reprogramming specification) |
+/// |[`KwpSessionType::Standby`] | Optional |
+/// |[`KwpSessionType::Passive`] | Optional (Only intended for ECU development) |
+/// |[`KwpSessionType::ExtendedDiagnostics`] | Mandatory |
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum KwpSessionType {

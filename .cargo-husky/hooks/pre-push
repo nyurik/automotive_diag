@@ -3,7 +3,7 @@
 # See https://github.com/rhysd/cargo-husky#readme
 #
 
-set -e
+set -ex
 
 echo "+Run CI steps"
 
