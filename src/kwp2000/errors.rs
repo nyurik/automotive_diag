@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(kwp2000, KwpError, KwpErrorByte);
+
 /// KWP2000 Error definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -46,5 +48,3 @@ pub enum KwpError {
     /// Sent by a gateway ECU. The requested ECU address is unknown
     EcuAddressUnknown = 0xA1,
 }
-
-enum_wrapper!(kwp2000, KwpError, KwpErrorByte);

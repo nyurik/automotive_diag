@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);
+
 /// KWP2000 diagnostic session type
 ///
 /// Session support matrix
@@ -34,5 +36,3 @@ pub enum KwpSessionType {
     /// Extended diagnostics mode. Every service is available here
     ExtendedDiagnostics = 0x92,
 }
-
-enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);

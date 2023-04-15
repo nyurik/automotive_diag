@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(obd2, Obd2Command, Obd2CommandByte);
+
 /// OBD2 Command Service IDs
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -27,5 +29,3 @@ pub enum Obd2Command {
     /// Service 0A - Read permanent DTCs
     Service0A = 0x0A,
 }
-
-enum_wrapper!(obd2, Obd2Command, Obd2CommandByte);

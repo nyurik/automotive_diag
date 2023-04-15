@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte);
+
 /// OBD2 Error definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -27,8 +29,6 @@ pub enum Obd2Error {
     /// Exceeded the maximum number of attempts at authentication
     ExceedAttempts = 0x36,
 }
-
-enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte);
 
 /// FIXME: it seems there are more than one value for `ServiceNotSupportedInActiveSession` condition,
 /// so for now we just have a test here. In the future, it should be clarified as individual constants above.

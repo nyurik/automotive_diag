@@ -1,6 +1,8 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+enum_wrapper!(obd2, DataPid, DataPidByte);
+
 /// OBD2 data PIDs used for Service 01 and 02
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -111,5 +113,3 @@ pub enum DataPid {
     EngineCoolantTemp2 = 0x66,
     IntakeAirTemp2 = 0x67,
 }
-
-enum_wrapper!(obd2, DataPid, DataPidByte);
