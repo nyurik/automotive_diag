@@ -4,6 +4,9 @@ use enum2repr::EnumRepr;
 /// UDS Command Service IDs
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum UdsCommand {
     /// The client requests to control a diagnostic session with a server(s).
     DiagnosticSessionControl = 0x10,

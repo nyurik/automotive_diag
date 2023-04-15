@@ -64,6 +64,7 @@ generate_enum! {
     /// or [`ScalingExtension::get_prefix`] to return the optional prefix of the scaling byte.
     #[repr(u8)]
     #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+    #[deprecated(note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace.")]
     pub enum ScalingExtension {
         /// No unit or presentation
         NoUnit = 0x00,

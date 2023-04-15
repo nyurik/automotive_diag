@@ -1,5 +1,8 @@
 /// ECU Communication types
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum CommunicationType {
     /// Application layer communication (inter-signal exchanges)
     /// between ECUs
@@ -12,6 +15,9 @@ pub enum CommunicationType {
 
 /// ECU communication subnet type
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum Subnet {
     /// All subnets
     All,

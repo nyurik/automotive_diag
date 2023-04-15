@@ -7,6 +7,9 @@ use crate::SecurityOperation;
 /// UDS Error definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum UdsError {
     /// ECU rejected the request (No specific error)
     GeneralReject = 0x10,

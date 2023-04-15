@@ -4,6 +4,9 @@ use enum2repr::EnumRepr;
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum ScalingType {
     /// Unsigned numeric integer. Must be followed by 1..4 bytes, given as a low nibble of the byte.
     UnsignedNumeric = 0x00,

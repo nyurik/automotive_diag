@@ -7,6 +7,9 @@ use crate::UdsCommand;
 /// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask
     ReportNumberOfDtcByStatusMask = 0x01,

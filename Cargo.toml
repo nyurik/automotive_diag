@@ -1,7 +1,7 @@
 [package]
 name = "auto_uds"
-version = "0.5.2"
-description = "Core definitions of the Unified Diagnostic Services specification for road vehicles ISO-14229"
+version = "0.5.3"
+description = "(deprecated) Core definitions of the Unified Diagnostic Services specification for road vehicles ISO-14229"
 authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashconm@outlook.com>"]
 repository = "https://github.com/nyurik/auto_uds"
 edition = "2021"

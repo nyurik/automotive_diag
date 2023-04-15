@@ -4,6 +4,9 @@ use enum2repr::EnumRepr;
 /// Reset ECU subcommand
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum ResetType {
     /// Signals the ECU to perform a hard-reset,
     /// simulating a forceful power off/on cycle

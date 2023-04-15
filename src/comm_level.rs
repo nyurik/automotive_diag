@@ -4,6 +4,9 @@ use enum2repr::EnumRepr;
 /// Communication level toggle
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum CommunicationLevel {
     /// This value indicates that the reception and transmission of messages
     /// shall be enabled for the specified communicationType.

@@ -3,6 +3,9 @@ use core::fmt::Debug;
 /// A wrapper around a byte, which can be either an ISO-standardized value for a specific enum,
 /// or an implementation-specific/invalid `Extended` value wrapping original byte.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum ByteWrapper<T> {
     Standard(T),
     Extended(u8),

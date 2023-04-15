@@ -4,6 +4,9 @@ use enum2repr::EnumRepr;
 /// UDS Diagnostic session modes. Handled by SID 0x10
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[deprecated(
+    note = "The `auto_uds` crate has been renamed to `automotive_diag`. Update your Cargo.toml, and use this enum from the `uds` namespace."
+)]
 pub enum UdsSessionType {
     /// Default diagnostic session mode (ECU is normally in this mode on startup)
     /// This session type does not require the diagnostic server to sent TesterPresent messages
