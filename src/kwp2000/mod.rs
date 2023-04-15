@@ -15,9 +15,11 @@
 mod commands;
 mod errors;
 mod reset_types;
+mod routine_exit_status;
 mod session_types;
 
 pub use commands::*;
 pub use errors::*;
 pub use reset_types::*;
+pub use routine_exit_status::*;
 pub use session_types::*;
