@@ -1,9 +1,9 @@
 [package]
 name = "auto_uds"
-version = "0.5.4"
-description = "(deprecated) Core definitions of the Unified Diagnostic Services specification for road vehicles ISO-14229. The new crate name is automotive_diag"
+version = "0.5.5"
+description = "DEPRECATED: The new crate name automotive_diag."
 authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashconm@outlook.com>"]
-repository = "https://github.com/nyurik/auto_uds"
+repository = "https://github.com/nyurik/automotive_diag"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 keywords = ["uds", "iso14229", "iso_14229_1", "automotive", "no_std"]
