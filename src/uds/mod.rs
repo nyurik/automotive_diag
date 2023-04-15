@@ -1,3 +1,5 @@
+//! Module for [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) - ISO-14229-1
+
 mod comm_control;
 mod comm_level;
 mod commands;

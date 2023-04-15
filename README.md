@@ -34,7 +34,7 @@ fn handle_cmd_byte(cmd: u8) {
 }
 ```
 
-Additionally, support [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) and [OBD2](https://en.wikipedia.org/wiki/On-board_diagnostics) protocols.
+Additionally, support [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) and [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) protocols.
 
 ## Credits
-The code was forked from the amazing [rnd-ash/ecu_diagnostics](https://github.com/rnd-ash/ecu_diagnostics) project. The code was forked from the last MIT-versioned code before the MIT to GPL license migration.
+The code was forked from the amazing [rnd-ash/ecu_diagnostics](https://github.com/rnd-ash/ecu_diagnostics) project. The code was forked from the last MIT-versioned code before the MIT to GPL license migration.  Initially, this code was developed as a deprecated [auto_uds](https://crates.io/crates/auto_uds) crate.

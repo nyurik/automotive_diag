@@ -1,4 +1,4 @@
-//! Module for OBD (ISO-9141)
+//! Module for [On-board diagnostics](https://en.wikipedia.org/wiki/On-board_diagnostics) - ISO-9141
 
 mod command_2nd_air_status;
 mod commands;

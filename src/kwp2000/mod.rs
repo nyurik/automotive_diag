@@ -1,4 +1,4 @@
-//! Module for KWP2000 (Keyword protocol 2000 - ISO142330)
+//! Module for [Keyword protocol 2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) - ISO-142330
 //!
 //! This module is written to be 100% compliant with the following vehicle manufactures
 //! which utilize KWP2000:
