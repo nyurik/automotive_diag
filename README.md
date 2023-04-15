@@ -24,8 +24,8 @@ fn handle_cmd_byte(cmd: u8) {
         Standard(ECUReset) => {
             // handle_ecu_reset()
         },
-        Extended(0xCF) => {
-            // handle_custom_cmd_CF()
+        Extended(0x42) => {
+            // handle_custom_cmd_42()
         },
         _ => {
             // handle all other commands
