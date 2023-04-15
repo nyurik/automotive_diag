@@ -21,4 +21,4 @@ pub enum ResetType {
     NonVolatileMemoryReset = 0x82,
 }
 
-enum_wrapper!(kwp2k, ResetType, ResetTypeByte);
+enum_wrapper!(kwp2000, ResetType, ResetTypeByte);

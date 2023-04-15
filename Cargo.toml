@@ -10,13 +10,13 @@ keywords = ["uds", "iso14229", "iso_14229_1", "automotive", "no_std"]
 categories = ["embedded", "no-std", "encoding", "parsing"]
 
 [features]
-default = ["std", "display", "with-kwp2k", "with-obd2", "with-uds"]
+default = ["std", "display", "with-kwp2000", "with-obd2", "with-uds"]
 # Include support for std library. Without this feature, uses `no_std` attribute
 std = []
 # Add Display implementation for all enums, using doc comments as display strings
 display = ["displaydoc"]
 # Include support for Keyword protocol 2000 - ISO142330
-with-kwp2k = []
+with-kwp2000 = []
 # Include support for On-board diagnostics
 with-obd2 = []
 # Include support for Unified Diagnostic Services

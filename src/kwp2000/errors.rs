@@ -47,4 +47,4 @@ pub enum KwpError {
     EcuAddressUnknown = 0xA1,
 }
 
-enum_wrapper!(kwp2k, KwpError, KwpErrorByte);
+enum_wrapper!(kwp2000, KwpError, KwpErrorByte);
