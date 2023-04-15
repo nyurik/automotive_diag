@@ -1,8 +1,8 @@
 /// ECU Communication types
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum CommunicationType {
-    /// Application layer communication (inter-signal exchanges)
-    /// between ECUs
+    /// Application layer communication (inter-signal exchanges) between ECUs
     NormalCommunication,
     /// Network management related communication
     NetworkManagement,
@@ -12,6 +12,7 @@ pub enum CommunicationType {
 
 /// ECU communication subnet type
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum Subnet {
     /// All subnets
     All,

@@ -2,11 +2,12 @@ use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
 #[cfg(doc)]
-use crate::UdsCommand;
+use crate::uds::UdsCommand;
 
 /// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask
     ReportNumberOfDtcByStatusMask = 0x01,
@@ -58,4 +59,4 @@ pub enum DtcSubFunction {
     ReportDtcWithPermanentStatus = 0x15,
 }
 
-enum_wrapper!(DtcSubFunction, DtcSubFunctionByte);
+enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);

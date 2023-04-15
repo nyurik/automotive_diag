@@ -35,4 +35,4 @@ pub enum ResetType {
     DisableRapidPowerShutDown = 0x05,
 }
 
-enum_wrapper!(ResetType, ResetTypeByte);
+enum_wrapper!(uds, ResetType, ResetTypeByte);

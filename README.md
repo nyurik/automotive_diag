@@ -12,8 +12,8 @@ All values are presented as Rust `enum`, and can be converted to/from their unde
 
 ```rust
 use auto_uds::ByteWrapper::{Extended, Standard};
-use auto_uds::UdsCommand::{DiagnosticSessionControl, ECUReset};
-use auto_uds::UdsCommandByte;
+use auto_uds::uds::UdsCommand::{DiagnosticSessionControl, ECUReset};
+use auto_uds::uds::UdsCommandByte;
 
 /// Handle a single command byte on the ECU side
 fn handle_cmd_byte(cmd: u8) {
@@ -33,6 +33,8 @@ fn handle_cmd_byte(cmd: u8) {
     }
 }
 ```
+
+Additionally, support [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) and [OBD2](https://en.wikipedia.org/wiki/On-board_diagnostics) protocols.
 
 ## Credits
 The code was forked from the amazing [rnd-ash/ecu_diagnostics](https://github.com/rnd-ash/ecu_diagnostics) project. The code was forked from the last MIT-versioned code before the MIT to GPL license migration.

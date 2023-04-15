@@ -322,4 +322,4 @@ generate_enum! {
     }
 }
 
-enum_wrapper!(ScalingExtension, ScalingExtensionByte);
+enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);

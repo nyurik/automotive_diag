@@ -4,6 +4,7 @@ use enum2repr::EnumRepr;
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum ScalingType {
     /// Unsigned numeric integer. Must be followed by 1..4 bytes, given as a low nibble of the byte.
     UnsignedNumeric = 0x00,
@@ -44,7 +45,7 @@ impl From<Scaling> for u8 {
     }
 }
 
-enum_wrapper!(Scaling, ScalingByte);
+enum_wrapper!(uds, Scaling, ScalingByte);
 
 impl Scaling {
     pub fn new(typ: ScalingType, size: u8) -> Result<Self, &'static str> {
