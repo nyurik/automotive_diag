@@ -1,7 +1,10 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
-/// [`crate::DtcSubFunction::ReadDtcInformation`] sub-function definitions
+#[cfg(doc)]
+use crate::UdsCommand;
+
+/// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum DtcSubFunction {

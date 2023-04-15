@@ -1,6 +1,9 @@
 use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+#[cfg(doc)]
+use crate::SecurityOperation;
+
 /// UDS Error definitions
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -23,7 +26,7 @@ pub enum UdsError {
     /// not being correct
     ConditionsNotCorrect = 0x22,
     /// The ECU cannot perform the request as the request has been sent in the incorrect order.
-    /// For example, if [UdsDiagnosticServer::send_key] is used before [UdsDiagnosticServer::request_seed],
+    /// For example, if [`SecurityOperation::SendKey`] is used before [`SecurityOperation::RequestSeed`],
     /// then the ECU will respond with this error.
     RequestSequenceError = 0x24,
     /// The ECU cannot perform the request as it has timed out trying to communicate with another
@@ -36,7 +39,7 @@ pub enum UdsError {
     RequestOutOfRange = 0x31,
     /// The request could not be completed due to security access being denied.
     SecurityAccessDenied = 0x33,
-    /// The key sent from [UdsDiagnosticServer::send_key] was invalid
+    /// The key sent from [`SecurityOperation::SendKey`] was invalid
     InvalidKey = 0x35,
     /// The client has tried to obtain security access to the ECU too many times with
     /// incorrect keys
@@ -53,7 +56,7 @@ pub enum UdsError {
     /// The ECU has detected the reprogramming error as the blockSequenceCounter is incorrect.
     WrongBlockSequenceCounter = 0x73,
     /// The ECU has accepted the request, but cannot reply right now. If this error occurs,
-    /// the [UdsDiagnosticServer] will automatically stop sending tester present messages and
+    /// the [`SecurityOperation`] will automatically stop sending tester present messages and
     /// will wait for the ECUs response. If after 2000ms, the ECU did not respond, then this error
     /// will get returned back to the function call.
     RequestCorrectlyReceivedResponsePending = 0x78,

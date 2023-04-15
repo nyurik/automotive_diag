@@ -39,7 +39,7 @@ impl<T: TryFrom<u8>> From<u8> for ByteWrapper<T> {
 #[macro_export]
 macro_rules! enum_wrapper {
     ($enum_name:tt, $enum_wrapper:tt) => {
-        /// Stores a single byte, either as a `Standard($enum_name)`, or as an `Extended(u8)`.
+        #[doc = concat!("Store a single byte, either as a `Standard(", stringify!($enum_name), ")`, or as an `Extended(u8)`.")]
         pub type $enum_wrapper = $crate::ByteWrapper<$enum_name>;
 
         impl From<$crate::$enum_name> for $crate::$enum_wrapper {

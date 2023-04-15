@@ -33,7 +33,7 @@ pub enum UdsCommand {
     ReadScalingDataByIdentifier = 0x24,
     /// The client requests to schedule data in the server for periodic transmission.
     ReadDataByPeriodicIdentifier = 0x2A,
-    /// The client requests to dynamically define data Identifiers that may subsequently be read by the [`Self::ReadDataByIdentifier`] service.
+    /// The client requests to dynamically define data Identifiers that may subsequently be read by the [`UdsCommand::ReadDataByIdentifier`] service.
     DynamicallyDefineDataIdentifier = 0x2C,
     /// The client requests to write a record specified by a provided dataIdentifier.
     WriteDataByIdentifier = 0x2E,

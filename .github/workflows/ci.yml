@@ -28,3 +28,4 @@ jobs:
             cargo test
             cargo test --no-default-features
             cargo test --doc
+            RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
