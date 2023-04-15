@@ -1,9 +1,9 @@
-# auto_uds
+# automotive_diag
 
-[![GitHub](https://img.shields.io/badge/github-nyurik/auto_uds-8da0cb?logo=github)](https://github.com/nyurik/auto_uds)
-[![crates.io version](https://img.shields.io/crates/v/auto_uds.svg)](https://crates.io/crates/auto_uds)
-[![docs.rs docs](https://docs.rs/auto_uds/badge.svg)](https://docs.rs/auto_uds)
-[![CI build](https://github.com/nyurik/auto_uds/workflows/CI/badge.svg)](https://github.com/nyurik/auto_uds/actions)
+[![GitHub](https://img.shields.io/badge/github-nyurik/automotive_diag-8da0cb?logo=github)](https://github.com/nyurik/automotive_diag)
+[![crates.io version](https://img.shields.io/crates/v/automotive_diag.svg)](https://crates.io/crates/automotive_diag)
+[![docs.rs docs](https://docs.rs/automotive_diag/badge.svg)](https://docs.rs/automotive_diag)
+[![CI build](https://github.com/nyurik/automotive_diag/workflows/CI/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
 
 This crate provides low-level no_std structs and enums of the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) specification for the road vehicles iso-14229-1 in Rust.
 
@@ -11,9 +11,9 @@ This crate provides low-level no_std structs and enums of the [Unified Diagnosti
 All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using the `From<T>` and `TryFrom<u8>` traits.  Additionally, there is a `ByteWrapper<T>` enum to handle the non-standard `Extended(u8)` values in addition to the recognized `Standand(T)` ones.
 
 ```rust
-use auto_uds::ByteWrapper::{Extended, Standard};
-use auto_uds::uds::UdsCommand::{DiagnosticSessionControl, ECUReset};
-use auto_uds::uds::UdsCommandByte;
+use automotive_diag::ByteWrapper::{Extended, Standard};
+use automotive_diag::uds::UdsCommand::{DiagnosticSessionControl, ECUReset};
+use automotive_diag::uds::UdsCommandByte;
 
 /// Handle a single command byte on the ECU side
 fn handle_cmd_byte(cmd: u8) {
