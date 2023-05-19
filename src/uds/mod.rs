@@ -10,6 +10,7 @@ mod scaling_byte;
 mod scaling_byte_ext;
 mod security_access;
 mod session_types;
+mod routine;
 
 pub use comm_control::*;
 pub use comm_level::*;
@@ -21,3 +22,4 @@ pub use scaling_byte::*;
 pub use scaling_byte_ext::*;
 pub use security_access::*;
 pub use session_types::*;
+pub use routine::*;
