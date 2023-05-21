@@ -18,14 +18,4 @@ jobs:
         uses: actions/checkout@v3
       - run: |
             export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
-            set -x
-            rustc --version
-            cargo --version
-            cargo fmt --all -- --check
-            cargo clippy -- -D warnings
-            cargo build
-            cargo build --no-default-features --features with-uds
-            cargo test
-            cargo test --no-default-features --features with-uds
-            cargo test --doc
-            RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
+            source .cargo-husky/hooks/pre-push

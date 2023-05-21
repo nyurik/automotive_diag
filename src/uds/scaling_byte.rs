@@ -86,7 +86,7 @@ impl TryFrom<u8> for Scaling {
 }
 
 #[cfg(test)]
-mod tests2 {
+mod tests {
     use super::*;
 
     #[test]

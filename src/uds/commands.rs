@@ -6,7 +6,11 @@ enum_wrapper!(uds, UdsCommand, UdsCommandByte);
 /// UDS Command Service IDs
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(
+    feature = "display",
+    derive(displaydoc::Display),
+    ignore_extra_doc_attributes
+)]
 pub enum UdsCommand {
     /// The client requests to control a diagnostic session with a server(s).
     DiagnosticSessionControl = 0x10,
@@ -49,6 +53,7 @@ pub enum UdsCommand {
     ///The client requests the control of an input/output specific to the server.
     InputOutputControlByIdentifier = 0x2F,
     /// The client requests to start, stop a routine in the server(s) or requests the routine results.
+    /// See also [`crate::uds::RoutineControlType`].
     RoutineControl = 0x31,
     ///The client requests the negotiation of a data transfer from the client to the server.
     RequestDownload = 0x34,
@@ -60,4 +65,17 @@ pub enum UdsCommand {
     RequestTransferExit = 0x37,
     /// The client requests the negotiation of a file transfer between server and client.
     RequestFileTransfer = 0x38,
+}
+
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    #[cfg(feature = "display")]
+    fn test_display_doc() {
+        use super::*;
+        // display doc should only use the first line of the doc
+        assert_eq!(format!("{}", UdsCommand::RoutineControl),
+                   "The client requests to start, stop a routine in the server(s) or requests the routine results.");
+    }
 }
