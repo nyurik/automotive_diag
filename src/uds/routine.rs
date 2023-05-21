@@ -4,6 +4,7 @@ use enum2repr::EnumRepr;
 enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
 
 /// UDS Routine (0x31) service control types.
+/// See chapter `14.2 RoutineControl service` in the ISO 14229 spec.
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum RoutineControlType {
