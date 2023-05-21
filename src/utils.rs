@@ -49,7 +49,7 @@ macro_rules! enum_wrapper {
         }
 
         #[cfg(test)]
-        mod tests {
+        mod enum_wrapper_tests {
             #[test]
             #[allow(non_snake_case)]
             fn test_try_from() {

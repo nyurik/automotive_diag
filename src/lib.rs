@@ -1,4 +1,4 @@
-#![doc = include_str!("../README.md")]
+#![cfg_attr(feature = "default", doc = include_str!("../README.md"))]
 #![cfg_attr(not(feature = "std"), no_std)]
 #![deny(clippy::all, clippy::pedantic)]
 #![allow(clippy::missing_errors_doc, clippy::module_name_repetitions)]
@@ -17,6 +17,7 @@ pub use utils::ByteWrapper;
 mod tests {
 
     #[test]
+    #[cfg(feature = "with-uds")]
     fn spot_test() {
         use crate::uds::UdsCommand::ECUReset;
         use crate::uds::{UdsCommand, UdsCommandByte};
