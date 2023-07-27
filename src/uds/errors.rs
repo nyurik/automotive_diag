@@ -1,6 +1,6 @@
-use crate::enum_wrapper;
 use enum2repr::EnumRepr;
 
+use crate::enum_wrapper;
 #[cfg(doc)]
 use crate::uds::SecurityOperation;
 

@@ -1,5 +1,6 @@
-use crate::enum_wrapper;
 use enum2repr::EnumRepr;
+
+use crate::enum_wrapper;
 
 enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
 

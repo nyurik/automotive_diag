@@ -3,8 +3,9 @@
 //!
 //! Currently, only default seed/key (0x01/0x02) are supported
 
-use crate::enum_wrapper;
 use enum2repr::EnumRepr;
+
+use crate::enum_wrapper;
 
 enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);
 

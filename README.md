@@ -34,6 +34,10 @@ fn handle_cmd_byte(cmd: u8) {
 }
 ```
 
+## Development
+* This project is easier to develop with [just](https://github.com/casey/just#readme), a modern alternative to `make`. Install it with `cargo install just`.
+* On `git push`, it will run a few validations, including `cargo fmt`, `cargo clippy`, and `cargo test`.  Use `git push --no-verify` to skip these checks.
+
 ## Credits
 The code was forked from the amazing [rnd-ash/ecu_diagnostics](https://github.com/rnd-ash/ecu_diagnostics) project. The code was forked from the last MIT-versioned code before the MIT to GPL license migration.  Initially, this code was developed as a deprecated [auto_uds](https://crates.io/crates/auto_uds) crate.
 
