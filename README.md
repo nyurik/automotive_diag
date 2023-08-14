@@ -3,6 +3,7 @@
 [![GitHub](https://img.shields.io/badge/github-nyurik/automotive_diag-8da0cb?logo=github)](https://github.com/nyurik/automotive_diag)
 [![crates.io version](https://img.shields.io/crates/v/automotive_diag.svg)](https://crates.io/crates/automotive_diag)
 [![docs.rs docs](https://docs.rs/automotive_diag/badge.svg)](https://docs.rs/automotive_diag)
+[![crates.io version](https://img.shields.io/crates/l/automotive_diag.svg)](https://github.com/nyurik/automotive_diag/blob/main/LICENSE-APACHE)
 [![CI build](https://github.com/nyurik/automotive_diag/workflows/CI/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
 
 This crate provides low-level no_std structs and enums of the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) (ISO-14229-1), [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) (ISO-142330) and [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) (ISO-9141) specifications for the road vehicles in Rust.
@@ -36,6 +37,8 @@ fn handle_cmd_byte(cmd: u8) {
 
 ## Development
 * This project is easier to develop with [just](https://github.com/casey/just#readme), a modern alternative to `make`. Install it with `cargo install just`.
+* To get a list of available commands, run `just`.
+* To run tests, use `just test`.
 * On `git push`, it will run a few validations, including `cargo fmt`, `cargo clippy`, and `cargo test`.  Use `git push --no-verify` to skip these checks.
 
 ## Credits

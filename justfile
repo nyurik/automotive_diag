@@ -3,9 +3,10 @@
 @_default:
     just --list --unsorted
 
-# Run all tests
-test:
-    ./.cargo-husky/hooks/pre-push
+# Clean all build artifacts
+clean:
+    cargo clean
+    rm -f Cargo.lock
 
 # Run cargo fmt and cargo clippy
 lint: fmt clippy
@@ -21,3 +22,7 @@ clippy:
 # Build and open code documentation
 docs:
     cargo doc --no-deps --open
+
+# Run all tests
+test:
+    ./.cargo-husky/hooks/pre-push
