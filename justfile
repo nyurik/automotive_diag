@@ -26,3 +26,7 @@ docs:
 # Run all tests
 test:
     ./.cargo-husky/hooks/pre-push
+
+# Test documentation
+test-doc:
+    cargo test --doc

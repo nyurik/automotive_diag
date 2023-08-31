@@ -14,7 +14,6 @@ set -ex
 rustc --version
 cargo --version
 cargo fmt --all -- --check
-cargo clippy -- -D warnings
 cargo build
 cargo build --no-default-features --features with-uds
 cargo test
@@ -22,3 +21,4 @@ cargo test --no-default-features --features with-uds
 cargo test --no-default-features
 cargo test --doc
 RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
+cargo clippy -- -D warnings
