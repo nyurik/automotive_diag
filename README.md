@@ -4,7 +4,7 @@
 [![crates.io version](https://img.shields.io/crates/v/automotive_diag.svg)](https://crates.io/crates/automotive_diag)
 [![docs.rs docs](https://docs.rs/automotive_diag/badge.svg)](https://docs.rs/automotive_diag)
 [![crates.io version](https://img.shields.io/crates/l/automotive_diag.svg)](https://github.com/nyurik/automotive_diag/blob/main/LICENSE-APACHE)
-[![CI build](https://github.com/nyurik/automotive_diag/workflows/CI/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
+[![CI build](https://github.com/nyurik/automotive_diag/actions/workflows/ci.yml/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
 
 This crate provides low-level no_std structs and enums of the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) (ISO-14229-1), [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) (ISO-142330) and [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) (ISO-9141) specifications for the road vehicles in Rust.
 
