@@ -7,10 +7,10 @@
 [![CI build](https://github.com/nyurik/automotive_diag/actions/workflows/ci.yml/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
 
 This crate provides low-level no_std structs and enums of
-the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) (
-ISO-14229-1), [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) (ISO-142330)
-and [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) (ISO-9141) specifications for the road vehicles in
-Rust.
+the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) (ISO-14229-1),
+[KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) (ISO-142330) and
+[OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) (ISO-9141)
+specifications for the road vehicles in Rust.
 
 Not everything is implemented yet, but the goal is to provide a full set of enums and structs to handle the most common
 diagnostic commands and responses. If you need a specific command or response, please open an issue or better yet, a
