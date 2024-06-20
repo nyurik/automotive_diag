@@ -1,8 +1,5 @@
 #![cfg_attr(feature = "default", doc = include_str!("../README.md"))]
 #![cfg_attr(not(feature = "std"), no_std)]
-#![forbid(unsafe_code)]
-#![deny(clippy::all, clippy::pedantic)]
-#![allow(clippy::missing_errors_doc, clippy::module_name_repetitions)]
 
 #[cfg(feature = "with-kwp2000")]
 pub mod kwp2000;

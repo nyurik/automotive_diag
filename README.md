@@ -1,4 +1,4 @@
-# automotive_diag
+# Automotive diagnostics in Rust
 
 [![GitHub](https://img.shields.io/badge/github-nyurik/automotive_diag-8da0cb?logo=github)](https://github.com/nyurik/automotive_diag)
 [![crates.io version](https://img.shields.io/crates/v/automotive_diag.svg)](https://crates.io/crates/automotive_diag)
@@ -6,7 +6,7 @@
 [![crates.io version](https://img.shields.io/crates/l/automotive_diag.svg)](https://github.com/nyurik/automotive_diag/blob/main/LICENSE-APACHE)
 [![CI build](https://github.com/nyurik/automotive_diag/actions/workflows/ci.yml/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
 
-This crate provides low-level no_std structs and enums of
+This crate provides low-level `no_std` structs and enums of
 the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) (ISO-14229-1),
 [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) (ISO-142330) and
 [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) (ISO-9141)
@@ -29,20 +29,20 @@ use automotive_diag::uds::UdsCommandByte;
 
 /// Handle a single command byte on the ECU side
 fn handle_cmd_byte(cmd: u8) {
-  match UdsCommandByte::from(cmd) {
-    Standard(DiagnosticSessionControl) => {
-      // handle_diag_session()
+    match UdsCommandByte::from(cmd) {
+        Standard(DiagnosticSessionControl) => {
+            // handle_diag_session()
+        }
+        Standard(ECUReset) => {
+            // handle_ecu_reset()
+        }
+        Extended(0x42) => {
+            // handle_custom_cmd_42()
+        }
+        _ => {
+            // handle all other commands
+        }
     }
-    Standard(ECUReset) => {
-      // handle_ecu_reset()
-    }
-    Extended(0x42) => {
-      // handle_custom_cmd_42()
-    }
-    _ => {
-      // handle all other commands
-    }
-  }
 }
 ```
 

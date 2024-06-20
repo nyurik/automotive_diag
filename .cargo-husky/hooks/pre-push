@@ -5,20 +5,10 @@
 
 echo "-------------------------------------------------------------------------------"
 echo "Run CI steps"
-echo "The following steps are also ran during   git push   command."
+echo "The following steps are ran during   git push   command."
 echo "If you want to push your changes without running CI, use   git push --no-verify"
 echo "-------------------------------------------------------------------------------"
 
 set -ex
 
-rustc --version
-cargo --version
-cargo fmt --all -- --check
-cargo build
-cargo build --no-default-features --features with-uds
-cargo test
-cargo test --no-default-features --features with-uds
-cargo test --no-default-features
-cargo test --doc
-RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
-cargo clippy -- -D warnings
+just ci-test

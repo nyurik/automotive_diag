@@ -10,6 +10,7 @@ enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[allow(clippy::doc_markdown)]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask
     ReportNumberOfDtcByStatusMask = 0x01,

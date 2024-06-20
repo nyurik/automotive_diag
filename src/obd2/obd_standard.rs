@@ -9,6 +9,7 @@ enum_wrapper!(obd2, ObdStandard, ObdStandardByte);
 #[repr(u8)]
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[allow(clippy::doc_markdown)]
 pub enum ObdStandard {
     /// OBD-II as defined by the CARB
     OBD_II_CARB = 1,

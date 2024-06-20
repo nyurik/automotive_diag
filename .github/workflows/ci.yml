@@ -2,18 +2,70 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
   release:
-    types: [published]
+    types: [ published ]
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: taiki-e/install-action@v2
+        with: { tool: just }
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        if: github.event_name != 'release' && github.event_name != 'workflow_dispatch'
+      - run: just ci-test
+      - name: Check semver
+        uses: obi1kenobi/cargo-semver-checks-action@v2
+      - name: Get local and published versions
+        id: get-versions
+        run: |
+          echo "local_version=$(grep '^version =' Cargo.toml | sed -E 's/version = "([^"]*)".*/\1/')" >> $GITHUB_OUTPUT
+          CRATE_NAME=$(grep '^name =' Cargo.toml | head -1 | sed -E 's/name = "(.*)"/\1/')
+          PUBLISHED_VERSION=$(cargo search ${CRATE_NAME} | grep "^${CRATE_NAME} =" | sed -E 's/.* = "(.*)".*/\1/')
+          echo "published_version=${PUBLISHED_VERSION}" >> $GITHUB_OUTPUT
+      - name: Test that we haven't published current version yet
+        run: |
+          LOCAL_VERSION=${{ steps.get-versions.outputs.local_version }}
+          PUBLISHED_VERSION=${{ steps.get-versions.outputs.published_version }}
+          if [ "$LOCAL_VERSION" = "$PUBLISHED_VERSION" ]; then
+            echo "The current crate version ($LOCAL_VERSION) has already been published."
+            exit 1
+          else
+            echo "The current crate version ($LOCAL_VERSION) has not been published yet."
+          fi
+
+  msrv:
+    name: Test MSRV
+    runs-on: ubuntu-latest
+    steps:
+      - uses: taiki-e/install-action@v2
+        with: { tool: just }
+      - uses: actions/checkout@v4
+      - uses: Swatinem/rust-cache@v2
+        if: github.event_name != 'release' && github.event_name != 'workflow_dispatch'
+      - name: Read crate metadata
+        id: metadata
+        run: echo "rust-version=$(sed -ne 's/rust-version *= *\"\(.*\)\"/\1/p' Cargo.toml)" >> $GITHUB_OUTPUT
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ steps.metadata.outputs.rust-version }}
+      - run: just ci-test-msrv
+
+  publish:
+    name: Publish to crates.io
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [ test, msrv ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: Swatinem/rust-cache@v2
-      - run: source .cargo-husky/hooks/pre-push
+      - name: Publish to crates.io
+        run: cargo publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}

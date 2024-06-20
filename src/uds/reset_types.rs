@@ -30,7 +30,7 @@ pub enum ResetType {
     /// Enables a rapid power shutdown on the ECU during a key-off cycle.
     ///
     /// IMPORTANT: Once this has been used, the diagnostic server **cannot** send
-    /// any other messages other than ECUReset in order to not disturb the rapid power
+    /// any other messages other than `ECUReset` in order to not disturb the rapid power
     /// shutdown function.
     EnableRapidPowerShutDown = 0x04,
 

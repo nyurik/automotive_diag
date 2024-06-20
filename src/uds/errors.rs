@@ -46,7 +46,7 @@ pub enum UdsError {
     /// The client has tried to obtain security access to the ECU too many times with
     /// incorrect keys
     ExceedNumberOfAttempts = 0x36,
-    /// The client has tried to request seed_key's too quickly, before the ECU timeout's period
+    /// The client has tried to request `seed_key`'s too quickly, before the ECU timeout's period
     /// has expired
     RequiredTimeDelayNotExpired = 0x37,
     /// The ECU cannot accept the requested upload/download request due to a fault condition

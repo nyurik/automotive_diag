@@ -35,11 +35,8 @@ pub enum KwpCommand {
     DisableNormalMessageTransmission = 0x28,
     /// Enables normal CAN message transmission from an ECU.
     EnableNormalMessageTransmission = 0x29,
-    ///
     DynamicallyDefineLocalIdentifier = 0x2C,
-    ///
     WriteDataByIdentifier = 0x2E,
-    ///
     InputOutputControlByLocalIdentifier = 0x30,
     /// Starts a ECU routine given a local identifier.
     StartRoutineByLocalIdentifier = 0x31,
@@ -47,22 +44,14 @@ pub enum KwpCommand {
     StopRoutineByLocalIdentifier = 0x32,
     /// requests results of an executed routine given a local identifier.
     RequestRoutineResultsByLocalIdentifier = 0x33,
-    ///
     RequestDownload = 0x34,
-    ///
     RequestUpload = 0x35,
-    ///
     TransferData = 0x36,
-    ///
     RequestTransferExit = 0x37,
-    ///
     WriteDataByLocalIdentifier = 0x3B,
-    ///
     WriteMemoryByAddress = 0x3D,
     /// Tester present message.
     TesterPresent = 0x3E,
-    ///
     ControlDTCSettings = 0x85,
-    ///
     ResponseOnEvent = 0x86,
 }
