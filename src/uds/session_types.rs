@@ -9,7 +9,7 @@ enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
 #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UdsSessionType {
     /// Default diagnostic session mode (ECU is normally in this mode on startup)
-    /// This session type does not require the diagnostic server to sent TesterPresent messages
+    /// This session type does not require the diagnostic server to sent `TesterPresent` messages
     Default = 0x01,
 
     /// This diagnostic session mode enables all diagnostic services related to flashing or programming
