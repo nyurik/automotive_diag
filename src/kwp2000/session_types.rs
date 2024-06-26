@@ -14,6 +14,7 @@ crate::utils::enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum KwpSessionType {
     /// Normal session. The ECU will typically boot in this state.
     /// In this mode, only non-intrusive functions are supported.

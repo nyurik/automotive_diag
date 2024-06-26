@@ -5,6 +5,7 @@ crate::utils::enum_wrapper!(uds, UdsCommand, UdsCommandByte);
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum UdsCommand {
     /// The client requests to control a diagnostic session with a server(s).
     DiagnosticSessionControl = 0x10,
@@ -58,4 +59,31 @@ pub enum UdsCommand {
     RequestTransferExit = 0x37,
     /// The client requests the negotiation of a file transfer between server and client.
     RequestFileTransfer = 0x38,
+}
+
+#[cfg(all(test, feature = "serde"))]
+mod tests {
+    use super::*;
+
+    #[derive(serde::Serialize, serde::Deserialize)]
+    struct TestStruct {
+        command: UdsCommand,
+        command_byte: UdsCommandByte,
+    }
+
+    #[test]
+    fn test_serde() {
+        let test = TestStruct {
+            command: UdsCommand::DiagnosticSessionControl,
+            command_byte: UdsCommandByte::from(UdsCommand::DiagnosticSessionControl),
+        };
+
+        let json = serde_json::to_string(&test).unwrap();
+        insta::assert_snapshot!(json, @r###"{"command":"DiagnosticSessionControl","command_byte":{"Standard":"DiagnosticSessionControl"}}"###);
+
+        let deserialized: TestStruct = serde_json::from_str(&json).unwrap();
+
+        assert_eq!(test.command, deserialized.command);
+        assert_eq!(test.command_byte, deserialized.command_byte);
+    }
 }

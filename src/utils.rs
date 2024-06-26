@@ -3,6 +3,7 @@ use core::fmt::Debug;
 /// A wrapper around a byte, which can be either an ISO-standardized value for a specific enum,
 /// or an implementation-specific/invalid `Extended` value wrapping original byte.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ByteWrapper<T> {
     Standard(T),
     Extended(u8),

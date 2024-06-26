@@ -4,6 +4,7 @@ crate::utils::enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum UdsSessionType {
     /// Default diagnostic session mode (ECU is normally in this mode on startup)
     /// This session type does not require the diagnostic server to sent `TesterPresent` messages

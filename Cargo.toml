@@ -24,13 +24,19 @@ with-kwp2000 = []
 with-obd2 = []
 # Include support for Unified Diagnostic Services
 with-uds = []
+# Include support for serde serialization
+serde = ["dep:serde"]
 
 [dependencies]
 displaydoc = { version = "0.2", optional = true }
 strum = { version = "0.26.3", features = ["derive"] }
+serde = { version = "1", optional = true }
 
 [dev-dependencies]
 cargo-husky = { version = "1", features = ["user-hooks"], default-features = false }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+insta = { version = "1.39" }
 
 [lints.rust]
 unsafe_code = "forbid"

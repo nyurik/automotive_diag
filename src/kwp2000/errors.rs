@@ -4,6 +4,7 @@ crate::utils::enum_wrapper!(kwp2000, KwpError, KwpErrorByte);
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum KwpError {
     /// ECU rejected the request for unknown reason
     GeneralReject = 0x10,

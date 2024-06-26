@@ -6,6 +6,7 @@ crate::utils::enum_wrapper!(obd2, ObdStandard, ObdStandardByte);
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[allow(clippy::doc_markdown)]
 pub enum ObdStandard {
     /// OBD-II as defined by the CARB

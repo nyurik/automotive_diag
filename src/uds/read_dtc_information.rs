@@ -9,6 +9,7 @@ enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[allow(clippy::doc_markdown)]
 pub enum DtcSubFunction {
     /// This function takes a 1 byte DTCStatusMask

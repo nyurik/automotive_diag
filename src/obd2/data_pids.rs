@@ -4,6 +4,7 @@ crate::utils::enum_wrapper!(obd2, DataPid, DataPidByte);
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum DataPid {
     PidSupport0120 = 0x00,
     StatusSinceDTCCleared = 0x01,
