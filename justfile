@@ -42,12 +42,12 @@ test-doc:
     cargo test --doc
     RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
 
-# Run all tests as expected by CI
-ci-test: && test-fmt clippy check test test-doc
+rust-info:
     rustc --version
     cargo --version
 
+# Run all tests as expected by CI
+ci-test: rust-info test-fmt clippy check test test-doc
+
 # Run minimal subset of tests to ensure compatibility with MSRV
-ci-test-msrv: && check test
-    rustc --version
-    cargo --version
+ci-test-msrv: rust-info check test
