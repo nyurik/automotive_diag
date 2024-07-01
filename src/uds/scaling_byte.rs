@@ -1,11 +1,10 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_byte_wrapper!(uds, Scaling, ScalingByte);
 crate::enum_impls!(uds, ScalingType);
 
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum ScalingType {
     /// Unsigned numeric integer. Must be followed by 1..4 bytes, given as a low nibble of the byte.

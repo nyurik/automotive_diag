@@ -1,10 +1,9 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(uds, UdsCommand, UdsCommandByte);
 
 /// UDS Command Service IDs
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum UdsCommand {
     /// The client requests to control a diagnostic session with a server(s).

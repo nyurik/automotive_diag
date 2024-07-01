@@ -11,9 +11,11 @@ categories = ["embedded", "no-std", "encoding", "parsing"]
 rust-version = "1.61.0"
 
 [features]
-default = ["std", "display", "with-kwp2000", "with-obd2", "with-uds"]
+default = ["std", "iter", "display", "with-kwp2000", "with-obd2", "with-uds"]
 # Include support for std library. Without this feature, uses `no_std` attribute
 std = []
+# Add Enum::iter() implementation for all enums
+iter = []
 # Add Display implementation for all enums, using doc comments as display strings
 display = ["dep:displaydoc"]
 # Include support for Keyword protocol 2000 - ISO142330

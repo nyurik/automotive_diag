@@ -1,10 +1,9 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(obd2, DataPid, DataPidByte);
 
 /// OBD2 data PIDs used for Service 01 and 02
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 pub enum DataPid {
     PidSupport0120 = 0x00,
     StatusSinceDTCCleared = 0x01,

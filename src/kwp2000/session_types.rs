@@ -1,5 +1,3 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);
 
 /// KWP2000 diagnostic session type
@@ -14,7 +12,8 @@ crate::enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);
 /// |[`KwpSessionType::Passive`] | Optional (Only intended for ECU development) |
 /// |[`KwpSessionType::ExtendedDiagnostics`] | Mandatory |
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 pub enum KwpSessionType {
     /// Normal session. The ECU will typically boot in this state.
     /// In this mode, only non-intrusive functions are supported.

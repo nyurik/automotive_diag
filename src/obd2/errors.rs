@@ -1,10 +1,9 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte);
 
 /// OBD2 Error definitions
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum Obd2Error {
     /// ECU general reject

@@ -1,10 +1,9 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(obd2, Obd2Command, Obd2CommandByte);
 
 /// OBD2 Command Service IDs
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum Obd2Command {
     /// Service 01 - Show current data

@@ -65,8 +65,6 @@ macro_rules! enum_impls {
 
         #[cfg(test)]
         mod enum_impls_tests {
-            use ::strum::IntoEnumIterator as _;
-
             #[test]
             fn test_try_from() {
                 for value in 0x00_u8..=0xFF {
@@ -83,7 +81,10 @@ macro_rules! enum_impls {
             }
 
             #[test]
+            #[cfg(feature = "iter")]
             fn test_iter() {
+                use ::strum::IntoEnumIterator as _;
+
                 assert_ne!(0, $crate::$ns::$enum_name::iter().count());
                 for value in $crate::$ns::$enum_name::iter() {
                     let enc: u8 = value.into();

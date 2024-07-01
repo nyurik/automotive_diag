@@ -1,5 +1,3 @@
-use strum::{EnumIter, FromRepr};
-
 use crate::enum_wrapper;
 #[cfg(doc)]
 use crate::uds::UdsCommand;
@@ -8,7 +6,8 @@ enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);
 
 /// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[allow(clippy::doc_markdown)]
 pub enum DtcSubFunction {

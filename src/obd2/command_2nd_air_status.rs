@@ -1,5 +1,3 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(
     obd2,
     CommandedSecondaryAirStatus,
@@ -8,7 +6,8 @@ crate::enum_wrapper!(
 
 /// Commanded secondary air status for PID 12
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum CommandedSecondaryAirStatus {
     /// Upstream

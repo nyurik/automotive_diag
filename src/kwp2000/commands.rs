@@ -1,5 +1,3 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
 
 /// KWP Command Service IDs.
@@ -7,7 +5,8 @@ crate::enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
 /// Note. This does not cover both the 'Reserved' range (0x87-0xB9) and
 /// 'System supplier specific' range (0xBA-0xBF)
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 pub enum KwpCommand {
     /// Start or change ECU diagnostic session mode.
     StartDiagnosticSession = 0x10,

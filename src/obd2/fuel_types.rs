@@ -1,11 +1,10 @@
-use strum::{EnumIter, FromRepr};
-
 crate::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte);
 
 /// Fuel type coding for PID 51
 #[allow(non_camel_case_types)]
 #[repr(u8)]
-#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum FuelTypeCoding {
     /// Fuel type unavailable
