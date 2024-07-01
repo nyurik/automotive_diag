@@ -1,4 +1,4 @@
-use enum2repr::EnumRepr;
+use strum::{EnumIter, FromRepr};
 
 use crate::enum_wrapper;
 #[cfg(doc)]
@@ -8,7 +8,7 @@ enum_wrapper!(uds, UdsError, UdsErrorByte);
 
 /// UDS Error definitions
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UdsError {
     /// ECU rejected the request (No specific error)
     GeneralReject = 0x10,

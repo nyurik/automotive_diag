@@ -1,12 +1,10 @@
-use enum2repr::EnumRepr;
+use strum::{EnumIter, FromRepr};
 
-use crate::enum_wrapper;
-
-enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);
+crate::enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);
 
 /// Communication level toggle
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CommunicationLevel {
     /// This value indicates that the reception and transmission of messages
     /// shall be enabled for the specified communicationType.

@@ -1,12 +1,10 @@
-use enum2repr::EnumRepr;
+use strum::{EnumIter, FromRepr};
 
-use crate::enum_wrapper;
-
-enum_wrapper!(obd2, Service09Pid, Service09PidByte);
+crate::enum_wrapper!(obd2, Service09Pid, Service09PidByte);
 
 /// OBD2 service 09 (Request vehicle information) PIDs
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum Service09Pid {
     /// VIN message count (Only for LIN)

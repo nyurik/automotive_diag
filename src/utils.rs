@@ -37,7 +37,66 @@ impl<T: TryFrom<u8>> From<u8> for ByteWrapper<T> {
 }
 
 #[macro_export]
+#[doc(hidden)]
 macro_rules! enum_wrapper {
+    ($ns:tt, $enum_name:tt, $enum_wrapper:tt) => {
+        $crate::enum_impls!($ns, $enum_name);
+        $crate::enum_byte_wrapper!($ns, $enum_name, $enum_wrapper);
+    };
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! enum_impls {
+    ($ns:tt, $enum_name:tt) => {
+        impl TryFrom<u8> for $crate::$ns::$enum_name {
+            type Error = &'static str;
+            fn try_from(value: u8) -> Result<Self, Self::Error> {
+                $crate::$ns::$enum_name::from_repr(value)
+                    .ok_or("Failed to convert enum to numeric value!")
+            }
+        }
+
+        impl From<$crate::$ns::$enum_name> for u8 {
+            fn from(value: $crate::$ns::$enum_name) -> Self {
+                value as Self
+            }
+        }
+
+        #[cfg(test)]
+        mod enum_impls_tests {
+            use ::strum::IntoEnumIterator as _;
+
+            #[test]
+            fn test_try_from() {
+                for value in 0x00_u8..=0xFF {
+                    if let Ok(v) = $crate::$ns::$enum_name::try_from(value) {
+                        let enc: u8 = v.into();
+                        assert_eq!(value, enc, "{value:#02X} → {v:?} → {enc:#02X}");
+                        assert_eq!(
+                            $crate::$ns::$enum_name::from_repr(value).unwrap(),
+                            v,
+                            "{value:#02X} → {v:?}"
+                        );
+                    }
+                }
+            }
+
+            #[test]
+            fn test_iter() {
+                assert_ne!(0, $crate::$ns::$enum_name::iter().count());
+                for value in $crate::$ns::$enum_name::iter() {
+                    let enc: u8 = value.into();
+                    assert_eq!(value, $crate::$ns::$enum_name::try_from(enc).unwrap());
+                }
+            }
+        }
+    };
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! enum_byte_wrapper {
     ($ns:tt, $enum_name:tt, $enum_wrapper:tt) => {
         #[doc = concat!("Store a single byte, either as a `Standard(", stringify!($enum_name), ")`, or as an `Extended(u8)`.")]
         pub type $enum_wrapper = $crate::ByteWrapper<$enum_name>;
@@ -49,18 +108,7 @@ macro_rules! enum_wrapper {
         }
 
         #[cfg(test)]
-        mod enum_wrapper_tests {
-            #[test]
-            #[allow(non_snake_case)]
-            fn test_try_from() {
-                for value in 0x00_u8..=0xFF {
-                    if let Ok(v) = $crate::$ns::$enum_name::try_from(value) {
-                        let enc: u8 = v.into();
-                        assert_eq!(value, enc, "{value:#02X} → {v:?} → {enc:#02X}");
-                    }
-                }
-            }
-
+        mod enum_byte_wrapper_tests {
             #[test]
             #[allow(non_snake_case)]
             fn test_from() {

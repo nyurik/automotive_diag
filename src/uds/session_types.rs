@@ -1,12 +1,10 @@
-use enum2repr::EnumRepr;
+use strum::{EnumIter, FromRepr};
 
-use crate::enum_wrapper;
-
-enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
+crate::enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
 
 /// UDS Diagnostic session modes. Handled by SID 0x10
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum UdsSessionType {
     /// Default diagnostic session mode (ECU is normally in this mode on startup)
     /// This session type does not require the diagnostic server to sent `TesterPresent` messages

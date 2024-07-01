@@ -1,8 +1,6 @@
-use enum2repr::EnumRepr;
+use strum::{EnumIter, FromRepr};
 
-use crate::enum_wrapper;
-
-enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);
+crate::enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);
 
 /// A macro rule to generate prefix and postfix functions from a single enum
 macro_rules! generate_enum {
@@ -66,7 +64,7 @@ generate_enum! {
     /// Use [`ScalingExtension::get_postfix`] to return the optional postfix of the scaling byte,
     /// or [`ScalingExtension::get_prefix`] to return the optional prefix of the scaling byte.
     #[repr(u8)]
-    #[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+    #[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
     pub enum ScalingExtension {
         /// No unit or presentation
         NoUnit = 0x00,

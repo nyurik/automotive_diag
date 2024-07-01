@@ -10,7 +10,7 @@ clean:
 
 # Run cargo clippy
 clippy:
-    cargo clippy --bins --tests --lib --benches --examples -- -D warnings
+    cargo clippy --workspace --bins --tests --lib --benches --examples -- -D warnings
     cargo clippy --no-default-features -- -D warnings
 
 # Test code formatting

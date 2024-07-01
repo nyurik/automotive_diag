@@ -24,8 +24,8 @@ with-obd2 = []
 with-uds = []
 
 [dependencies]
-enum2repr = "0.1"
 displaydoc = { version = "0.2", optional = true }
+strum = { version = "0.26.3", features = ["derive"] }
 
 [dev-dependencies]
 cargo-husky = { version = "1", features = ["user-hooks"], default-features = false }

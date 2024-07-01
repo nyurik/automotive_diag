@@ -1,12 +1,11 @@
-use enum2repr::EnumRepr;
+use strum::{EnumIter, FromRepr};
 
-use crate::enum_wrapper;
-
-enum_wrapper!(uds, Scaling, ScalingByte);
+crate::enum_byte_wrapper!(uds, Scaling, ScalingByte);
+crate::enum_impls!(uds, ScalingType);
 
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum ScalingType {
     /// Unsigned numeric integer. Must be followed by 1..4 bytes, given as a low nibble of the byte.
@@ -44,7 +43,7 @@ pub struct Scaling {
 
 impl From<Scaling> for u8 {
     fn from(value: Scaling) -> Self {
-        value.typ as u8 | value.size
+        value.typ as Self | value.size
     }
 }
 
@@ -54,6 +53,12 @@ impl Scaling {
             return Err("Invalid size, expecting between 0 and 15.");
         }
         (typ as u8 | size).try_into()
+    }
+
+    /// Try to create [Self] from the raw representation
+    #[must_use]
+    pub fn from_repr(discriminant: u8) -> Option<Self> {
+        Scaling::try_from(discriminant).ok()
     }
 }
 

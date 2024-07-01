@@ -1,12 +1,10 @@
-use enum2repr::EnumRepr;
+use strum::{EnumIter, FromRepr};
 
-use crate::enum_wrapper;
-
-enum_wrapper!(obd2, FuelSystemStatus, FuelSystemStatusByte);
+crate::enum_wrapper!(obd2, FuelSystemStatus, FuelSystemStatusByte);
 
 /// Fuel system status enumeration for PID 03
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(FromRepr, EnumIter, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum FuelSystemStatus {
     /// The motor is off
