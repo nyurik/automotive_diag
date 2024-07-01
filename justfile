@@ -32,12 +32,16 @@ check:
 
 
 # Run all tests
-test:
-    RUSTFLAGS='-D warnings' cargo test
+test: test-no-serde
     RUSTFLAGS='-D warnings' cargo test --features serde
+
+# Test with no serde support because it requires newer Rust versions
+test-no-serde:
+    RUSTFLAGS='-D warnings' cargo test
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-kwp2000
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-obd2
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-uds
+
 
 # Test documentation
 test-doc:
@@ -52,4 +56,4 @@ rust-info:
 ci-test: rust-info test-fmt clippy check test test-doc
 
 # Run minimal subset of tests to ensure compatibility with MSRV
-ci-test-msrv: rust-info check test
+ci-test-msrv: rust-info check test-no-serde
