@@ -34,6 +34,7 @@ check:
 # Run all tests
 test:
     RUSTFLAGS='-D warnings' cargo test
+    RUSTFLAGS='-D warnings' cargo test --features serde
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-kwp2000
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-obd2
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-uds
