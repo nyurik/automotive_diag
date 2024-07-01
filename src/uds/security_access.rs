@@ -9,6 +9,7 @@ crate::utils::enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SecurityOperation {
     /// Asks the ECU for a security seed
     RequestSeed = 0x01,

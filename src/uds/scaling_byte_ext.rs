@@ -63,7 +63,8 @@ generate_enum! {
     /// or [`ScalingExtension::get_prefix`] to return the optional prefix of the scaling byte.
     #[repr(u8)]
     #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+    #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum ScalingExtension {
         /// No unit or presentation
         NoUnit = 0x00,

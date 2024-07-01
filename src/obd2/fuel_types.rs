@@ -6,6 +6,7 @@ crate::utils::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte);
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum FuelTypeCoding {
     /// Fuel type unavailable
     NotAvailable = 0,

@@ -5,6 +5,7 @@ crate::utils::enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte);
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Obd2Error {
     /// ECU general reject
     GeneralReject = 0x10,

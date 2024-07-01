@@ -5,6 +5,7 @@ crate::utils::enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RoutineControlType {
     /// Launches a routine on the ECU
     StartRoutine = 0x01,
