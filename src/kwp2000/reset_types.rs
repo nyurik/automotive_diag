@@ -1,10 +1,6 @@
 //! This service requests the ECU to perform a reset
 
-use enum2repr::EnumRepr;
-
-use crate::enum_wrapper;
-
-enum_wrapper!(kwp2000, ResetType, ResetTypeByte);
+crate::utils::enum_wrapper!(kwp2000, ResetType, ResetTypeByte);
 
 /// ECU Reset types
 ///
@@ -15,7 +11,8 @@ enum_wrapper!(kwp2000, ResetType, ResetTypeByte);
 /// |[`ResetType::PowerOnReset`]|Mandatory|
 /// |[`ResetType::NonVolatileMemoryReset`]|Optional|
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 pub enum ResetType {
     /// Simulates a power off/on reset of the ECU.

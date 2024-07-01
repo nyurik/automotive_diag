@@ -1,12 +1,9 @@
-use enum2repr::EnumRepr;
-
-use crate::enum_wrapper;
-
-enum_wrapper!(uds, ResetType, ResetTypeByte);
+crate::utils::enum_wrapper!(uds, ResetType, ResetTypeByte);
 
 /// Reset ECU subcommand
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 pub enum ResetType {
     /// Signals the ECU to perform a hard-reset,
     /// simulating a forceful power off/on cycle

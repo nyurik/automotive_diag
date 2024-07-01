@@ -1,13 +1,10 @@
-use enum2repr::EnumRepr;
-
-use crate::enum_wrapper;
-
-enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
+crate::utils::enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
 
 /// UDS Routine (0x31) service control types.
 /// See chapter `14.2 RoutineControl service` in the ISO 14229 spec.
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 pub enum RoutineControlType {
     /// Launches a routine on the ECU
     StartRoutine = 0x01,

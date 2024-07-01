@@ -1,11 +1,8 @@
-use enum2repr::EnumRepr;
-
-use crate::enum_wrapper;
-
-enum_wrapper!(kwp2000, RoutineExitStatus, RoutineExitStatusByte);
+crate::utils::enum_wrapper!(kwp2000, RoutineExitStatus, RoutineExitStatusByte);
 
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 pub enum RoutineExitStatus {
     /// Normal exit with results available
     NormalExitWithResults = 0x61,

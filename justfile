@@ -10,8 +10,8 @@ clean:
 
 # Run cargo clippy
 clippy:
-    cargo clippy --bins --tests --lib --benches --examples -- -D warnings
-    cargo clippy --no-default-features -- -D warnings
+    cargo clippy --workspace --bins --tests --lib --benches --examples -- -D warnings
+    cargo clippy --no-default-features --features with-uds -- -D warnings
 
 # Test code formatting
 test-fmt:
@@ -34,8 +34,9 @@ check:
 # Run all tests
 test:
     RUSTFLAGS='-D warnings' cargo test
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-kwp2000
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-obd2
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-uds
-    RUSTFLAGS='-D warnings' cargo test --no-default-features
 
 # Test documentation
 test-doc:

@@ -3,15 +3,12 @@
 //!
 //! Currently, only default seed/key (0x01/0x02) are supported
 
-use enum2repr::EnumRepr;
-
-use crate::enum_wrapper;
-
-enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);
+crate::utils::enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);
 
 /// Security operation request
 #[repr(u8)]
-#[derive(EnumRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 pub enum SecurityOperation {
     /// Asks the ECU for a security seed
     RequestSeed = 0x01,

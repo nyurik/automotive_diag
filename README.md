@@ -19,7 +19,7 @@ pull request.
 ## Usage
 
 All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using
-the `From<T>` and `TryFrom<u8>` traits. Most enums also have a corresponding `...Byte` enums as `ByteWrapper<T>` to
+the `T::from_repr(u8)` and `u8::from(value)`. Most enums also have a corresponding `...Byte` enums as `ByteWrapper<T>` to
 handle the non-standard `Extended(u8)` values in addition to the defined `Standand(T)` ones.
 
 ```rust
