@@ -1,4 +1,4 @@
-crate::enum_wrapper!(obd2, Service09Pid, Service09PidByte);
+crate::utils::enum_wrapper!(obd2, Service09Pid, Service09PidByte);
 
 /// OBD2 service 09 (Request vehicle information) PIDs
 #[repr(u8)]

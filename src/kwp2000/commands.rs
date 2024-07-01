@@ -1,4 +1,4 @@
-crate::enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
+crate::utils::enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
 
 /// KWP Command Service IDs.
 ///

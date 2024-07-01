@@ -1,6 +1,6 @@
-use crate::enum_wrapper;
 #[cfg(doc)]
 use crate::uds::SecurityOperation;
+use crate::utils::enum_wrapper;
 
 enum_wrapper!(uds, UdsError, UdsErrorByte);
 

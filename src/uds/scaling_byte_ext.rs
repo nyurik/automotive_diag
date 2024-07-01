@@ -1,4 +1,4 @@
-crate::enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);
+crate::utils::enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);
 
 /// A macro rule to generate prefix and postfix functions from a single enum
 macro_rules! generate_enum {

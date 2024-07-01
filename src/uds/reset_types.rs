@@ -1,4 +1,4 @@
-crate::enum_wrapper!(uds, ResetType, ResetTypeByte);
+crate::utils::enum_wrapper!(uds, ResetType, ResetTypeByte);
 
 /// Reset ECU subcommand
 #[repr(u8)]

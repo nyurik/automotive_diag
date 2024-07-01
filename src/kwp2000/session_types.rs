@@ -1,4 +1,4 @@
-crate::enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);
+crate::utils::enum_wrapper!(kwp2000, KwpSessionType, KwpSessionTypeByte);
 
 /// KWP2000 diagnostic session type
 ///

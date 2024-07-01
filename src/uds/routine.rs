@@ -1,4 +1,4 @@
-crate::enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
+crate::utils::enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
 
 /// UDS Routine (0x31) service control types.
 /// See chapter `14.2 RoutineControl service` in the ISO 14229 spec.

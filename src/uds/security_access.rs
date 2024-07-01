@@ -3,7 +3,7 @@
 //!
 //! Currently, only default seed/key (0x01/0x02) are supported
 
-crate::enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);
+crate::utils::enum_wrapper!(uds, SecurityOperation, SecurityOperationByte);
 
 /// Security operation request
 #[repr(u8)]

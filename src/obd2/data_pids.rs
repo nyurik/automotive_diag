@@ -1,4 +1,4 @@
-crate::enum_wrapper!(obd2, DataPid, DataPidByte);
+crate::utils::enum_wrapper!(obd2, DataPid, DataPidByte);
 
 /// OBD2 data PIDs used for Service 01 and 02
 #[repr(u8)]

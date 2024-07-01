@@ -1,4 +1,4 @@
-crate::enum_wrapper!(
+crate::utils::enum_wrapper!(
     obd2,
     CommandedSecondaryAirStatus,
     CommandedSecondaryAirStatusByte

@@ -1,4 +1,4 @@
-crate::enum_wrapper!(kwp2000, RoutineExitStatus, RoutineExitStatusByte);
+crate::utils::enum_wrapper!(kwp2000, RoutineExitStatus, RoutineExitStatusByte);
 
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]

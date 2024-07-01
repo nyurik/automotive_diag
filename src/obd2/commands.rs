@@ -1,4 +1,4 @@
-crate::enum_wrapper!(obd2, Obd2Command, Obd2CommandByte);
+crate::utils::enum_wrapper!(obd2, Obd2Command, Obd2CommandByte);
 
 /// OBD2 Command Service IDs
 #[repr(u8)]

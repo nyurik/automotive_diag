@@ -27,26 +27,13 @@ impl<T: Into<u8>> From<ByteWrapper<T>> for u8 {
     }
 }
 
-impl<T: TryFrom<u8>> From<u8> for ByteWrapper<T> {
-    fn from(value: u8) -> Self {
-        match T::try_from(value) {
-            Ok(v) => ByteWrapper::Standard(v),
-            Err(_) => ByteWrapper::Extended(value),
-        }
-    }
-}
-
-#[macro_export]
-#[doc(hidden)]
 macro_rules! enum_wrapper {
     ($ns:tt, $enum_name:tt, $enum_wrapper:tt) => {
-        $crate::enum_impls!($ns, $enum_name);
-        $crate::enum_byte_wrapper!($ns, $enum_name, $enum_wrapper);
+        $crate::utils::enum_impls!($ns, $enum_name);
+        $crate::utils::enum_byte_wrapper!($ns, $enum_name, $enum_wrapper);
     };
 }
 
-#[macro_export]
-#[doc(hidden)]
 macro_rules! enum_impls {
     ($ns:tt, $enum_name:tt) => {
         impl TryFrom<u8> for $crate::$ns::$enum_name {
@@ -95,8 +82,6 @@ macro_rules! enum_impls {
     };
 }
 
-#[macro_export]
-#[doc(hidden)]
 macro_rules! enum_byte_wrapper {
     ($ns:tt, $enum_name:tt, $enum_wrapper:tt) => {
         #[doc = concat!("Store a single byte, either as a `Standard(", stringify!($enum_name), ")`, or as an `Extended(u8)`.")]
@@ -105,6 +90,17 @@ macro_rules! enum_byte_wrapper {
         impl From<$crate::$ns::$enum_name> for $crate::$ns::$enum_wrapper {
             fn from(value: $crate::$ns::$enum_name) -> Self {
                 Self::Standard(value)
+            }
+        }
+
+        // Implementing it as part of the macro because from_repr is not part of a trait
+        // https://github.com/Peternator7/strum/issues/251
+        impl From<u8> for $crate::ByteWrapper<$crate::$ns::$enum_name> {
+            fn from(value: u8) -> Self {
+                match $crate::$ns::$enum_name::from_repr(value) {
+                    Some(v) => $crate::ByteWrapper::Standard(v),
+                    None => $crate::ByteWrapper::Extended(value),
+                }
             }
         }
 
@@ -122,3 +118,5 @@ macro_rules! enum_byte_wrapper {
         }
     };
 }
+
+pub(crate) use {enum_byte_wrapper, enum_impls, enum_wrapper};

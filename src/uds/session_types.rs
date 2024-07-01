@@ -1,4 +1,4 @@
-crate::enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
+crate::utils::enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
 
 /// UDS Diagnostic session modes. Handled by SID 0x10
 #[repr(u8)]

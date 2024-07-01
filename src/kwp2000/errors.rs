@@ -1,4 +1,4 @@
-crate::enum_wrapper!(kwp2000, KwpError, KwpErrorByte);
+crate::utils::enum_wrapper!(kwp2000, KwpError, KwpErrorByte);
 
 /// KWP2000 Error definitions
 #[repr(u8)]

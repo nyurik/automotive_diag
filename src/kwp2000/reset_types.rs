@@ -1,6 +1,6 @@
 //! This service requests the ECU to perform a reset
 
-crate::enum_wrapper!(kwp2000, ResetType, ResetTypeByte);
+crate::utils::enum_wrapper!(kwp2000, ResetType, ResetTypeByte);
 
 /// ECU Reset types
 ///

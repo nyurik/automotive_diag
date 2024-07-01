@@ -1,5 +1,5 @@
-crate::enum_byte_wrapper!(uds, Scaling, ScalingByte);
-crate::enum_impls!(uds, ScalingType);
+crate::utils::enum_byte_wrapper!(uds, Scaling, ScalingByte);
+crate::utils::enum_impls!(uds, ScalingType);
 
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]

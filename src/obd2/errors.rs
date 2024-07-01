@@ -1,4 +1,4 @@
-crate::enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte);
+crate::utils::enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte);
 
 /// OBD2 Error definitions
 #[repr(u8)]

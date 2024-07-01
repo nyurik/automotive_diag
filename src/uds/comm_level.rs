@@ -1,4 +1,4 @@
-crate::enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);
+crate::utils::enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);
 
 /// Communication level toggle
 #[repr(u8)]

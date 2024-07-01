@@ -1,6 +1,6 @@
-use crate::enum_wrapper;
 #[cfg(doc)]
 use crate::uds::UdsCommand;
+use crate::utils::enum_wrapper;
 
 enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);
 
