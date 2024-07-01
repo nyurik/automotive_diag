@@ -28,12 +28,14 @@ mod tests {
         use crate::ByteWrapper::{Extended, Standard};
 
         assert_eq!(UdsCommandByte::from(0x11), Standard(ECUReset));
+        assert_eq!(UdsCommand::from_repr(0x11), Some(ECUReset));
         assert_eq!(UdsCommand::try_from(0x11), Ok(ECUReset));
         assert_eq!(ECUReset as u8, 0x11);
         assert_eq!(u8::from(ECUReset), 0x11);
         assert_eq!(u8::from(Standard(ECUReset)), 0x11);
         assert_eq!(UdsCommandByte::from(ECUReset), Standard(ECUReset));
 
+        assert!(UdsCommand::from_repr(0x42).is_none());
         assert!(UdsCommand::try_from(0x42).is_err());
         assert_eq!(UdsCommandByte::from(0x42), Extended(0x42));
     }
