@@ -35,7 +35,6 @@ strum = { version = "0.26.3", features = ["derive"] }
 [dev-dependencies]
 cargo-husky = { version = "1", features = ["user-hooks"], default-features = false }
 serde_json = { version = "1", features = ["preserve_order"] }
-insta = { version = "1.39" }
 
 [lints.rust]
 unsafe_code = "forbid"
