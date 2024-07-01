@@ -1,6 +1,12 @@
 #![cfg_attr(feature = "default", doc = include_str!("../README.md"))]
 #![cfg_attr(not(feature = "std"), no_std)]
 
+// It makes no sense to use this crate without at least one of the core features enabled
+#[cfg(not(any(feature = "with-kwp2000", feature = "with-obd2", feature = "with-uds")))]
+compile_error!(
+    "At least one of the features `with-kwp2000`, `with-obd2`, or `with-uds` must be enabled!"
+);
+
 #[cfg(feature = "with-kwp2000")]
 pub mod kwp2000;
 #[cfg(feature = "with-obd2")]
