@@ -8,6 +8,10 @@ clean:
     cargo clean
     rm -f Cargo.lock
 
+update:
+    cargo +nightly -Z unstable-options update --breaking
+    cargo update
+
 # Run cargo clippy
 clippy:
     cargo clippy --workspace --bins --tests --lib --benches --examples -- -D warnings
