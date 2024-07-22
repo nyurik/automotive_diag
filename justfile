@@ -14,7 +14,7 @@ update:
 
 # Run cargo clippy
 clippy:
-    cargo clippy --workspace --bins --tests --lib --benches --examples -- -D warnings
+    cargo clippy --workspace --all-targets -- -D warnings
     cargo clippy --no-default-features --features with-uds -- -D warnings
 
 # Test code formatting

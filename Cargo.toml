@@ -1,6 +1,6 @@
 [package]
 name = "automotive_diag"
-version = "0.1.8"
+version = "0.1.9"
 description = "Core definitions for various Automotive ECU Diagnostics such as UDS ISO-14229, KWP2000, OBD-II, etc."
 authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashconm@outlook.com>"]
 repository = "https://github.com/nyurik/automotive_diag"
