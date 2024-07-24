@@ -17,28 +17,14 @@ jobs:
       - uses: taiki-e/install-action@v2
         with: { tool: just }
       - uses: actions/checkout@v4
+      - name: Ensure this crate has not yet been published (on release)
+        if: github.event_name == 'release'
+        run: just check-if-published
       - uses: Swatinem/rust-cache@v2
         if: github.event_name != 'release' && github.event_name != 'workflow_dispatch'
       - run: just ci-test
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v2
-      - name: Get local and published versions
-        id: get-versions
-        run: |
-          echo "local_version=$(grep '^version =' Cargo.toml | sed -E 's/version = "([^"]*)".*/\1/')" >> $GITHUB_OUTPUT
-          CRATE_NAME=$(grep '^name =' Cargo.toml | head -1 | sed -E 's/name = "(.*)"/\1/')
-          PUBLISHED_VERSION=$(cargo search ${CRATE_NAME} | grep "^${CRATE_NAME} =" | sed -E 's/.* = "(.*)".*/\1/')
-          echo "published_version=${PUBLISHED_VERSION}" >> $GITHUB_OUTPUT
-      - name: Test that we haven't published current version yet
-        run: |
-          LOCAL_VERSION=${{ steps.get-versions.outputs.local_version }}
-          PUBLISHED_VERSION=${{ steps.get-versions.outputs.published_version }}
-          if [ "$LOCAL_VERSION" = "$PUBLISHED_VERSION" ]; then
-            echo "The current crate version ($LOCAL_VERSION) has already been published."
-            exit 1
-          else
-            echo "The current crate version ($LOCAL_VERSION) has not been published yet."
-          fi
 
   msrv:
     name: Test MSRV

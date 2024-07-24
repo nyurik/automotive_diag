@@ -57,3 +57,19 @@ ci-test: rust-info test-fmt clippy check test test-doc
 
 # Run minimal subset of tests to ensure compatibility with MSRV
 ci-test-msrv: rust-info check test
+
+# Verify that the current version of the crate is not the same as the one published on crates.io
+check-if-published:
+    #!/usr/bin/env bash
+    LOCAL_VERSION="$(grep '^version =' Cargo.toml | sed -E 's/version = "([^"]*)".*/\1/')"
+    echo "Detected crate version:  $LOCAL_VERSION"
+    CRATE_NAME="$(grep '^name =' Cargo.toml | head -1 | sed -E 's/name = "(.*)"/\1/')"
+    echo "Detected crate name:     $CRATE_NAME"
+    PUBLISHED_VERSION="$(cargo search ${CRATE_NAME} | grep "^${CRATE_NAME} =" | sed -E 's/.* = "(.*)".*/\1/')"
+    echo "Published crate version: $PUBLISHED_VERSION"
+    if [ "$LOCAL_VERSION" = "$PUBLISHED_VERSION" ]; then
+        echo "ERROR: The current crate version has already been published."
+        exit 1
+    else
+        echo "The current crate version has not yet been published."
+    fi
