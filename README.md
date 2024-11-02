@@ -1,9 +1,9 @@
 # Automotive diagnostics in Rust
 
 [![GitHub](https://img.shields.io/badge/github-nyurik/automotive_diag-8da0cb?logo=github)](https://github.com/nyurik/automotive_diag)
-[![crates.io version](https://img.shields.io/crates/v/automotive_diag.svg)](https://crates.io/crates/automotive_diag)
-[![docs.rs docs](https://docs.rs/automotive_diag/badge.svg)](https://docs.rs/automotive_diag)
-[![crates.io version](https://img.shields.io/crates/l/automotive_diag.svg)](https://github.com/nyurik/automotive_diag/blob/main/LICENSE-APACHE)
+[![crates.io version](https://img.shields.io/crates/v/automotive_diag)](https://crates.io/crates/automotive_diag)
+[![docs.rs](https://img.shields.io/docsrs/automotive_diag)](https://docs.rs/automotive_diag)
+[![crates.io license](https://img.shields.io/crates/l/automotive_diag)](https://github.com/nyurik/automotive_diag/blob/main/LICENSE-APACHE)
 [![CI build](https://github.com/nyurik/automotive_diag/actions/workflows/ci.yml/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
 
 This crate provides low-level `no_std` structs and enums of
@@ -19,7 +19,8 @@ pull request.
 ## Usage
 
 All values are presented as Rust `enum`, and can be converted to/from their underlying numeric values using
-the `T::from_repr(u8)` and `u8::from(value)`. Most enums also have a corresponding `...Byte` enums as `ByteWrapper<T>` to
+the `T::from_repr(u8)` and `u8::from(value)`. Most enums also have a corresponding `...Byte` enums as
+`ByteWrapper<T>` to
 handle the non-standard `Extended(u8)` values in addition to the defined `Standand(T)` ones.
 
 ```rust
