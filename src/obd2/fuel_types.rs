@@ -7,6 +7,7 @@ crate::utils::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte);
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[allow(clippy::upper_case_acronyms)]
 pub enum FuelTypeCoding {
     /// Fuel type unavailable
     NotAvailable = 0,
@@ -40,7 +41,7 @@ pub enum FuelTypeCoding {
     BifuelPropane = 14,
     /// Bifuel engine running electricity as primary
     BifuelElectricity = 15,
-    /// Bifuel engine running a electric and combustion engine as primary
+    /// Bifuel engine running an electric and combustion engine as primary
     BifuelElectricAndCombustion = 16,
     /// Hybrid gasoline engine
     HybridGasoline = 17,
