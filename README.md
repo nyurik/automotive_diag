@@ -12,9 +12,8 @@ the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnost
 [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) (ISO-9141)
 specifications for the road vehicles in Rust.
 
-Not everything is implemented yet, but the goal is to provide a full set of enums and structs to handle the most common
-diagnostic commands and responses. If you need a specific command or response, please open an issue or better yet, a
-pull request.
+Most features have been implemented and documented to handle the most common diagnostic commands and responses.
+If you find a missing command or response, please open an issue or better yet, a pull request.
 
 ## Usage
 
