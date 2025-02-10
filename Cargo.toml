@@ -30,7 +30,7 @@ serde = ["dep:serde"]
 [dependencies]
 displaydoc = { version = "0.2", optional = true }
 serde = { version = "1", features = ["derive"], optional = true }
-strum = { version = "0.26.3", features = ["derive"] }
+strum = { version = "0.27.0", features = ["derive"] }
 
 [dev-dependencies]
 cargo-husky = { version = "1", features = ["user-hooks"], default-features = false }
