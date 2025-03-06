@@ -52,8 +52,6 @@ fn handle_cmd_byte(cmd: u8) {
   Install it with `cargo install just`.
 * To get a list of available commands, run `just`.
 * To run tests, use `just test`.
-* On `git push`, it will run a few validations, including `cargo fmt`, `cargo clippy`, and `cargo test`.
-  Use `git push --no-verify` to skip these checks.
 
 ## Credits
 
