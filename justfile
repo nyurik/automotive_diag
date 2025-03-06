@@ -8,16 +8,16 @@ clean:
     cargo clean
     rm -f Cargo.lock
 
-# Update dependencies, including breaking changes
+# Update all dependencies, including the breaking changes. Requires nightly toolchain (install with `rustup install nightly`)
 update:
     cargo +nightly -Z unstable-options update --breaking
     cargo update
 
 # Find the minimum supported Rust version (MSRV) using cargo-msrv extension, and update Cargo.toml
 msrv:
-    cargo msrv find --write-msrv
+    cargo msrv find --write-msrv --ignore-lockfile
 
-# Run cargo clippy
+# Run cargo clippy to lint the code
 clippy:
     cargo clippy --workspace --all-targets -- -D warnings
     cargo clippy --no-default-features --features with-uds -- -D warnings
@@ -26,18 +26,26 @@ clippy:
 test-fmt:
     cargo fmt --all -- --check
 
-# Run cargo fmt
+# Reformat all code `cargo fmt`. If nightly is available, use it for better results
 fmt:
-    cargo +nightly fmt -- --config imports_granularity=Module,group_imports=StdExternalCrate
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if command -v cargo +nightly &> /dev/null; then
+        echo 'Reformatting Rust code using nightly Rust fmt to sort imports'
+        cargo +nightly fmt --all -- --config imports_granularity=Module,group_imports=StdExternalCrate
+    else
+        echo 'Reformatting Rust with the stable cargo fmt.  Install nightly with `rustup install nightly` for better results'
+        cargo fmt --all
+    fi
 
 # Build and open code documentation
 docs:
     cargo doc --no-deps --open
 
-# Quick compile
+# Quick compile without building a binary
 check:
-    RUSTFLAGS='-D warnings' cargo check
-    RUSTFLAGS='-D warnings' cargo check --no-default-features --features with-uds
+    RUSTFLAGS='-D warnings' cargo check --workspace --all-targets
+    RUSTFLAGS='-D warnings' cargo check --no-default-features --features with-uds --all-targets
 
 # Run all tests
 test:
@@ -49,10 +57,11 @@ test:
 
 # Test documentation
 test-doc:
-    cargo test --doc
+    RUSTDOCFLAGS="-D warnings" cargo test --doc
     RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
 
-rust-info:
+# Print Rust version information
+@rust-info:
     rustc --version
     cargo --version
 
