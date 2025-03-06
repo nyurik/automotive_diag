@@ -9,13 +9,17 @@ on:
     types: [ published ]
   workflow_dispatch:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: taiki-e/install-action@v2
-        with: { 'tool': 'just' }
+        with: { tool: just }
       - uses: actions/checkout@v4
       - name: Ensure this crate has not yet been published (on release)
         if: github.event_name == 'release'
