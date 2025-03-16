@@ -1,7 +1,7 @@
 **/*.rs.bk
 *.pdb
-.idea
-.vscode
+.idea/
+.vscode/
 debug/
 target/
 temp/

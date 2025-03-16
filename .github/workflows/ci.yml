@@ -24,7 +24,7 @@ jobs:
       - if: github.event_name != 'release' && github.event_name != 'workflow_dispatch'
         uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
-        with: { tool: just }
+        with: { tool: 'just,cargo-llvm-cov' }
       - uses: actions/checkout@v4
       - if: github.event_name == 'release'
         name: Ensure this crate has not yet been published (on release)
@@ -32,6 +32,17 @@ jobs:
       - run: RUST_BACKTRACE=1 just ci-test
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v2
+      #############################################################
+      ## Code coverage
+      ##
+      - name: Generate code coverage
+        run: just ci-coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: target/llvm-cov/codecov.info
+          fail_ci_if_error: true
       #############################################################
       ## Test MSRV
       ##
