@@ -49,7 +49,7 @@ jobs:
       - name: Read MSRV
         id: msrv
         run: echo "value=$(sed -ne 's/rust-version *= *\"\(.*\)\"/\1/p' Cargo.toml)" >> $GITHUB_OUTPUT
-      - name: Install Rust
+      - name: Install MSRV Rust ${{ steps.msrv.outputs.value }}
         uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: ${{ steps.msrv.outputs.value }}
