@@ -8,10 +8,18 @@ clean:
     cargo clean
     rm -f Cargo.lock
 
-# Update all dependencies, including the breaking changes. Requires nightly toolchain (install with `rustup install nightly`)
+# Update all dependencies, including breaking changes. Requires nightly toolchain (install with `rustup install nightly`)
 update:
     cargo +nightly -Z unstable-options update --breaking
     cargo update
+
+# Find unused dependencies. Install it with `cargo install cargo-udeps`
+udeps:
+    cargo +nightly udeps --all-targets --workspace --all-features
+
+# Check semver compatibility with prior published version. Install it with `cargo install cargo-semver-checks`
+semver *ARGS:
+    cargo semver-checks {{ARGS}}
 
 # Find the minimum supported Rust version (MSRV) using cargo-msrv extension, and update Cargo.toml
 msrv:
@@ -47,9 +55,19 @@ check:
     RUSTFLAGS='-D warnings' cargo check --workspace --all-targets
     RUSTFLAGS='-D warnings' cargo check --no-default-features --features with-uds --all-targets
 
+# Generate code coverage report
+coverage *ARGS="--no-clean --open":
+    cargo llvm-cov --workspace --all-targets --include-build-script {{ARGS}}
+
+# Generate code coverage report to upload to codecov.io
+ci-coverage: && \
+            (coverage '--codecov --output-path target/llvm-cov/codecov.info')
+    # ATTENTION: the full file path above is used in the CI workflow
+    mkdir -p target/llvm-cov
+
 # Run all tests
 test:
-    RUSTFLAGS='-D warnings' cargo test
+    RUSTFLAGS='-D warnings' cargo test --workspace --all-targets
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-kwp2000
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-obd2
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-uds

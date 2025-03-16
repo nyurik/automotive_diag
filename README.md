@@ -5,6 +5,7 @@
 [![docs.rs](https://img.shields.io/docsrs/automotive_diag)](https://docs.rs/automotive_diag)
 [![crates.io license](https://img.shields.io/crates/l/automotive_diag)](https://github.com/nyurik/automotive_diag/blob/main/LICENSE-APACHE)
 [![CI build](https://github.com/nyurik/automotive_diag/actions/workflows/ci.yml/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/nyurik/automotive_diag)](https://app.codecov.io/gh/nyurik/automotive_diag)
 
 This crate provides low-level `no_std` structs and enums of
 the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) (ISO-14229-1),
