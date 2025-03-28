@@ -2,6 +2,7 @@ crate::utils::enum_wrapper!(obd2, Obd2Command, Obd2CommandByte);
 
 /// OBD2 Command Service IDs
 #[repr(u8)]
+// test ci    
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
