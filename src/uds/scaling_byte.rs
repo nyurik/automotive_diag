@@ -86,7 +86,7 @@ impl TryFrom<u8> for Scaling {
                     return Err("No data bytes are expected for this type.");
                 }
             }
-        };
+        }
         Ok(Self { typ, size })
     }
 }
