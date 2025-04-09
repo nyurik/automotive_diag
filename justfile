@@ -28,7 +28,7 @@ msrv:
 # Run cargo clippy to lint the code
 clippy:
     cargo clippy --workspace --all-targets -- -D warnings
-    cargo clippy --no-default-features --features with-uds -- -D warnings
+    cargo clippy --no-default-features --features uds -- -D warnings
 
 # Test code formatting
 test-fmt:
@@ -53,7 +53,7 @@ docs:
 # Quick compile without building a binary
 check:
     RUSTFLAGS='-D warnings' cargo check --workspace --all-targets
-    RUSTFLAGS='-D warnings' cargo check --no-default-features --features with-uds --all-targets
+    RUSTFLAGS='-D warnings' cargo check --no-default-features --features uds --all-targets
 
 # Generate code coverage report
 coverage *ARGS="--no-clean --open":
@@ -68,9 +68,9 @@ ci-coverage: && \
 # Run all tests
 test:
     RUSTFLAGS='-D warnings' cargo test --workspace --all-targets
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-kwp2000
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-obd2
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features with-uds
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features kwp2000
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features obd2
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features uds
     RUSTFLAGS='-D warnings' cargo test --features serde
 
 # Test documentation
