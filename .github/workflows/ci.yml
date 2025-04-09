@@ -21,11 +21,11 @@ jobs:
       #############################################################
       ## Full test
       ##
+      - uses: actions/checkout@v4
       - if: github.event_name != 'release' && github.event_name != 'workflow_dispatch'
         uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
         with: { tool: 'just,cargo-llvm-cov' }
-      - uses: actions/checkout@v4
       - if: github.event_name == 'release'
         name: Ensure this crate has not yet been published (on release)
         run: just check-if-published

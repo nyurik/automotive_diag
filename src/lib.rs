@@ -2,16 +2,14 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 // It makes no sense to use this crate without at least one of the core features enabled
-#[cfg(not(any(feature = "with-kwp2000", feature = "with-obd2", feature = "with-uds")))]
-compile_error!(
-    "At least one of the features `with-kwp2000`, `with-obd2`, or `with-uds` must be enabled!"
-);
+#[cfg(not(any(feature = "kwp2000", feature = "obd2", feature = "uds")))]
+compile_error!("At least one of the features `kwp2000`, `obd2`, or `uds` must be enabled!");
 
-#[cfg(feature = "with-kwp2000")]
+#[cfg(feature = "kwp2000")]
 pub mod kwp2000;
-#[cfg(feature = "with-obd2")]
+#[cfg(feature = "obd2")]
 pub mod obd2;
-#[cfg(feature = "with-uds")]
+#[cfg(feature = "uds")]
 pub mod uds;
 
 mod utils;
@@ -21,7 +19,7 @@ pub use utils::ByteWrapper;
 mod tests {
 
     #[test]
-    #[cfg(feature = "with-uds")]
+    #[cfg(feature = "uds")]
     fn spot_test() {
         use crate::uds::UdsCommand::ECUReset;
         use crate::uds::{UdsCommand, UdsCommandByte};
