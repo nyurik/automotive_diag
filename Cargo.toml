@@ -1,7 +1,7 @@
 [package]
 name = "automotive_diag"
 version = "0.1.14"
-description = "Unified Diagnostic Services/UDS (ISO-14229-1), KWP2000 (ISO-142330) and OBD-II (ISO-9141) definitions to communicate with the road vehicle ECUs in Rust."
+description = "Unified Diagnostic Services/UDS (ISO-14229-1), KWP2000 (ISO-142330), OBD-II (ISO-9141), and DoIP (ISO-13400) definitions to communicate with the road vehicle ECUs in Rust."
 authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashconm@outlook.com>"]
 repository = "https://github.com/nyurik/automotive_diag"
 edition = "2021"
@@ -11,7 +11,7 @@ categories = ["embedded", "no-std", "encoding", "parsing"]
 rust-version = "1.70"
 
 [features]
-default = ["std", "iter", "display", "kwp2000", "obd2", "uds"]
+default = ["std", "iter", "display", "doip", "kwp2000", "obd2", "uds"]
 # Include support for std library. Without this feature, uses `no_std` attribute
 std = ["strum/default"]
 # Add support for `defmt` logging
@@ -24,6 +24,8 @@ iter = []
 pyo3 = ["std", "dep:pyo3"]
 # Include support for serde serialization
 serde = ["dep:serde"]
+# Include support for DoIP - ISO-13400
+doip = []
 # Include support for Keyword protocol 2000 - ISO-142330
 kwp2000 = []
 with-kwp2000 = ["kwp2000"] # deprecated, use `kwp2000` instead
