@@ -25,6 +25,10 @@ semver *ARGS:
 msrv:
     cargo msrv find --write-msrv --ignore-lockfile
 
+# Get the minimum supported Rust version (MSRV) for the crate
+get-msrv CRATE_NAME="automotive_diag":
+    cargo metadata --format-version 1 | jq -r --arg CRATE_NAME {{quote(CRATE_NAME)}} '.packages | map(select(.name == $CRATE_NAME)) | first | .rust_version'
+
 # Run cargo clippy to lint the code
 clippy:
     cargo clippy --workspace --all-targets -- -D warnings

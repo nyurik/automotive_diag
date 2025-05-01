@@ -81,7 +81,7 @@ mod tests {
         let json = serde_json::to_string(&test).unwrap();
         assert_eq!(
             json,
-            r###"{"command":"DiagnosticSessionControl","command_byte":{"Standard":"DiagnosticSessionControl"}}"###
+            r#"{"command":"DiagnosticSessionControl","command_byte":{"Standard":"DiagnosticSessionControl"}}"#
         );
 
         let deserialized: TestStruct = serde_json::from_str(&json).unwrap();
