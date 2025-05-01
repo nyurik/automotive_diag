@@ -1,6 +1,6 @@
 [package]
 name = "automotive_diag"
-version = "0.1.12"
+version = "0.1.13"
 description = "Unified Diagnostic Services/UDS (ISO-14229-1), KWP2000 (ISO-142330) and OBD-II (ISO-9141) definitions to communicate with the road vehicle ECUs in Rust."
 authors = ["Yuri Astrakhan <YuriAstrakhan@gmail.com>", "Ashcon Mohseninia <ashconm@outlook.com>"]
 repository = "https://github.com/nyurik/automotive_diag"
@@ -18,13 +18,13 @@ std = []
 iter = []
 # Add Display implementation for all enums, using doc comments as display strings
 display = ["dep:displaydoc"]
-# Include support for Keyword protocol 2000 - ISO142330
+# Include support for Keyword protocol 2000 - ISO-142330
 kwp2000 = []
 with-kwp2000 = ["kwp2000"] # deprecated, use `kwp2000` instead
-# Include support for On-board diagnostics
+# Include support for On-board diagnostics - ISO-9141
 obd2 = []
 with-obd2 = ["obd2"] # deprecated, use `obd2` instead
-# Include support for Unified Diagnostic Services
+# Include support for Unified Diagnostic Services - ISO-14229-1
 uds = []
 with-uds = ["uds"] # deprecated, use `uds` instead
 # Include support for serde serialization
@@ -44,7 +44,7 @@ unused_qualifications = "warn"
 
 [lints.clippy]
 cargo = { level = "warn", priority = -1 }
-redundant_feature_names = "allow"  # with-* features have been deprecated. Remove this once they are removed
+redundant_feature_names = "allow"  # All with-* features have been deprecated. Remove this once they are removed
 pedantic = { level = "warn", priority = -1 }
 missing_errors_doc = "allow"
 module_name_repetitions = "allow"

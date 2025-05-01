@@ -12,7 +12,7 @@ pub enum ByteWrapper<T> {
 impl<T: Debug> Debug for ByteWrapper<T> {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
-            // For standard values, just delegate to the Debug implementation of the inner type.
+            // For standard values, delegate to the Debug implementation of the inner type.
             Self::Standard(v) => Debug::fmt(v, f),
             Self::Extended(v) => write!(f, "Extended({v:#02X})"),
         }
@@ -28,24 +28,26 @@ impl<T: Into<u8>> From<ByteWrapper<T>> for u8 {
     }
 }
 
+/// For a byte enum, generate `TryFrom<u8> -> $enum_name`, `From<$enum_name> -> u8`, and `ByteWrapper` alias with conversions
 macro_rules! enum_wrapper {
     ($ns:tt, $enum_name:tt, $enum_wrapper:tt) => {
-        $crate::utils::enum_impls!($ns, $enum_name);
+        $crate::utils::enum_impls!($ns, $enum_name, u8);
         $crate::utils::enum_byte_wrapper!($ns, $enum_name, $enum_wrapper);
     };
 }
 
+/// Generate `TryFrom<$typ>` and `From<$enum_name>` implementations for a given enum with its type
 macro_rules! enum_impls {
-    ($ns:tt, $enum_name:tt) => {
-        impl TryFrom<u8> for $crate::$ns::$enum_name {
+    ($ns:tt, $enum_name:tt, $typ:ty) => {
+        impl TryFrom<$typ> for $crate::$ns::$enum_name {
             type Error = &'static str;
-            fn try_from(value: u8) -> Result<Self, Self::Error> {
+            fn try_from(value: $typ) -> Result<Self, Self::Error> {
                 $crate::$ns::$enum_name::from_repr(value)
                     .ok_or("Failed to convert enum to numeric value!")
             }
         }
 
-        impl From<$crate::$ns::$enum_name> for u8 {
+        impl From<$crate::$ns::$enum_name> for $typ {
             fn from(value: $crate::$ns::$enum_name) -> Self {
                 value as Self
             }
@@ -55,9 +57,9 @@ macro_rules! enum_impls {
         mod enum_impls_tests {
             #[test]
             fn test_try_from() {
-                for value in 0x00_u8..=0xFF {
+                for value in <$typ>::MIN..=<$typ>::MAX {
                     if let Ok(v) = $crate::$ns::$enum_name::try_from(value) {
-                        let enc: u8 = v.into();
+                        let enc: $typ = v.into();
                         assert_eq!(value, enc, "{value:#02X} → {v:?} → {enc:#02X}");
                         assert_eq!(
                             $crate::$ns::$enum_name::from_repr(value).unwrap(),
@@ -75,7 +77,7 @@ macro_rules! enum_impls {
 
                 assert_ne!(0, $crate::$ns::$enum_name::iter().count());
                 for value in $crate::$ns::$enum_name::iter() {
-                    let enc: u8 = value.into();
+                    let enc: $typ = value.into();
                     assert_eq!(value, $crate::$ns::$enum_name::try_from(enc).unwrap());
                 }
             }
@@ -83,6 +85,7 @@ macro_rules! enum_impls {
     };
 }
 
+/// Generate `ByteWrapper` alias and conversions for a given enum
 macro_rules! enum_byte_wrapper {
     ($ns:tt, $enum_name:tt, $enum_wrapper:tt) => {
         #[doc = concat!("Store a single byte, either as a `Standard(", stringify!($enum_name), ")`, or as an `Extended(u8)`.")]
