@@ -69,7 +69,7 @@ check:
 
 # Generate code coverage report
 coverage *ARGS="--no-clean --open":
-    cargo llvm-cov --workspace --all-targets --include-build-script {{ARGS}}
+    cargo llvm-cov --workspace --all-targets --all-features --include-build-script {{ARGS}}
 
 # Generate code coverage report to upload to codecov.io
 ci-coverage: && \
