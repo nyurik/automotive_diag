@@ -1,4 +1,4 @@
-crate::utils::enum_wrapper!(uds, UdsCommand, UdsCommandByte);
+crate::utils::enum_wrapper!(uds, UdsCommand, UdsCommandByte, display = @"10111100423397497463");
 
 /// UDS Command Service IDs
 #[repr(u8)]

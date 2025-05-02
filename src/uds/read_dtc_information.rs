@@ -2,7 +2,7 @@
 use crate::uds::UdsCommand;
 use crate::utils::enum_wrapper;
 
-enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte);
+enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte, display = @"10134386477669841736");
 
 /// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]

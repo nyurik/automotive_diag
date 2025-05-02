@@ -1,4 +1,4 @@
-crate::utils::enum_wrapper!(obd2, FuelSystemStatus, FuelSystemStatusByte);
+crate::utils::enum_wrapper!(obd2, FuelSystemStatus, FuelSystemStatusByte, display = @"14417397174224904691");
 
 /// Fuel system status enumeration for PID 03
 #[repr(u8)]
