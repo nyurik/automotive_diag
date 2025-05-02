@@ -1,4 +1,4 @@
-crate::utils::enum_wrapper!(obd2, Obd2Command, Obd2CommandByte);
+crate::utils::enum_wrapper!(obd2, Obd2Command, Obd2CommandByte, display = @"200205385734257990");
 
 /// OBD2 Command Service IDs
 #[repr(u8)]

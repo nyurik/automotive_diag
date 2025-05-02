@@ -1,7 +1,8 @@
 crate::utils::enum_wrapper!(
     obd2,
     CommandedSecondaryAirStatus,
-    CommandedSecondaryAirStatusByte
+    CommandedSecondaryAirStatusByte,
+    display = @"4674215784794864501"
 );
 
 /// Commanded secondary air status for PID 12

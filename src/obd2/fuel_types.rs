@@ -1,4 +1,4 @@
-crate::utils::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte);
+crate::utils::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte, display = @"8724297537048401983");
 
 /// Fuel type coding for PID 51
 #[allow(non_camel_case_types)]

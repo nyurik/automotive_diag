@@ -1,4 +1,4 @@
-crate::utils::enum_wrapper!(obd2, ObdStandard, ObdStandardByte);
+crate::utils::enum_wrapper!(obd2, ObdStandard, ObdStandardByte, display = @"16384231687073919054");
 
 /// OBD Standard for PID 1C
 #[allow(non_camel_case_types)]
