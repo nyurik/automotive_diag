@@ -14,7 +14,9 @@ the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnost
 specifications for the road vehicles in Rust.
 
 Most features have been implemented and documented to handle the most common diagnostic commands and responses.
-If you find a missing command or response, please open an issue or better yet, a pull request.
+If you find a missing feature, please open an issue or better yet, a pull request.
+
+The long term goal is to provide all core functionality for message definitions and (de-)serialization, supporting both the `no_std` and `std` environments.
 
 ## Usage
 
