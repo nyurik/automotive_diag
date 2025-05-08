@@ -36,9 +36,11 @@ jobs:
       #############################################################
       ## Code coverage
       ##
-      - name: Generate code coverage
+      - if: github.event_name != 'release'
+        name: Generate code coverage
         run: just ci-coverage
-      - name: Upload coverage to Codecov
+      - if: github.event_name != 'release'
+        name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
