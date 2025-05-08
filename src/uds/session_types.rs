@@ -3,6 +3,7 @@ crate::utils::enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
 /// UDS Diagnostic session modes. Handled by SID 0x10
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum UdsSessionType {

@@ -6,6 +6,7 @@ crate::utils::enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
 /// 'System supplier specific' range (0xBA-0xBF)
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum KwpCommand {

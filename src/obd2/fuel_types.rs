@@ -4,8 +4,9 @@ crate::utils::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte, display = 
 #[allow(non_camel_case_types)]
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[allow(clippy::upper_case_acronyms)]
 pub enum FuelTypeCoding {

@@ -3,8 +3,9 @@ crate::utils::enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte, display = @"58362401
 /// OBD2 Error definitions
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Obd2Error {
     /// ECU general reject

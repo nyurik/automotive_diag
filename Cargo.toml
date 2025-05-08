@@ -8,7 +8,7 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 keywords = ["uds", "kwp2000", "obd", "automotive", "no_std"]
 categories = ["embedded", "no-std", "encoding", "parsing"]
-rust-version = "1.66"
+rust-version = "1.70"
 
 [features]
 default = ["std", "iter", "display", "kwp2000", "obd2", "uds"]
@@ -16,7 +16,9 @@ default = ["std", "iter", "display", "kwp2000", "obd2", "uds"]
 std = ["strum/default"]
 # Add Enum::iter() implementation for all enums
 iter = []
-# Add Display implementation for all enums, using doc comments as display strings
+# Add support for `defmt` logging
+defmt = ["dep:defmt"]
+# Add Display trait for all enums, using doc comments as display strings. Requires `std`.
 display = ["std", "dep:displaydoc"]
 # Include support for Keyword protocol 2000 - ISO-142330
 kwp2000 = []
@@ -31,6 +33,7 @@ with-uds = ["uds"] # deprecated, use `uds` instead
 serde = ["dep:serde"]
 
 [dependencies]
+defmt = { version = "1.0.1", optional = true }
 displaydoc = { version = "0.2", optional = true }
 serde = { version = "1", features = ["derive"], optional = true }
 strum = { version = "0.27.0", default-features = false, features = ["derive"] }
