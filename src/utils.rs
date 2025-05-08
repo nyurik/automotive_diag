@@ -19,6 +19,17 @@ impl<T: Debug> Debug for ByteWrapper<T> {
     }
 }
 
+#[cfg(feature = "defmt")]
+impl<T: defmt::Format> defmt::Format for ByteWrapper<T> {
+    fn format(&self, fmt: defmt::Formatter) {
+        match self {
+            // For standard values, delegate to the Debug implementation of the inner type.
+            Self::Standard(v) => defmt::Format::format(v, fmt),
+            Self::Extended(v) => defmt::write!(fmt, "Extended({:#02X})", v),
+        }
+    }
+}
+
 impl<T: Into<u8>> From<ByteWrapper<T>> for u8 {
     fn from(value: ByteWrapper<T>) -> Self {
         match value {

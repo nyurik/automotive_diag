@@ -25,7 +25,7 @@ semver *ARGS:
 
 # Find the minimum supported Rust version (MSRV) using cargo-msrv extension, and update Cargo.toml
 msrv:
-    cargo msrv find --write-msrv --ignore-lockfile
+    cargo msrv find --write-msrv --ignore-lockfile --all-features
 
 # Get the minimum supported Rust version (MSRV) for the crate
 get-msrv: (get-crate-field "rust_version")
@@ -83,6 +83,7 @@ test:
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features kwp2000
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features obd2
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features uds
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features defmt,iter,uds,obd2,kwp2000
     RUSTFLAGS='-D warnings' cargo test --features serde
 
 # Test documentation

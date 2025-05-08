@@ -7,8 +7,9 @@ enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte, display = @"1013438647766
 /// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[allow(clippy::doc_markdown, clippy::enum_variant_names)]
 pub enum DtcSubFunction {

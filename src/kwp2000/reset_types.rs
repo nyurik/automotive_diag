@@ -12,8 +12,9 @@ crate::utils::enum_wrapper!(kwp2000, ResetType, ResetTypeByte, display = @"15739
 /// |[`ResetType::NonVolatileMemoryReset`]|Optional|
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
-#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
+#[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ResetType {
     /// Simulates a power off/on reset of the ECU.
