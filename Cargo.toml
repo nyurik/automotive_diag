@@ -13,11 +13,11 @@ rust-version = "1.66"
 [features]
 default = ["std", "iter", "display", "kwp2000", "obd2", "uds"]
 # Include support for std library. Without this feature, uses `no_std` attribute
-std = []
+std = ["strum/default"]
 # Add Enum::iter() implementation for all enums
 iter = []
 # Add Display implementation for all enums, using doc comments as display strings
-display = ["dep:displaydoc"]
+display = ["std", "dep:displaydoc"]
 # Include support for Keyword protocol 2000 - ISO-142330
 kwp2000 = []
 with-kwp2000 = ["kwp2000"] # deprecated, use `kwp2000` instead
@@ -33,7 +33,7 @@ serde = ["dep:serde"]
 [dependencies]
 displaydoc = { version = "0.2", optional = true }
 serde = { version = "1", features = ["derive"], optional = true }
-strum = { version = "0.27.0", features = ["derive"] }
+strum = { version = "0.27.0", default-features = false, features = ["derive"] }
 
 [dev-dependencies]
 insta = "1.43.1"

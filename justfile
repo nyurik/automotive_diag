@@ -101,16 +101,39 @@ ci-test: rust-info test-fmt clippy check test test-doc
 # Run minimal subset of tests to ensure compatibility with MSRV
 ci-test-msrv: rust-info check test
 
+# Test building for an embedded no_std target
+ci-build-thumbv7em-none-eabi: (rustup-add-target "thumbv7em-none-eabi")
+    cargo build --target thumbv7em-none-eabi --no-default-features --features "iter,kwp2000,obd2,uds"
+
 # Run integration tests and save its output as the new expected output
 bless *ARGS: (cargo-install "insta" "cargo-insta")
     cargo insta test --accept --unreferenced=delete --all-features {{ARGS}}
 
+# Check if cargo target is already installed, and install if needed
+[private]
+rustup-add-target target:
+    #!/usr/bin/env sh
+    set -eu
+    if ! rustup target list --installed | grep -q {{quote(target)}}; then
+        echo "Adding target {{target}}"
+        rustup target add {{quote(target)}}
+    else
+        echo "Target {{target}} is already installed"
+    fi
+
 # Check if a certain Cargo command is installed, and install it if needed
 [private]
 cargo-install $COMMAND $INSTALL_CMD="" *ARGS="":
-    @if ! command -v $COMMAND > /dev/null; then \
-        echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} {{ARGS}}" ;\
-        cargo install ${INSTALL_CMD:-$COMMAND} {{ARGS}} ;\
+    #!/usr/bin/env sh
+    set -eu
+    if ! command -v $COMMAND > /dev/null; then
+        if ! command -v cargo-binstall > /dev/null; then
+            echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} {{ARGS}}"
+            cargo install ${INSTALL_CMD:-$COMMAND} {{ARGS}}
+        else
+            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} {{ARGS}}"
+            cargo binstall ${INSTALL_CMD:-$COMMAND} {{ARGS}}
+        fi
     fi
 
 # Verify that the current version of the crate is not the same as the one published on crates.io

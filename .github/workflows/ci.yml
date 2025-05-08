@@ -30,6 +30,7 @@ jobs:
         name: Ensure this crate has not yet been published (on release)
         run: just check-if-published
       - run: RUST_BACKTRACE=1 just ci-test
+      - run: just ci-build-thumbv7em-none-eabi
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v2
       #############################################################
