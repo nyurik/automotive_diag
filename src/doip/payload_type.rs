@@ -1,9 +1,12 @@
-crate::utils::enum_impls!(doip, DoIpPayloadType, u16);
-crate::utils::assert_display_hash!(DoIpPayloadType, @"5886519332798079216");
+use crate::utils::{assert_display_hash, enum_impls, python_test};
+
+enum_impls!(doip, PayloadType, u16);
+assert_display_hash!(PayloadType, @"5886519332798079216");
+python_test!(doip, PayloadType, GenericNack, VehicleIdentificationRequest);
 
 /// Defines the variants of payloads available to `DoIP`.
 ///
-/// `DoIpPayloadType` values map to the `u16` representing the bytes it makes up
+/// `PayloadType` values map to the `u16` representing the bytes it makes up
 /// within the `DoIP` packet.
 #[repr(u16)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -12,8 +15,7 @@ crate::utils::assert_display_hash!(DoIpPayloadType, @"5886519332798079216");
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-// TODO: should this be DoIp-prefixed?
-pub enum DoIpPayloadType {
+pub enum PayloadType {
     /// Generic Negative Acknowledge
     GenericNack = 0x0000,
 

@@ -1,8 +1,11 @@
-crate::utils::enum_wrapper!(
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(
     doip,
-    DoIpProtocolVersion,
-    DoIpProtocolVersionByte,
-    display = @"12259587059646726960");
+    ProtocolVersion,
+    ProtocolVersionByte,
+    display = @"15161726968649792658");
+python_test!(doip, ProtocolVersion, V2010, V2012);
 
 /// Available version of the `DoIP` protocol as per ISO-13400.
 ///
@@ -15,25 +18,24 @@ crate::utils::enum_wrapper!(
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
 #[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-// TODO: should this be DoIp-prefixed?
-pub enum DoIpProtocolVersion {
+pub enum ProtocolVersion {
     // TODO: needed? This seems like a placeholder that shouldn't be used in Rust
     // /// Reserved Version
     // ReservedVer = 0x00,
     /// `DoIP` Payload Version: ISO-13400 2010 Version
-    Iso13400_2010 = 0x01,
+    V2010 = 0x01,
 
     /// `DoIP` Payload Version: ISO-13400 2012 Version
-    Iso13400_2012 = 0x02,
+    V2012 = 0x02,
 
     /// `DoIP` Payload Version: ISO-13400 2019 Version
-    Iso13400_2019 = 0x03,
+    V2019 = 0x03,
 
     /// `DoIP` Payload Version: ISO-13400 `2019_AMD1` Version
-    Iso13400_2019Amd1 = 0x04,
-
-    /// `DoIP` Payload Version: Default Version
-    DefaultValue = 0xFF,
+    V2019amd1 = 0x04,
+    // TODO: needed? This seems like a placeholder that shouldn't be used in Rust
+    // /// `DoIP` Payload Version: Default Version
+    // DefaultValue = 0xFF,
 }
 
 #[cfg(all(test, feature = "serde"))]
@@ -42,21 +44,21 @@ mod tests {
 
     #[derive(serde::Serialize, serde::Deserialize)]
     struct TestStruct {
-        command: DoIpProtocolVersion,
-        command_byte: DoIpProtocolVersionByte,
+        command: ProtocolVersion,
+        command_byte: ProtocolVersionByte,
     }
 
     #[test]
     fn test_serde() {
         let test = TestStruct {
-            command: DoIpProtocolVersion::Iso13400_2019,
-            command_byte: DoIpProtocolVersionByte::from(DoIpProtocolVersion::Iso13400_2019),
+            command: ProtocolVersion::V2019,
+            command_byte: ProtocolVersionByte::from(ProtocolVersion::V2019),
         };
 
         let json = serde_json::to_string(&test).unwrap();
         assert_eq!(
             json,
-            r#"{"command":"Iso13400_2019","command_byte":{"Standard":"Iso13400_2019"}}"#
+            r#"{"command":"V2019","command_byte":{"Standard":"V2019"}}"#
         );
 
         let deserialized: TestStruct = serde_json::from_str(&json).unwrap();
