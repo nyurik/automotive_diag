@@ -1,6 +1,6 @@
 use core::fmt::Debug;
 
-/// A wrapper around a byte, which can be either an ISO-standardized value for a specific enum,
+/// A wrapper around a byte, which can be either an ISO-standardized value for a specific enum
 /// or an implementation-specific/invalid `Extended` value wrapping original byte.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
@@ -138,6 +138,33 @@ macro_rules! enum_byte_wrapper {
     };
 }
 
+/// Generates a python wrapper test
+macro_rules! python_test {
+    ($($ns:ident, $enum_name:ident, $val1:ident, $val2:ident $(;)?)+) => {
+        #[cfg(all(test, feature = "pyo3"))]
+        mod enum_python_tests {
+            use pyo3::{prepare_freethreaded_python, Py, Python};
+
+            #[test]
+            fn test_py() {
+                prepare_freethreaded_python();
+                Python::with_gil(|py| {
+                    $(
+                        let a = Py::new(py, $crate::$ns::$enum_name::$val1).unwrap();
+                        let b = Py::new(py, $crate::$ns::$enum_name::$val2).unwrap();
+                        let enm = py.get_type::<$crate::$ns::$enum_name>();
+                        pyo3::py_run!(py, a b enm, &format!(r#"
+                            assert a == enm.{}
+                            assert b == enm.{}
+                            assert a != b
+                        "#, stringify!($val1), stringify!($val2)));
+                    )+
+                })
+            }
+        }
+    };
+}
+
 /// Compute the combined value of all `Display` representations of all enum variants for hashing purposes.
 #[cfg(all(test, feature = "iter", feature = "display"))]
 pub(crate) fn calc_display_hash<T: strum::IntoEnumIterator + std::fmt::Display>() -> u64 {
@@ -167,4 +194,4 @@ macro_rules! assert_display_hash {
     };
 }
 
-pub(crate) use {assert_display_hash, enum_byte_wrapper, enum_impls, enum_wrapper};
+pub(crate) use {assert_display_hash, enum_byte_wrapper, enum_impls, enum_wrapper, python_test};

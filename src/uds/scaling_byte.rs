@@ -1,5 +1,8 @@
-crate::utils::enum_byte_wrapper!(uds, Scaling, ScalingByte);
-crate::utils::enum_impls!(uds, ScalingType, u8);
+use crate::utils::{enum_byte_wrapper, enum_impls, python_test};
+
+enum_byte_wrapper!(uds, Scaling, ScalingByte);
+enum_impls!(uds, ScalingType, u8);
+python_test!(uds, ScalingType, Bcd, Ascii);
 
 /// Scaling high nibble, representing the type of data without its size. The size is given by the low nibble.
 #[repr(u8)]
@@ -7,6 +10,7 @@ crate::utils::enum_impls!(uds, ScalingType, u8);
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ScalingType {
     /// Unsigned numeric integer. Must be followed by 1..4 bytes, given as a low nibble of the byte.
@@ -38,6 +42,7 @@ pub enum ScalingType {
 /// Scaling value with both the [`ScalingType`] and the size of the data.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Scaling {
     typ: ScalingType,

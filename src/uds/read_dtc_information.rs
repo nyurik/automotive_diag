@@ -1,8 +1,14 @@
 #[cfg(doc)]
 use crate::uds::UdsCommand;
-use crate::utils::enum_wrapper;
+use crate::utils::{enum_wrapper, python_test};
 
 enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte, display = @"10134386477669841736");
+python_test!(
+    uds,
+    DtcSubFunction,
+    ReportNumberOfDtcByStatusMask,
+    ReportDtcByStatusMask
+);
 
 /// [`UdsCommand::ReadDTCInformation`] sub-function definitions
 #[repr(u8)]
@@ -10,6 +16,7 @@ enum_wrapper!(uds, DtcSubFunction, DtcSubFunctionByte, display = @"1013438647766
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[allow(clippy::doc_markdown, clippy::enum_variant_names)]
 pub enum DtcSubFunction {

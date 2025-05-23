@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(uds, UdsCommand, UdsCommandByte, display = @"10111100423397497463");
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(uds, UdsCommand, UdsCommandByte, display = @"10111100423397497463");
+python_test!(uds, UdsCommand, DiagnosticSessionControl, ECUReset);
 
 /// UDS Command Service IDs
 #[repr(u8)]
@@ -6,6 +9,7 @@ crate::utils::enum_wrapper!(uds, UdsCommand, UdsCommandByte, display = @"1011110
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum UdsCommand {
     /// The client requests to control a diagnostic session with a server(s).

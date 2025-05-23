@@ -1,10 +1,14 @@
-crate::utils::enum_wrapper!(obd2, DataPid, DataPidByte);
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(obd2, DataPid, DataPidByte);
+python_test!(obd2, DataPid, PidSupport0120, PidSupport6180);
 
 /// OBD2 data PIDs used for Service 01 and 02
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum DataPid {
     PidSupport0120 = 0x00,

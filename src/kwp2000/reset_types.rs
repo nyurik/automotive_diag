@@ -1,6 +1,9 @@
 //! This service requests the ECU to perform a reset
 
-crate::utils::enum_wrapper!(kwp2000, ResetType, ResetTypeByte, display = @"157395241436022347");
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(kwp2000, ResetType, ResetTypeByte, display = @"157395241436022347");
+python_test!(kwp2000, ResetType, PowerOnReset, NonVolatileMemoryReset);
 
 /// ECU Reset types
 ///
@@ -15,6 +18,7 @@ crate::utils::enum_wrapper!(kwp2000, ResetType, ResetTypeByte, display = @"15739
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ResetType {
     /// Simulates a power off/on reset of the ECU.

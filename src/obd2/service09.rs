@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(obd2, Service09Pid, Service09PidByte, display = @"7936397335745330157");
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(obd2, Service09Pid, Service09PidByte, display = @"7936397335745330157");
+python_test!(obd2, Service09Pid, VinMsgCount, Vin);
 
 /// OBD2 service 09 (Request vehicle information) PIDs
 #[repr(u8)]
@@ -6,6 +9,7 @@ crate::utils::enum_wrapper!(obd2, Service09Pid, Service09PidByte, display = @"79
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Service09Pid {
     /// VIN message count (Only for LIN)

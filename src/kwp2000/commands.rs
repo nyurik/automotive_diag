@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
+python_test!(kwp2000, KwpCommand, StartDiagnosticSession, ECUReset);
 
 /// KWP Command Service IDs.
 ///
@@ -8,6 +11,7 @@ crate::utils::enum_wrapper!(kwp2000, KwpCommand, KwpCommandByte);
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum KwpCommand {
     /// Start or change ECU diagnostic session mode.
