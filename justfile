@@ -85,6 +85,8 @@ test:
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features uds
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features defmt,iter,uds,obd2,kwp2000
     RUSTFLAGS='-D warnings' cargo test --features serde
+    RUSTFLAGS='-D warnings' cargo test --features pyo3
+    RUSTFLAGS='-D warnings' cargo test --features pyo3,serde
 
 # Test documentation
 test-doc:

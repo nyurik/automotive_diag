@@ -1,14 +1,16 @@
 #[cfg(doc)]
 use crate::uds::SecurityOperation;
-use crate::utils::enum_wrapper;
+use crate::utils::{enum_wrapper, python_test};
 
 enum_wrapper!(uds, UdsError, UdsErrorByte);
+python_test!(uds, UdsError, GeneralReject, ServiceNotSupported);
 
 /// UDS Error definitions
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum UdsError {
     /// ECU rejected the request (No specific error)

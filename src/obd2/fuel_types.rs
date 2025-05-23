@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte, display = @"8724297537048401983");
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte, display = @"8724297537048401983");
+python_test!(obd2, FuelTypeCoding, NotAvailable, Gasoline);
 
 /// Fuel type coding for PID 51
 #[allow(non_camel_case_types)]
@@ -7,6 +10,7 @@ crate::utils::enum_wrapper!(obd2, FuelTypeCoding, FuelTypeCodingByte, display = 
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[allow(clippy::upper_case_acronyms)]
 pub enum FuelTypeCoding {

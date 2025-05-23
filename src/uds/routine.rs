@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
+python_test!(uds, RoutineControlType, StartRoutine, StopRoutine);
 
 /// UDS Routine (0x31) service control types.
 /// See chapter `14.2 RoutineControl service` in the ISO 14229 spec.
@@ -6,6 +9,7 @@ crate::utils::enum_wrapper!(uds, RoutineControlType, RoutineControlTypeByte);
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RoutineControlType {
     /// Launches a routine on the ECU

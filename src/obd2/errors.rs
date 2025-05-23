@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte, display = @"5836240184362350709");
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte, display = @"5836240184362350709");
+python_test!(obd2, Obd2Error, GeneralReject, FormatIncorrect);
 
 /// OBD2 Error definitions
 #[repr(u8)]
@@ -6,6 +9,7 @@ crate::utils::enum_wrapper!(obd2, Obd2Error, Obd2ErrorByte, display = @"58362401
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Obd2Error {
     /// ECU general reject

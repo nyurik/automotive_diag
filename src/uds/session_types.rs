@@ -1,10 +1,14 @@
-crate::utils::enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(uds, UdsSessionType, UdsSessionTypeByte);
+python_test!(uds, UdsSessionType, Default, Programming);
 
 /// UDS Diagnostic session modes. Handled by SID 0x10
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum UdsSessionType {
     /// Default diagnostic session mode (ECU is normally in this mode on startup)

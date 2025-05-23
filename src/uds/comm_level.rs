@@ -1,10 +1,14 @@
-crate::utils::enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(uds, CommunicationLevel, CommunicationLevelByte);
+python_test!(uds, CommunicationLevel, EnableRxAndTx, EnableRxDisableTx);
 
 /// Communication level toggle
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum CommunicationLevel {
     /// This value indicates that the reception and transmission of messages

@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(obd2, ObdStandard, ObdStandardByte, display = @"16384231687073919054");
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(obd2, ObdStandard, ObdStandardByte, display = @"16384231687073919054");
+python_test!(obd2, ObdStandard, OBD_II_CARB, OBD_EPA);
 
 /// OBD Standard for PID 1C
 #[allow(non_camel_case_types)]
@@ -7,6 +10,7 @@ crate::utils::enum_wrapper!(obd2, ObdStandard, ObdStandardByte, display = @"1638
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "display", derive(displaydoc::Display))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[allow(clippy::doc_markdown, clippy::upper_case_acronyms)]
 pub enum ObdStandard {

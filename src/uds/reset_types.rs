@@ -1,10 +1,14 @@
-crate::utils::enum_wrapper!(uds, ResetType, ResetTypeByte);
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(uds, ResetType, ResetTypeByte);
+python_test!(uds, ResetType, HardReset, SoftReset);
 
 /// Reset ECU subcommand
 #[repr(u8)]
 #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
+#[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ResetType {
     /// Signals the ECU to perform a hard-reset,

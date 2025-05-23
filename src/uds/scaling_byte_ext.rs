@@ -1,4 +1,7 @@
-crate::utils::enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);
+use crate::utils::{enum_wrapper, python_test};
+
+enum_wrapper!(uds, ScalingExtension, ScalingExtensionByte);
+python_test!(uds, ScalingExtension, NoUnit, Meter);
 
 /// A macro rule to generate prefix and postfix functions from a single enum
 macro_rules! generate_enum {
@@ -64,7 +67,8 @@ generate_enum! {
     #[repr(u8)]
     #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
     #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
-    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum ScalingExtension {
         /// No unit or presentation
         NoUnit = 0x00,
