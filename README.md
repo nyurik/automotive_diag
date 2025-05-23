@@ -11,12 +11,12 @@ This crate provides low-level `no_std` structs and enums of
 the [Unified Diagnostic Services](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services) (ISO-14229-1),
 [KWP2000](https://en.wikipedia.org/wiki/Keyword_Protocol_2000) (ISO-142330) and
 [OBD-II](https://en.wikipedia.org/wiki/On-board_diagnostics) (ISO-9141)
-specifications for the road vehicles in Rust.
+specifications for the road vehicles in Rust. Optionally supports `defmt`, `serde`, and `pyo3`. See features section in the `Cargo.toml` file.
 
 Most features have been implemented and documented to handle the most common diagnostic commands and responses.
 If you find a missing feature, please open an issue or better yet, a pull request.
 
-The long term goal is to provide all core functionality for message definitions and (de-)serialization, supporting both the `no_std` and `std` environments.
+The long-term goal is to provide all core functionality for message definitions and (de-)serialization, supporting both the `no_std` and `std` environments.
 
 ## Usage
 

@@ -14,12 +14,16 @@ rust-version = "1.70"
 default = ["std", "iter", "display", "kwp2000", "obd2", "uds"]
 # Include support for std library. Without this feature, uses `no_std` attribute
 std = ["strum/default"]
-# Add Enum::iter() implementation for all enums
-iter = []
 # Add support for `defmt` logging
 defmt = ["dep:defmt"]
 # Add Display trait for all enums, using doc comments as display strings. Requires `std`.
 display = ["std", "dep:displaydoc"]
+# Add Enum::iter() implementation for all enums
+iter = []
+# Generate Python bindings for enums using pyo3. Requires std.
+pyo3 = ["std", "dep:pyo3"]
+# Include support for serde serialization
+serde = ["dep:serde"]
 # Include support for Keyword protocol 2000 - ISO-142330
 kwp2000 = []
 with-kwp2000 = ["kwp2000"] # deprecated, use `kwp2000` instead
@@ -29,10 +33,6 @@ with-obd2 = ["obd2"] # deprecated, use `obd2` instead
 # Include support for Unified Diagnostic Services - ISO-14229-1
 uds = []
 with-uds = ["uds"] # deprecated, use `uds` instead
-# Include support for serde serialization
-serde = ["dep:serde"]
-# Generate Python bindings for enums using pyo3. Requires std.
-pyo3 = ["std", "dep:pyo3"]
 
 [dependencies]
 defmt = { version = "1.0.1", optional = true }
