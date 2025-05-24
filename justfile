@@ -78,20 +78,26 @@ ci-coverage: && \
     mkdir -p target/llvm-cov
 
 # Run all tests
-test:
-    # Ensure std is only enabled in serde when expected
-    cargo tree --invert serde --format '{p} {f}' --depth 0 --edges normal --no-default-features --features serde | tee /dev/stderr | grep std \
-      && echo 'std is enabled in serde in non-default mode' && exit 1 || echo 'std is not enabled as expected'
-    cargo tree --invert serde --format '{p} {f}' --depth 0 --edges normal --features serde | tee /dev/stderr | grep -v std \
-      && echo 'std is not enabled in serde in default mode' && exit 1 || echo 'std is enabled as expected'
+test: \
+        (test-std-enabled-disabled "serde" "--features serde" ) \
+        (test-std-enabled-disabled "displaydoc" "--features display" ) \
+        (test-std-enabled-disabled "strum" "" )
     RUSTFLAGS='-D warnings' cargo test --workspace --all-targets --all-features
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features kwp2000
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features obd2
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features uds
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features doip
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features defmt,iter,serde,doip,uds,obd2,kwp2000
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features defmt,display,iter,serde,doip,uds,obd2,kwp2000
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features std,doip,uds,obd2,kwp2000
     RUSTFLAGS='-D warnings' cargo test --features pyo3
     RUSTFLAGS='-D warnings' cargo test --features pyo3,serde
+
+# Ensure std is only enabled in the dependency when expected
+test-std-enabled-disabled dependency feature:
+    cargo tree --invert {{dependency}} --format '{p} {f}' --depth 0 --edges normal --no-default-features {{feature}} | tee /dev/stderr | grep std \
+      && echo 'std is enabled in {{dependency}} in non-default mode' && exit 1 || echo 'std is not enabled in {{dependency}} as expected'
+    cargo tree --invert {{dependency}} --format '{p} {f}' --depth 0 --edges normal {{feature}} | tee /dev/stderr | grep -v std \
+      && echo 'std is not enabled in {{dependency}} in default mode' && exit 1 || echo 'std is enabled in {{dependency}} as expected'
 
 # Test documentation
 test-doc:
