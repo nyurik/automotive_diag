@@ -79,13 +79,17 @@ ci-coverage: && \
 
 # Run all tests
 test:
+    # Ensure std is only enabled in serde when expected
+    cargo tree --invert serde --format '{p} {f}' --depth 0 --edges normal --no-default-features --features serde | tee /dev/stderr | grep std \
+      && echo 'std is enabled in serde in non-default mode' && exit 1 || echo 'std is not enabled as expected'
+    cargo tree --invert serde --format '{p} {f}' --depth 0 --edges normal --features serde | tee /dev/stderr | grep -v std \
+      && echo 'std is not enabled in serde in default mode' && exit 1 || echo 'std is enabled as expected'
     RUSTFLAGS='-D warnings' cargo test --workspace --all-targets --all-features
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features kwp2000
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features obd2
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features uds
     RUSTFLAGS='-D warnings' cargo test --no-default-features --features doip
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features defmt,iter,doip,uds,obd2,kwp2000
-    RUSTFLAGS='-D warnings' cargo test --features serde
+    RUSTFLAGS='-D warnings' cargo test --no-default-features --features defmt,iter,serde,doip,uds,obd2,kwp2000
     RUSTFLAGS='-D warnings' cargo test --features pyo3
     RUSTFLAGS='-D warnings' cargo test --features pyo3,serde
 
