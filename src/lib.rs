@@ -2,9 +2,16 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 // It makes no sense to use this crate without at least one of the core features enabled
-#[cfg(not(any(feature = "kwp2000", feature = "obd2", feature = "uds")))]
-compile_error!("At least one of the features `kwp2000`, `obd2`, or `uds` must be enabled!");
+#[cfg(not(any(
+    feature = "doip",
+    feature = "kwp2000",
+    feature = "obd2",
+    feature = "uds",
+)))]
+compile_error!("At least one of the features `doip`, `kwp2000`, `obd2`, or `uds` must be enabled!");
 
+#[cfg(feature = "doip")]
+pub mod doip;
 #[cfg(feature = "kwp2000")]
 pub mod kwp2000;
 #[cfg(feature = "obd2")]
