@@ -68,7 +68,7 @@ generate_enum! {
     #[derive(strum::FromRepr, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
     #[cfg_attr(feature = "iter", derive(strum::EnumIter))]
     #[cfg_attr(feature = "pyo3", pyo3::pyclass(eq, eq_int))]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum ScalingExtension {
         /// No unit or presentation
         NoUnit = 0x00,

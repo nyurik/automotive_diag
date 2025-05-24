@@ -91,8 +91,8 @@ test:
 
 # Test documentation
 test-doc:
-    RUSTDOCFLAGS="-D warnings" cargo test --doc
-    RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
+    RUSTDOCFLAGS="-D warnings" cargo test --doc --all-features
+    RUSTDOCFLAGS="-D warnings" cargo doc --all-features --no-deps
 
 # Print Rust version information
 @rust-info:

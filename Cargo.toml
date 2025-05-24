@@ -59,3 +59,6 @@ pedantic = { level = "warn", priority = -1 }
 missing_errors_doc = "allow"
 module_name_repetitions = "allow"
 unwrap_used = "warn"
+
+[package.metadata.docs.rs]
+all-features = true
