@@ -175,7 +175,7 @@ macro_rules! python_test {
 }
 
 /// Compute the combined value of all `Display` representations of all enum variants for hashing purposes.
-#[cfg(all(test, feature = "iter", feature = "display"))]
+#[cfg(all(test, feature = "std", feature = "iter", feature = "display"))]
 pub(crate) fn calc_display_hash<T: strum::IntoEnumIterator + std::fmt::Display>() -> u64 {
     use std::hash::Hasher as _;
 
@@ -189,7 +189,7 @@ pub(crate) fn calc_display_hash<T: strum::IntoEnumIterator + std::fmt::Display>(
 /// Assert that the display hash of an enum matches the expected value.
 macro_rules! assert_display_hash {
     ($enm:ty, $($arg:tt)*) => {
-        #[cfg(all(test, feature = "iter", feature = "display"))]
+        #[cfg(all(test, feature = "std", feature = "iter", feature = "display"))]
         mod display_hash_tests {
             use super::*;
             use insta::assert_debug_snapshot;
