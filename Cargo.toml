@@ -11,7 +11,7 @@ categories = ["embedded", "no-std", "encoding", "parsing"]
 rust-version = "1.70"
 
 [features]
-default = ["std", "iter", "display", "doip", "kwp2000", "obd2", "uds"]
+default = ["std", "iter", "display", "kwp2000", "obd2", "uds"]
 # Include support for std library. Without this feature, uses `no_std` attribute
 std = ["strum/default"]
 # Add support for `defmt` logging
@@ -24,7 +24,7 @@ iter = []
 pyo3 = ["std", "dep:pyo3"]
 # Include support for serde serialization
 serde = ["dep:serde"]
-# Include support for DoIP - ISO-13400
+# Include support for DoIP - ISO-13400. This feature is unstable, and is not enabled by default.
 doip = []
 # Include support for Keyword protocol 2000 - ISO-142330
 kwp2000 = []
