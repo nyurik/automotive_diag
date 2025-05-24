@@ -61,7 +61,7 @@ fn handle_cmd_byte(cmd: u8) {
 
 The code was forked from the amazing [rnd-ash/ecu_diagnostics](https://github.com/rnd-ash/ecu_diagnostics) project. The
 code was forked from the last MIT-versioned code before the MIT to GPL license migration. Initially, this code was
-developed as a deprecated [auto_uds](https://crates.io/crates/auto_uds) crate. The DoIP definitions were adapted from
+developed as a deprecated [auto_uds](https://crates.io/crates/auto_uds) crate. The `DoIP` definitions were adapted from
 the MIT-licensed [samp-reston/doip-definitions](https://github.com/samp-reston/doip-definitions) project.
 
 ## License
