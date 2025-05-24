@@ -140,7 +140,22 @@ macro_rules! enum_byte_wrapper {
 
 /// Generates a python wrapper test
 macro_rules! python_test {
-    ($($ns:ident, $enum_name:ident, $val1:ident, $val2:ident $(;)?)+) => {
+    ($ns:ident, $enum_name:ident, $val1:ident) => {
+        $crate::utils::python_test!($ns, $enum_name, $val1, $val1 =>
+            format!(r#"assert a == enm.{}
+                       assert a == b
+                    "#, stringify!($val1)));
+    };
+
+    ($ns:ident, $enum_name:ident, $val1:ident, $val2:ident) => {
+        $crate::utils::python_test!($ns, $enum_name, $val1, $val2 =>
+            format!(r#"assert a == enm.{}
+                       assert b == enm.{}
+                       assert a != b
+                    "#, stringify!($val1), stringify!($val2)));
+    };
+
+    ($ns:ident, $enum_name:ident, $val1:ident, $val2:ident => $code:expr) => {
         #[cfg(all(test, feature = "pyo3"))]
         mod enum_python_tests {
             use pyo3::{prepare_freethreaded_python, Py, Python};
@@ -149,16 +164,10 @@ macro_rules! python_test {
             fn test_py() {
                 prepare_freethreaded_python();
                 Python::with_gil(|py| {
-                    $(
-                        let a = Py::new(py, $crate::$ns::$enum_name::$val1).unwrap();
-                        let b = Py::new(py, $crate::$ns::$enum_name::$val2).unwrap();
-                        let enm = py.get_type::<$crate::$ns::$enum_name>();
-                        pyo3::py_run!(py, a b enm, &format!(r#"
-                            assert a == enm.{}
-                            assert b == enm.{}
-                            assert a != b
-                        "#, stringify!($val1), stringify!($val2)));
-                    )+
+                    let a = Py::new(py, $crate::$ns::$enum_name::$val1).unwrap();
+                    let b = Py::new(py, $crate::$ns::$enum_name::$val2).unwrap();
+                    let enm = py.get_type::<$crate::$ns::$enum_name>();
+                    pyo3::py_run!(py, a b enm, &$code)
                 })
             }
         }
