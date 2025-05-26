@@ -50,7 +50,7 @@ test-fmt:
 fmt:
     #!/usr/bin/env bash
     set -euo pipefail
-    if command -v cargo +nightly &> /dev/null; then
+    if rustup component list --toolchain nightly | grep rustfmt &> /dev/null; then
         echo 'Reformatting Rust code using nightly Rust fmt to sort imports'
         cargo +nightly fmt --all -- --config imports_granularity=Module,group_imports=StdExternalCrate
     else
@@ -104,16 +104,19 @@ test-doc:
     RUSTDOCFLAGS="-D warnings" cargo test --doc --all-features
     RUSTDOCFLAGS="-D warnings" cargo doc --all-features --no-deps
 
-# Print Rust version information
-@rust-info:
+# Print environment info
+env-info:
+    @echo "Running on {{os()}} / {{arch()}}"
+    {{just_executable()}} --version
     rustc --version
     cargo --version
+    rustup --version
 
 # Run all tests as expected by CI
-ci-test: rust-info test-fmt clippy check test test-doc
+ci-test: env-info test-fmt clippy check test test-doc
 
 # Run minimal subset of tests to ensure compatibility with MSRV
-ci-test-msrv: rust-info check test
+ci-test-msrv: env-info check test
 
 # Test building for an embedded no_std target
 ci-build-thumbv7em-none-eabi: (rustup-add-target "thumbv7em-none-eabi")
@@ -142,11 +145,11 @@ cargo-install $COMMAND $INSTALL_CMD="" *ARGS="":
     set -eu
     if ! command -v $COMMAND > /dev/null; then
         if ! command -v cargo-binstall > /dev/null; then
-            echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} {{ARGS}}"
-            cargo install ${INSTALL_CMD:-$COMMAND} {{ARGS}}
+            echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}"
+            cargo install ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}
         else
-            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} {{ARGS}}"
-            cargo binstall ${INSTALL_CMD:-$COMMAND} {{ARGS}}
+            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}"
+            cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}
         fi
     fi
 
