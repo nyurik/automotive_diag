@@ -5,153 +5,17 @@ CRATE_NAME := "automotive_diag"
 @_default:
     just --list
 
-# Clean all build artifacts
-clean:
-    cargo clean
-    rm -f Cargo.lock
-
-# Update all dependencies, including breaking changes. Requires nightly toolchain (install with `rustup install nightly`)
-update:
-    cargo +nightly -Z unstable-options update --breaking
-    cargo update
-
-# Find unused dependencies. Install it with `cargo install cargo-udeps`
-udeps:
-    cargo +nightly udeps --all-targets --workspace --all-features
-
-# Check semver compatibility with prior published version. Install it with `cargo install cargo-semver-checks`
-semver *ARGS:
-    cargo semver-checks {{ARGS}}
-
-# Find the minimum supported Rust version (MSRV) using cargo-msrv extension, and update Cargo.toml
-msrv:
-    cargo msrv find --write-msrv --ignore-lockfile --all-features
-
-# Get the minimum supported Rust version (MSRV) for the crate
-get-msrv: (get-crate-field "rust_version")
-
-# Get any package's field from the metadata
-get-crate-field field package=CRATE_NAME:
-    cargo metadata --format-version 1 | jq -r '.packages | map(select(.name == "{{package}}")) | first | .{{field}}'
+# Run integration tests and save its output as the new expected output
+bless *ARGS: (cargo-install "insta" "cargo-insta")
+    cargo insta test --accept --unreferenced=delete --all-features {{ARGS}}
 
 build:
     cargo build --workspace --all-targets
-
-# Run cargo clippy to lint the code
-clippy:
-    cargo clippy --workspace --all-targets -- -D warnings
-    cargo clippy --no-default-features --features uds -- -D warnings
-
-# Test code formatting
-test-fmt:
-    cargo fmt --all -- --check
-
-# Reformat all code `cargo fmt`. If nightly is available, use it for better results
-fmt:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    if rustup component list --toolchain nightly | grep rustfmt &> /dev/null; then
-        echo 'Reformatting Rust code using nightly Rust fmt to sort imports'
-        cargo +nightly fmt --all -- --config imports_granularity=Module,group_imports=StdExternalCrate
-    else
-        echo 'Reformatting Rust with the stable cargo fmt.  Install nightly with `rustup install nightly` for better results'
-        cargo fmt --all
-    fi
-
-# Build and open code documentation
-docs:
-    cargo doc --no-deps --open
 
 # Quick compile without building a binary
 check:
     RUSTFLAGS='-D warnings' cargo check --workspace --all-targets
     RUSTFLAGS='-D warnings' cargo check --no-default-features --features uds --all-targets
-
-# Generate code coverage report
-coverage *ARGS="--no-clean --open":
-    cargo llvm-cov --workspace --all-targets --all-features --include-build-script {{ARGS}}
-
-# Generate code coverage report to upload to codecov.io
-ci-coverage: && \
-            (coverage '--codecov --output-path target/llvm-cov/codecov.info')
-    # ATTENTION: the full file path above is used in the CI workflow
-    mkdir -p target/llvm-cov
-
-# Run all tests
-test: \
-        (test-std-enabled-disabled "serde" "--features serde" ) \
-        (test-std-enabled-disabled "displaydoc" "--features display" ) \
-        (test-std-enabled-disabled "strum" "" )
-    RUSTFLAGS='-D warnings' cargo test --workspace --all-targets --all-features
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features kwp2000
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features obd2
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features uds
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features doip
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features defmt,display,iter,serde,doip,uds,obd2,kwp2000
-    RUSTFLAGS='-D warnings' cargo test --no-default-features --features std,doip,uds,obd2,kwp2000
-    RUSTFLAGS='-D warnings' cargo test --features pyo3
-    RUSTFLAGS='-D warnings' cargo test --features pyo3,serde
-
-# Ensure std is only enabled in the dependency when expected
-test-std-enabled-disabled dependency feature:
-    cargo tree --invert {{dependency}} --format '{p} {f}' --depth 0 --edges normal --no-default-features {{feature}} | tee /dev/stderr | grep std \
-      && echo 'std is enabled in {{dependency}} in non-default mode' && exit 1 || echo 'std is not enabled in {{dependency}} as expected'
-    cargo tree --invert {{dependency}} --format '{p} {f}' --depth 0 --edges normal {{feature}} | tee /dev/stderr | grep -v std \
-      && echo 'std is not enabled in {{dependency}} in default mode' && exit 1 || echo 'std is enabled in {{dependency}} as expected'
-
-# Test documentation
-test-doc:
-    RUSTDOCFLAGS="-D warnings" cargo test --doc --all-features
-    RUSTDOCFLAGS="-D warnings" cargo doc --all-features --no-deps
-
-# Print environment info
-env-info:
-    @echo "Running on {{os()}} / {{arch()}}"
-    {{just_executable()}} --version
-    rustc --version
-    cargo --version
-    rustup --version
-
-# Run all tests as expected by CI
-ci-test: env-info test-fmt clippy check test test-doc
-
-# Run minimal subset of tests to ensure compatibility with MSRV
-ci-test-msrv: env-info check test
-
-# Test building for an embedded no_std target
-ci-build-thumbv7em-none-eabi: (rustup-add-target "thumbv7em-none-eabi")
-    cargo build --target thumbv7em-none-eabi --no-default-features --features "iter,kwp2000,obd2,uds"
-
-# Run integration tests and save its output as the new expected output
-bless *ARGS: (cargo-install "insta" "cargo-insta")
-    cargo insta test --accept --unreferenced=delete --all-features {{ARGS}}
-
-# Check if cargo target is already installed, and install if needed
-[private]
-rustup-add-target target:
-    #!/usr/bin/env sh
-    set -eu
-    if ! rustup target list --installed | grep -q {{quote(target)}}; then
-        echo "Adding target {{target}}"
-        rustup target add {{quote(target)}}
-    else
-        echo "Target {{target}} is already installed"
-    fi
-
-# Check if a certain Cargo command is installed, and install it if needed
-[private]
-cargo-install $COMMAND $INSTALL_CMD="" *ARGS="":
-    #!/usr/bin/env sh
-    set -eu
-    if ! command -v $COMMAND > /dev/null; then
-        if ! command -v cargo-binstall > /dev/null; then
-            echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}"
-            cargo install ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}
-        else
-            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}"
-            cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}
-        fi
-    fi
 
 # Verify that the current version of the crate is not the same as the one published on crates.io
 check-if-published:
@@ -168,3 +32,146 @@ check-if-published:
     else
         echo "The current crate version has not yet been published."
     fi
+
+# Test building for an embedded no_std target
+ci-build-thumbv7em-none-eabi: (rustup-add-target "thumbv7em-none-eabi")
+    cargo build --target thumbv7em-none-eabi --no-default-features --features "iter,kwp2000,obd2,uds"
+
+# Generate code coverage report to upload to codecov.io
+ci-coverage: && \
+            (coverage '--codecov --output-path target/llvm-cov/codecov.info')
+    # ATTENTION: the full file path above is used in the CI workflow
+    mkdir -p target/llvm-cov
+
+# Run minimal subset of tests to ensure compatibility with MSRV
+ci-test-msrv: env-info check test
+
+
+# Run all tests as expected by CI
+ci-test: env-info test-fmt clippy check test test-doc
+
+
+# Clean all build artifacts
+clean:
+    cargo clean
+    rm -f Cargo.lock
+
+# Run cargo clippy to lint the code
+clippy:
+    cargo clippy --workspace --all-targets -- -D warnings
+    cargo clippy --no-default-features --features uds -- -D warnings
+
+# Generate code coverage report
+coverage *ARGS="--no-clean --open":
+    cargo llvm-cov --workspace --all-targets --all-features --include-build-script {{ARGS}}
+
+# Build and open code documentation
+docs:
+    cargo doc --no-deps --open
+
+# Print environment info
+env-info:
+    @echo "Running on {{os()}} / {{arch()}}"
+    {{just_executable()}} --version
+    rustc --version
+    cargo --version
+    rustup --version
+
+# Reformat all code `cargo fmt`. If nightly is available, use it for better results
+fmt:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if rustup component list --toolchain nightly | grep rustfmt &> /dev/null; then
+        echo 'Reformatting Rust code using nightly Rust fmt to sort imports'
+        cargo +nightly fmt --all -- --config imports_granularity=Module,group_imports=StdExternalCrate
+    else
+        echo 'Reformatting Rust with the stable cargo fmt.  Install nightly with `rustup install nightly` for better results'
+        cargo fmt --all
+    fi
+
+# Get any package's field from the metadata
+get-crate-field field package=CRATE_NAME:
+    cargo metadata --format-version 1 | jq -r '.packages | map(select(.name == "{{package}}")) | first | .{{field}}'
+
+# Get the minimum supported Rust version (MSRV) for the crate
+get-msrv: (get-crate-field "rust_version")
+
+
+# Find the minimum supported Rust version (MSRV) using cargo-msrv extension, and update Cargo.toml
+msrv:
+    cargo msrv find --write-msrv --ignore-lockfile --all-features
+
+# Check semver compatibility with prior published version. Install it with `cargo install cargo-semver-checks`
+semver *ARGS:
+    cargo semver-checks {{ARGS}}
+
+# Test documentation
+test-doc:
+    RUSTDOCFLAGS="-D warnings" cargo test --doc --all-features
+    RUSTDOCFLAGS="-D warnings" cargo doc --all-features --no-deps
+
+# Test code formatting
+test-fmt:
+    cargo fmt --all -- --check
+
+# Run all tests
+test: \
+        (test-std-enabled-disabled "serde" "--features serde" ) \
+        (test-std-enabled-disabled "displaydoc" "--features display" ) \
+        (test-std-enabled-disabled "strum" "" )
+    #!/usr/bin/env bash
+    set -euo pipefail
+    export RUSTFLAGS='-D warnings'
+    cargo test --workspace --all-targets --all-features
+    cargo test --no-default-features --features kwp2000
+    cargo test --no-default-features --features obd2
+    cargo test --no-default-features --features uds
+    cargo test --no-default-features --features doip
+    cargo test --no-default-features --features defmt,display,iter,serde,doip,uds,obd2,kwp2000
+    cargo test --no-default-features --features std,doip,uds,obd2,kwp2000
+    cargo test --features pyo3
+    cargo test --features pyo3,serde
+
+# Find unused dependencies. Install it with `cargo install cargo-udeps`
+udeps:
+    cargo +nightly udeps --all-targets --workspace --all-features
+
+# Update all dependencies, including breaking changes. Requires nightly toolchain (install with `rustup install nightly`)
+update:
+    cargo +nightly -Z unstable-options update --breaking
+    cargo update
+
+# Check if a certain Cargo command is installed, and install it if needed
+[private]
+cargo-install $COMMAND $INSTALL_CMD="" *ARGS="":
+    #!/usr/bin/env sh
+    set -eu
+    if ! command -v $COMMAND > /dev/null; then
+        if ! command -v cargo-binstall > /dev/null; then
+            echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}"
+            cargo install ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}
+        else
+            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}"
+            cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{ARGS}}
+        fi
+    fi
+
+# Check if cargo target is already installed, and install if needed
+[private]
+rustup-add-target target:
+    #!/usr/bin/env sh
+    set -eu
+    if ! rustup target list --installed | grep -q {{quote(target)}}; then
+        echo "Adding target {{target}}"
+        rustup target add {{quote(target)}}
+    else
+        echo "Target {{target}} is already installed"
+    fi
+
+# Ensure std is only enabled in the dependency when expected
+[private]
+test-std-enabled-disabled dependency feature:
+    cargo tree --invert {{dependency}} --format '{p} {f}' --depth 0 --edges normal --no-default-features {{feature}} | tee /dev/stderr | grep std \
+      && echo 'std is enabled in {{dependency}} in non-default mode' && exit 1 || echo 'std is not enabled in {{dependency}} as expected'
+    cargo tree --invert {{dependency}} --format '{p} {f}' --depth 0 --edges normal {{feature}} | tee /dev/stderr | grep -v std \
+      && echo 'std is not enabled in {{dependency}} in default mode' && exit 1 || echo 'std is enabled in {{dependency}} as expected'
