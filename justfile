@@ -30,9 +30,9 @@ check-if-published:
     #!/usr/bin/env bash
     set -euo pipefail
     LOCAL_VERSION="$({{just_executable()}} get-crate-field version)"
-    echo "Detected crate version: '$LOCAL_VERSION'"
+    echo "Detected crate version:  '$LOCAL_VERSION'"
     CRATE_NAME="$({{just_executable()}} get-crate-field name)"
-    echo "Detected crate name:    '$CRATE_NAME'"
+    echo "Detected crate name:     '$CRATE_NAME'"
     PUBLISHED_VERSION="$(cargo search ${CRATE_NAME} | grep "^${CRATE_NAME} =" | sed -E 's/.* = "(.*)".*/\1/')"
     echo "Published crate version: '$PUBLISHED_VERSION'"
     if [ "$LOCAL_VERSION" = "$PUBLISHED_VERSION" ]; then

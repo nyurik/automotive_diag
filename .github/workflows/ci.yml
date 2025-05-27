@@ -49,7 +49,7 @@ jobs:
           toolchain: ${{ steps.msrv.outputs.value }}
       - run: just ci-test-msrv
         env:
-          # Ignore warnings in MSRV. Sadly this cannot be done inside `just ci-test-msrv`
+          # Ignore warnings in MSRV. Sadly, this cannot be done inside `just ci-test-msrv`
           CI: ''
 
   coverage:
