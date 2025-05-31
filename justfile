@@ -13,7 +13,7 @@ export RUST_BACKTRACE := env('RUST_BACKTRACE', if env('CI', '') == 'true' {'1'} 
     just --list
 
 # Run integration tests and save its output as the new expected output
-bless *args:  (cargo-install 'insta' 'cargo-insta')
+bless *args:  (cargo-install 'cargo-insta')
     cargo insta test --accept --unreferenced=delete --all-features {{args}}
 
 # Build the project
@@ -26,7 +26,7 @@ check:
     cargo check --no-default-features --features uds --all-targets
 
 # Verify that the current version of the crate is not the same as the one published on crates.io
-check-if-published:
+check-if-published:  (assert 'jq')
     #!/usr/bin/env bash
     set -euo pipefail
     LOCAL_VERSION="$({{just_executable()}} get-crate-field version)"
@@ -153,6 +153,14 @@ udeps:  (cargo-install 'cargo-udeps')
 update:
     cargo +nightly -Z unstable-options update --breaking
     cargo update
+
+# Ensure that a certain command is available
+[private]
+assert $COMMAND:
+    @if ! type "{{COMMAND}}" > /dev/null; then \
+        echo "Command '{{COMMAND}}' could not be found. Please make sure it has been installed on your computer." ;\
+        exit 1 ;\
+    fi
 
 # Check if a certain Cargo command is installed, and install it if needed
 [private]
