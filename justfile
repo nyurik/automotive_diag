@@ -1,6 +1,6 @@
 #!/usr/bin/env just --justfile
 
-CRATE_NAME := 'automotive_diag'
+main_crate := 'automotive_diag'
 
 # if running in CI, treat warnings as errors by setting RUSTFLAGS and RUSTDOCFLAGS to '-D warnings' unless they are already set
 # Use `CI=true just ci-test` to run the same tests as in GitHub CI.
@@ -72,9 +72,9 @@ clean:
     rm -f Cargo.lock
 
 # Run cargo clippy to lint the code
-clippy:
-    cargo clippy --workspace --all-targets
-    cargo clippy --no-default-features --features uds
+clippy *args:
+    cargo clippy --workspace --all-targets {{args}}
+    cargo clippy --no-default-features --features uds {{args}}
 
 # Generate code coverage report. Will install `cargo llvm-cov` if missing.
 coverage *args='--no-clean --open':  (cargo-install 'cargo-llvm-cov')
@@ -107,7 +107,7 @@ fmt:
     fi
 
 # Get any package's field from the metadata
-get-crate-field field package=CRATE_NAME:
+get-crate-field field package=main_crate:
     cargo metadata --format-version 1 | jq -r '.packages | map(select(.name == "{{package}}")) | first | .{{field}}'
 
 # Get the minimum supported Rust version (MSRV) for the crate
@@ -156,9 +156,9 @@ update:
 
 # Ensure that a certain command is available
 [private]
-assert $COMMAND:
-    @if ! type "{{COMMAND}}" > /dev/null; then \
-        echo "Command '{{COMMAND}}' could not be found. Please make sure it has been installed on your computer." ;\
+assert command:
+    @if ! type {{command}} > /dev/null; then \
+        echo "Command '{{command}}' could not be found. Please make sure it has been installed on your computer." ;\
         exit 1 ;\
     fi
 
