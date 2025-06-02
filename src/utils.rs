@@ -142,17 +142,17 @@ macro_rules! enum_byte_wrapper {
 macro_rules! python_test {
     ($ns:ident, $enum_name:ident, $val1:ident) => {
         $crate::utils::python_test!($ns, $enum_name, $val1, $val1 =>
-            format!(r#"assert a == enm.{}
+            format!("assert a == enm.{}
                        assert a == b
-                    "#, stringify!($val1)));
+                    ", stringify!($val1)));
     };
 
     ($ns:ident, $enum_name:ident, $val1:ident, $val2:ident) => {
         $crate::utils::python_test!($ns, $enum_name, $val1, $val2 =>
-            format!(r#"assert a == enm.{}
+            format!("assert a == enm.{}
                        assert b == enm.{}
                        assert a != b
-                    "#, stringify!($val1), stringify!($val2)));
+                    ", stringify!($val1), stringify!($val2)));
     };
 
     ($ns:ident, $enum_name:ident, $val1:ident, $val2:ident => $code:expr) => {
