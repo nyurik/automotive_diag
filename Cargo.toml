@@ -58,6 +58,7 @@ redundant_feature_names = "allow"  # All with-* features have been deprecated. R
 pedantic = { level = "warn", priority = -1 }
 missing_errors_doc = "allow"
 module_name_repetitions = "allow"
+unsafe_derive_deserialize = "allow"
 unwrap_used = "warn"
 
 [package.metadata.docs.rs]
