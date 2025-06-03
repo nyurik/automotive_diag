@@ -127,7 +127,7 @@ test: \
     cargo test --no-default-features --features std,doip,uds,obd2,kwp2000
     cargo test --features pyo3
     cargo test --features pyo3,serde
-    cargo test --doc --workspace {{features_flag}}
+    cargo test --workspace --doc {{features_flag}}
 
 # Test documentation generation
 test-doc: (docs '')
