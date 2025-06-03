@@ -28,14 +28,12 @@ check:
     cargo check --all-targets --no-default-features --features uds
 
 # Verify that the current version of the crate is not the same as the one published on crates.io
-check-if-published:  (assert-cmd 'jq')
+check-if-published package=main_crate:  (assert-cmd 'jq')
     #!/usr/bin/env bash
     set -euo pipefail
-    LOCAL_VERSION="$({{just_executable()}} get-crate-field version)"
-    echo "Detected crate version:  '$LOCAL_VERSION'"
-    CRATE_NAME="$({{just_executable()}} get-crate-field name)"
-    echo "Detected crate name:     '$CRATE_NAME'"
-    PUBLISHED_VERSION="$(cargo search ${CRATE_NAME} | grep "^${CRATE_NAME} =" | sed -E 's/.* = "(.*)".*/\1/')"
+    LOCAL_VERSION="$({{just_executable()}} get-crate-field version package)"
+    echo "Detected crate {{package}} version:  '$LOCAL_VERSION'"
+    PUBLISHED_VERSION="$(cargo search --quiet {{package}} | grep "^{{package}} =" | sed -E 's/.* = "(.*)".*/\1/')"
     echo "Published crate version: '$PUBLISHED_VERSION'"
     if [ "$LOCAL_VERSION" = "$PUBLISHED_VERSION" ]; then
         echo "ERROR: The current crate version has already been published."
@@ -44,10 +42,6 @@ check-if-published:  (assert-cmd 'jq')
         echo "The current crate version has not yet been published."
     fi
 
-# Test building for an embedded no_std target
-ci-build-thumbv7em-none-eabi:  (rustup-add-target 'thumbv7em-none-eabi')
-    cargo build --target thumbv7em-none-eabi --no-default-features --features "iter,kwp2000,obd2,uds"
-
 # Generate code coverage report to upload to codecov.io
 ci-coverage: env-info && \
             (coverage '--codecov --output-path target/llvm-cov/codecov.info')
@@ -55,10 +49,14 @@ ci-coverage: env-info && \
     mkdir -p target/llvm-cov
 
 # Run all tests as expected by CI
-ci-test: env-info test-fmt clippy check test test-doc && assert-git-is-clean
+ci-test: env-info test-fmt clippy check test test-doc build-thumbv7em-none-eabi && assert-git-is-clean
 
 # Run minimal subset of tests to ensure compatibility with MSRV
-ci-test-msrv: env-info check test
+ci-test-msrv: env-info test
+
+# Test building for an embedded no_std target
+build-thumbv7em-none-eabi:  (rustup-add-target 'thumbv7em-none-eabi')
+    cargo build --target thumbv7em-none-eabi --no-default-features --features "iter,kwp2000,obd2,uds"
 
 # Clean all build artifacts
 clean:
@@ -75,8 +73,8 @@ coverage *args='--no-clean --open':  (cargo-install 'cargo-llvm-cov')
     cargo llvm-cov --workspace --all-targets {{features_flag}} --include-build-script {{args}}
 
 # Build and open code documentation
-docs:
-    cargo doc --no-deps --open
+docs *args='--open':
+    DOCS_RS=1 cargo doc --no-deps {{args}} --workspace {{features_flag}}
 
 # Print environment info
 env-info:
@@ -129,11 +127,10 @@ test: \
     cargo test --no-default-features --features std,doip,uds,obd2,kwp2000
     cargo test --features pyo3
     cargo test --features pyo3,serde
-
-# Test documentation
-test-doc:
     cargo test --doc --workspace {{features_flag}}
-    cargo doc --no-deps --workspace {{features_flag}}
+
+# Test documentation generation
+test-doc: (docs '')
 
 # Test code formatting
 test-fmt:
@@ -163,6 +160,7 @@ assert-git-is-clean:
       >&2 echo "ERROR: git repo is no longer clean. Make sure compilation and tests artifacts are in the .gitignore, and no repo files are modified." ;\
       >&2 echo "######### git status ##########" ;\
       git status ;\
+      git --no-pager diff ;\
       exit 1 ;\
     fi
 
