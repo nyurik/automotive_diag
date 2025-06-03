@@ -54,10 +54,10 @@ unused_qualifications = "warn"
 
 [lints.clippy]
 cargo = { level = "warn", priority = -1 }
-redundant_feature_names = "allow"  # All with-* features have been deprecated. Remove this once they are removed
 pedantic = { level = "warn", priority = -1 }
 missing_errors_doc = "allow"
 module_name_repetitions = "allow"
+redundant_feature_names = "allow"  # All with-* features have been deprecated. Remove this once they are removed
 unsafe_derive_deserialize = "allow"
 unwrap_used = "warn"
 
