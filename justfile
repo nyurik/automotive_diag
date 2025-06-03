@@ -103,7 +103,7 @@ get-crate-field field package=main_crate:
     cargo metadata --format-version 1 | jq -r '.packages | map(select(.name == "{{package}}")) | first | .{{field}}'
 
 # Get the minimum supported Rust version (MSRV) for the crate
-get-msrv:  (get-crate-field 'rust_version')
+get-msrv package=main_crate:  (get-crate-field 'rust_version' package)
 
 # Find the minimum supported Rust version (MSRV) using cargo-msrv extension, and update Cargo.toml
 msrv:  (cargo-install 'cargo-msrv')
@@ -127,10 +127,10 @@ test: \
     cargo test --no-default-features --features std,doip,uds,obd2,kwp2000
     cargo test --features pyo3
     cargo test --features pyo3,serde
-    cargo test --doc --workspace {{features_flag}}
+    cargo test --workspace --doc {{features_flag}}
 
 # Test documentation generation
-test-doc: (docs '')
+test-doc:  (docs '')
 
 # Test code formatting
 test-fmt:
