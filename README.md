@@ -1,10 +1,10 @@
 # Automotive diagnostics in Rust
 
-[![GitHub](https://img.shields.io/badge/github-nyurik/automotive_diag-8da0cb?logo=github)](https://github.com/nyurik/automotive_diag)
+[![GitHub repo](https://img.shields.io/badge/github-nyurik/automotive_diag-8da0cb?logo=github)](https://github.com/nyurik/automotive_diag)
 [![crates.io version](https://img.shields.io/crates/v/automotive_diag)](https://crates.io/crates/automotive_diag)
-[![docs.rs](https://img.shields.io/docsrs/automotive_diag)](https://docs.rs/automotive_diag)
+[![docs.rs status](https://img.shields.io/docsrs/automotive_diag)](https://docs.rs/automotive_diag)
 [![crates.io license](https://img.shields.io/crates/l/automotive_diag)](https://github.com/nyurik/automotive_diag/blob/main/LICENSE-APACHE)
-[![CI build](https://github.com/nyurik/automotive_diag/actions/workflows/ci.yml/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
+[![CI build status](https://github.com/nyurik/automotive_diag/actions/workflows/ci.yml/badge.svg)](https://github.com/nyurik/automotive_diag/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/nyurik/automotive_diag)](https://app.codecov.io/gh/nyurik/automotive_diag)
 
 This crate provides low-level `no_std` structs and enums of
