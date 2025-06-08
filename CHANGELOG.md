@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.20](https://github.com/nyurik/automotive_diag/compare/v0.1.19...v0.1.20) - 2025-06-08
+
+### Other
+
+- remove default ci perms
+- update deps on release
+
 ## [0.1.19](https://github.com/nyurik/automotive_diag/compare/v0.1.18...v0.1.19) - 2025-06-08
 
 ### Other
