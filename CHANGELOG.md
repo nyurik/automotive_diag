@@ -9,16 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.19](https://github.com/nyurik/automotive_diag/compare/v0.1.18...v0.1.19) - 2025-06-08
 
-### Added
-
-- improve release CI condition and wording ([#46](https://github.com/nyurik/automotive_diag/pull/46))
-- consolidate release CI, dedup release and PR
-
 ### Other
 
-- use CI RELEASE_PLZ_TOKEN to release bins
-- use release-plz CI token
-- add download counter to readme
+- improve release-plz CI process
 
 ## [0.1.18](https://github.com/nyurik/automotive_diag/compare/v0.1.17...v0.1.18) - 2025-06-06
 
