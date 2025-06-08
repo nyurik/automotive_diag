@@ -77,7 +77,6 @@ jobs:
 
   # Release unpublished packages or create a PR with changes
   release-plz:
-    name: Release-plz
     if: |
       always()
       && needs.ci-passed.result == 'success'
