@@ -9,10 +9,6 @@ on:
     types: [ published ]
   workflow_dispatch:
 
-permissions:
-  pull-requests: write
-  contents: write
-
 defaults:
   run:
     shell: bash
