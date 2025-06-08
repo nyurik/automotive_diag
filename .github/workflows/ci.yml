@@ -77,13 +77,13 @@ jobs:
 
   # Release unpublished packages or create a PR with changes
   release-plz:
+    needs: [ ci-passed ]
     if: |
       always()
       && needs.ci-passed.result == 'success'
       && github.event_name == 'push'
       && github.ref == 'refs/heads/main'
       && github.repository_owner == 'nyurik'
-    needs: [ ci-passed ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
