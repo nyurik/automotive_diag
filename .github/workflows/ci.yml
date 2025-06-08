@@ -79,7 +79,7 @@ jobs:
   release-plz:
     name: Release-plz
     if: |
-      always() 
+      always()
       && needs.ci-passed.result == 'success'
       && github.event_name == 'push'
       && github.ref == 'refs/heads/main'
