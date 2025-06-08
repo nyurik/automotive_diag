@@ -78,7 +78,12 @@ jobs:
   # Release unpublished packages or create a PR with changes
   release-plz:
     name: Release-plz
-    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository_owner == 'nyurik'
+    if: |
+      always() 
+      && needs.ci-passed.result == 'success'
+      && github.event_name == 'push'
+      && github.ref == 'refs/heads/main'
+      && github.repository_owner == 'nyurik'
     needs: [ ci-passed ]
     runs-on: ubuntu-latest
     permissions:
@@ -91,13 +96,15 @@ jobs:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: dtolnay/rust-toolchain@stable
-      - uses: release-plz/action@v0.5
+      - name: Publish to crates.io if crate's version is newer
+        uses: release-plz/action@v0.5
         id: release
         with: { command: release }
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
-      - uses: release-plz/action@v0.5
-        if: ${{ ! steps.release.outputs.releases_created }}
+      - name: If version is the same, create a PR proposing new version and changelog for the next release
+        uses: release-plz/action@v0.5
+        if: ${{ steps.release.outputs.releases_created == 'false' }}
         with: { command: release-pr }
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
