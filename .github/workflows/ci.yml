@@ -9,6 +9,10 @@ on:
     types: [ published ]
   workflow_dispatch:
 
+permissions:
+  pull-requests: write
+  contents: write
+
 defaults:
   run:
     shell: bash
@@ -70,3 +74,31 @@ jobs:
     steps:
       - if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         run: exit 1
+
+  # Release unpublished packages or create a PR with changes
+  release-plz:
+    name: Release-plz
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository_owner == 'nyurik'
+    needs: [ ci-passed ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    concurrency:
+      group: release-plz-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: release-plz/action@v0.5
+        id: release
+        with: { command: release }
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+      - uses: release-plz/action@v0.5
+        if: ${{ ! steps.release.outputs.releases_created }}
+        with: { command: release-pr }
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
