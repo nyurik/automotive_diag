@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- ensure 2-digit hex formatting ([#50](https://github.com/nyurik/automotive_diag/pull/50))
+- ensure 2-digit hex formatting ([#50](https://github.com/nyurik/automotive_diag/pull/50)), reported by @ColinFinck ([#49](https://github.com/nyurik/automotive_diag/issues/49))
 
 ### Other
 
