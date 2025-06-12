@@ -71,7 +71,7 @@ mod tests {
             match decode_communication_type(value) {
                 Ok((typ, sub)) => {
                     let enc = encode_communication_type(typ, sub);
-                    assert_eq!(value, enc, "{value:#02X} → ({typ:?}, {sub:?}) → {enc:#02X}");
+                    assert_eq!(value, enc, "{value:#04X} → ({typ:?}, {sub:?}) → {enc:#04X}");
                 }
                 Err(err) => {
                     assert_eq!(value & 0x0F, err);
