@@ -14,7 +14,7 @@ impl<T: Debug> Debug for ByteWrapper<T> {
         match self {
             // For standard values, delegate to the Debug implementation of the inner type.
             Self::Standard(v) => Debug::fmt(v, f),
-            Self::Extended(v) => write!(f, "Extended({v:#02X})"),
+            Self::Extended(v) => write!(f, "Extended({v:#04X})"),
         }
     }
 }
@@ -25,7 +25,7 @@ impl<T: defmt::Format> defmt::Format for ByteWrapper<T> {
         match self {
             // For standard values, delegate to the Debug implementation of the inner type.
             Self::Standard(v) => defmt::Format::format(v, fmt),
-            Self::Extended(v) => defmt::write!(fmt, "Extended({:#02X})", v),
+            Self::Extended(v) => defmt::write!(fmt, "Extended({:#04X})", v),
         }
     }
 }
@@ -75,11 +75,11 @@ macro_rules! enum_impls {
                 for value in <$typ>::MIN..=<$typ>::MAX {
                     if let Ok(v) = $crate::$ns::$enum_name::try_from(value) {
                         let enc: $typ = v.into();
-                        assert_eq!(value, enc, "{value:#02X} → {v:?} → {enc:#02X}");
+                        assert_eq!(value, enc, "{value:#04X} → {v:?} → {enc:#04X}");
                         assert_eq!(
                             $crate::$ns::$enum_name::from_repr(value).unwrap(),
                             v,
-                            "{value:#02X} → {v:?}"
+                            "{value:#04X} → {v:?}"
                         );
                     }
                 }
@@ -131,7 +131,7 @@ macro_rules! enum_byte_wrapper {
                 for value in 0x00_u8..=0xFF {
                     let v = $crate::$ns::$enum_wrapper::from(value);
                     let enc: u8 = v.into();
-                    assert_eq!(value, enc, "Wrapped {value:#02X} → {v:?} → {enc:#02X}");
+                    assert_eq!(value, enc, "Wrapped {value:#04X} → {v:?} → {enc:#04X}");
                 }
             }
         }
