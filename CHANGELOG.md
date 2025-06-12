@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.21](https://github.com/nyurik/automotive_diag/compare/v0.1.20...v0.1.21) - 2025-06-12
+
+### Fixed
+
+- ensure 2-digit hex formatting ([#50](https://github.com/nyurik/automotive_diag/pull/50))
+
+### Other
+
+- use release-plz token in dependabot ci
+
 ## [0.1.20](https://github.com/nyurik/automotive_diag/compare/v0.1.19...v0.1.20) - 2025-06-08
 
 ### Other
