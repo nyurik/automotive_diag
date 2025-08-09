@@ -64,6 +64,7 @@ docs *args='--open':
 # Print environment info
 env-info:
     @echo "Running {{if ci_mode == '1' {'in CI mode'} else {'in dev mode'} }} on {{os()}} / {{arch()}}"
+    echo "PWD $(pwd)"
     {{just_executable()}} --version
     rustc --version
     cargo --version
@@ -76,13 +77,17 @@ env-info:
 fmt:
     #!/usr/bin/env bash
     set -euo pipefail
-    if rustup component list --toolchain nightly | grep rustfmt &> /dev/null; then
+    if (rustup toolchain list | grep nightly && rustup component list --toolchain nightly | grep rustfmt) &> /dev/null; then
         echo 'Reformatting Rust code using nightly Rust fmt to sort imports'
         cargo +nightly fmt --all -- --config imports_granularity=Module,group_imports=StdExternalCrate
     else
         echo 'Reformatting Rust with the stable cargo fmt.  Install nightly with `rustup install nightly` for better results'
         cargo fmt --all
     fi
+
+# Reformat all Cargo.toml files using cargo-sort
+fmt-toml *args:  (cargo-install 'cargo-sort')
+    cargo sort --workspace --grouped --order package,lib,bin,example,bench,features,dependencies,build-dependencies,dev-dependencies,profile,lints {{args}}
 
 # Get any package's field from the metadata
 get-crate-field field package=main_crate:  (assert-cmd 'jq')
@@ -95,6 +100,7 @@ get-msrv package=main_crate:  (get-crate-field 'rust_version' package)
 msrv:  (cargo-install 'cargo-msrv')
     cargo msrv find --write-msrv --ignore-lockfile {{features_flag}}
 
+# Run cargo-release
 release *args='':  (cargo-install 'release-plz')
     release-plz {{args}}
 
@@ -122,7 +128,7 @@ test: \
 test-doc:  (docs '')
 
 # Test code formatting
-test-fmt:
+test-fmt: && (fmt-toml '--check' '--check-format')
     cargo fmt --all -- --check
 
 # Find unused dependencies. Install it with `cargo install cargo-udeps`
