@@ -316,13 +316,13 @@ generate_enum! {
         Time1 = 0x54,
         /// Time in `Hour/Minute/Second` format.
         Time2 = 0x55,
-        /// Date and time1 in `Second/Minute/Hour/Day/Month/Year` format.
+        /// Date and time in `Second/Minute/Hour/Day/Month/Year` format.
         DateAndTime1 = 0x56,
-        /// DateAndTime2 in `Second/Minute/Hour/Day/Month/Year/Local minute offset/Local hour offset` format.
+        /// Date and time in `Second/Minute/Hour/Day/Month/Year/Local minute offset/Local hour offset` format.
         DateAndTime2 = 0x57,
-        /// DateAndTime3 in `Second/Minute/Hour/Month/Day/Year` format.
+        /// Date and time in `Second/Minute/Hour/Month/Day/Year` format.
         DateAndTime3 = 0x58,
-        /// DateAndTime4 in `Second/Minute/Hour/Month/Day/Year/Local minute offset/Local hour offset` format.
+        /// Date and time in `Second/Minute/Hour/Month/Day/Year/Local minute offset/Local hour offset` format.
         DateAndTime4 = 0x59,
     }
 }
