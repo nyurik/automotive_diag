@@ -7,6 +7,9 @@ features_flag := '--all-features'
 # Use `CI=true just ci-test` to run the same tests as in GitHub CI.
 # Use `just env-info` to see the current values of RUSTFLAGS and RUSTDOCFLAGS
 ci_mode := if env('CI', '') != '' {'1'} else {''}
+# cargo-binstall needs a workaround due to caching
+# ci_mode might be manually set by user, so re-check the env var
+binstall_args := if env('CI', '') != '' {'--no-track'} else {''}
 export RUSTFLAGS := env('RUSTFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
 export RUSTDOCFLAGS := env('RUSTDOCFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
 export RUST_BACKTRACE := env('RUST_BACKTRACE', if ci_mode == '1' {'1'} else {''})
@@ -64,6 +67,7 @@ docs *args='--open':
 # Print environment info
 env-info:
     @echo "Running {{if ci_mode == '1' {'in CI mode'} else {'in dev mode'} }} on {{os()}} / {{arch()}}"
+    @echo "PWD $(pwd)"
     {{just_executable()}} --version
     rustc --version
     cargo --version
@@ -76,13 +80,17 @@ env-info:
 fmt:
     #!/usr/bin/env bash
     set -euo pipefail
-    if rustup component list --toolchain nightly | grep rustfmt &> /dev/null; then
+    if (rustup toolchain list | grep nightly && rustup component list --toolchain nightly | grep rustfmt) &> /dev/null; then
         echo 'Reformatting Rust code using nightly Rust fmt to sort imports'
         cargo +nightly fmt --all -- --config imports_granularity=Module,group_imports=StdExternalCrate
     else
         echo 'Reformatting Rust with the stable cargo fmt.  Install nightly with `rustup install nightly` for better results'
         cargo fmt --all
     fi
+
+# Reformat all Cargo.toml files using cargo-sort
+fmt-toml *args:  (cargo-install 'cargo-sort')
+    cargo sort --workspace --grouped {{args}}
 
 # Get any package's field from the metadata
 get-crate-field field package=main_crate:  (assert-cmd 'jq')
@@ -95,6 +103,7 @@ get-msrv package=main_crate:  (get-crate-field 'rust_version' package)
 msrv:  (cargo-install 'cargo-msrv')
     cargo msrv find --write-msrv --ignore-lockfile {{features_flag}}
 
+# Run cargo-release
 release *args='':  (cargo-install 'release-plz')
     release-plz {{args}}
 
@@ -122,7 +131,7 @@ test: \
 test-doc:  (docs '')
 
 # Test code formatting
-test-fmt:
+test-fmt: && (fmt-toml '--check' '--check-format')
     cargo fmt --all -- --check
 
 # Find unused dependencies. Install it with `cargo install cargo-udeps`
@@ -163,8 +172,8 @@ cargo-install $COMMAND $INSTALL_CMD='' *args='':
             echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} --locked {{args}}"
             cargo install ${INSTALL_CMD:-$COMMAND} --locked {{args}}
         else
-            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{args}}"
-            cargo binstall ${INSTALL_CMD:-$COMMAND} --locked {{args}}
+            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} {{binstall_args}} --locked {{args}}"
+            cargo binstall ${INSTALL_CMD:-$COMMAND} {{binstall_args}} --locked {{args}}
         fi
     fi
 
