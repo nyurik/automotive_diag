@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.22](https://github.com/nyurik/automotive_diag/compare/v0.1.21...v0.1.22) - 2025-08-16
+
+### Other
+
+- Bump actions/checkout from 4 to 5 in the all-actions-version-updates group ([#53](https://github.com/nyurik/automotive_diag/pull/53))
+- [pre-commit.ci] pre-commit autoupdate ([#52](https://github.com/nyurik/automotive_diag/pull/52))
+- *(ci)* format Cargo.toml ([#51](https://github.com/nyurik/automotive_diag/pull/51))
+
 ## [0.1.21](https://github.com/nyurik/automotive_diag/compare/v0.1.20...v0.1.21) - 2025-06-12
 
 ### Fixed
