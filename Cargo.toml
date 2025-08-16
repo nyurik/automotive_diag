@@ -1,6 +1,6 @@
 [package]
 name = "automotive_diag"
-version = "0.1.21"
+version = "0.1.22"
 description = "Unified Diagnostic Services/UDS (ISO-14229-1), KWP2000 (ISO-142330), OBD-II (ISO-9141), and DoIP (ISO-13400) definitions to communicate with the road vehicle ECUs in Rust."
 authors = [
     "Yuri Astrakhan <YuriAstrakhan@gmail.com>",
