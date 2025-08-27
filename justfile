@@ -9,7 +9,7 @@ features_flag := '--all-features'
 ci_mode := if env('CI', '') != '' {'1'} else {''}
 # cargo-binstall needs a workaround due to caching
 # ci_mode might be manually set by user, so re-check the env var
-binstall_args := if env('CI', '') != '' {'--no-track'} else {''}
+binstall_args := if env('CI', '') != '' {'--no-track --disable-telemetry'} else {''}
 export RUSTFLAGS := env('RUSTFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
 export RUSTDOCFLAGS := env('RUSTDOCFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
 export RUST_BACKTRACE := env('RUST_BACKTRACE', if ci_mode == '1' {'1'} else {''})
