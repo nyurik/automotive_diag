@@ -9,7 +9,7 @@ features_flag := '--all-features'
 ci_mode := if env('CI', '') != '' {'1'} else {''}
 # cargo-binstall needs a workaround due to caching
 # ci_mode might be manually set by user, so re-check the env var
-binstall_args := if env('CI', '') != '' {'--no-track --disable-telemetry'} else {''}
+binstall_args := if env('CI', '') != '' {'--no-confirm --no-track --disable-telemetry'} else {''}
 export RUSTFLAGS := env('RUSTFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
 export RUSTDOCFLAGS := env('RUSTDOCFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
 export RUST_BACKTRACE := env('RUST_BACKTRACE', if ci_mode == '1' {'1'} else {''})
@@ -168,12 +168,15 @@ cargo-install $COMMAND $INSTALL_CMD='' *args='':
     #!/usr/bin/env bash
     set -euo pipefail
     if ! command -v $COMMAND > /dev/null; then
+        echo "$COMMAND could not be found. Installing..."
         if ! command -v cargo-binstall > /dev/null; then
-            echo "$COMMAND could not be found. Installing it with    cargo install ${INSTALL_CMD:-$COMMAND} --locked {{args}}"
+            set -x
             cargo install ${INSTALL_CMD:-$COMMAND} --locked {{args}}
+            { set +x; } 2>/dev/null
         else
-            echo "$COMMAND could not be found. Installing it with    cargo binstall ${INSTALL_CMD:-$COMMAND} {{binstall_args}} --locked {{args}}"
+            set -x
             cargo binstall ${INSTALL_CMD:-$COMMAND} {{binstall_args}} --locked {{args}}
+            { set +x; } 2>/dev/null
         fi
     fi
 
