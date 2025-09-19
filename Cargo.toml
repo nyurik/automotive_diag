@@ -59,10 +59,14 @@ unsafe_code = "forbid"
 unused_qualifications = "warn"
 
 [lints.clippy]
+# Restrictions
+panic_in_result_fn = "warn"
+todo = "warn"
+unwrap_used = "warn"
+# Pedantics without being too noisy
 cargo = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
 missing_errors_doc = "allow"
 module_name_repetitions = "allow"
 redundant_feature_names = "allow"  # All with-* features have been deprecated. Remove this once they are removed
 unsafe_derive_deserialize = "allow"
-unwrap_used = "warn"
