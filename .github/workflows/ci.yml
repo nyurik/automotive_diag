@@ -78,7 +78,7 @@ jobs:
       && needs.ci-passed.result == 'success'
       && github.event_name == 'push'
       && github.ref == 'refs/heads/main'
-      && github.repository_owner == 'nyurik'
+      && github.repository_owner == 'oxibus'
     runs-on: ubuntu-latest
     permissions:
       contents: write
