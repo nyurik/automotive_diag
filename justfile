@@ -39,7 +39,7 @@ ci-coverage: env-info && \
     mkdir -p target/llvm-cov
 
 # Run all tests as expected by CI
-ci-test: env-info test-fmt clippy check test test-doc build-thumbv7em-none-eabi && assert-git-is-clean
+ci-test: env-info test-fmt clippy test test-doc build-thumbv7em-none-eabi && assert-git-is-clean
 
 # Run minimal subset of tests to ensure compatibility with MSRV
 ci-test-msrv: env-info test
