@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.23](https://github.com/nyurik/automotive_diag/compare/v0.1.22...v0.1.23) - 2025-09-19
+
+### Other
+
+- migrate this project to [OxiBUS](https://github.com/oxibus) GitHub organization
+- minor CI cleanups and improvements
+
 ## [0.1.22](https://github.com/oxibus/automotive_diag/compare/v0.1.21...v0.1.22) - 2025-08-16
 
 ### Other
