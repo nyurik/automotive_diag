@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.24](https://github.com/oxibus/automotive_diag/compare/v0.1.23...v0.1.24) - 2025-10-01
+
+### Other
+
+- revert to RELEASE_PLZ_TOKEN ([#61](https://github.com/oxibus/automotive_diag/pull/61))
+- use github tokens in release ([#59](https://github.com/oxibus/automotive_diag/pull/59))
+
 ## [0.1.23](https://github.com/nyurik/automotive_diag/compare/v0.1.22...v0.1.23) - 2025-09-19
 
 ### Other
