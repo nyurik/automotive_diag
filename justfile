@@ -42,7 +42,7 @@ ci-coverage: env-info && \
 ci-test: env-info test-fmt clippy test test-doc build-thumbv7em-none-eabi && assert-git-is-clean
 
 # Run minimal subset of tests to ensure compatibility with MSRV
-ci-test-msrv: env-info test
+ci-test-msrv: env-info test-msrv
 
 # Test building for an embedded no_std target
 build-thumbv7em-none-eabi:  (rustup-add-target 'thumbv7em-none-eabi')
@@ -114,20 +114,24 @@ semver *args:  (cargo-install 'cargo-semver-checks')
     cargo semver-checks {{features}} {{args}}
 
 # Run all unit and integration tests
-test: \
+test: test-msrv
+    cargo test {{packages}} {{features}} {{targets}}
+    cargo test --features pyo3
+    cargo test --features pyo3,serde
+    cargo test --doc {{packages}} {{features}}
+
+# Run all unit and integration tests
+test-msrv: \
         (test-std-enabled-disabled 'serde' '--features serde' ) \
         (test-std-enabled-disabled 'displaydoc' '--features display' ) \
         (test-std-enabled-disabled 'strum' '' )
-    cargo test {{packages}} {{features}} {{targets}}
+    cargo test
     cargo test --no-default-features --features kwp2000
     cargo test --no-default-features --features obd2
     cargo test --no-default-features --features uds
     cargo test --no-default-features --features doip
     cargo test --no-default-features --features defmt,display,iter,serde,doip,uds,obd2,kwp2000
     cargo test --no-default-features --features std,doip,uds,obd2,kwp2000
-    cargo test --features pyo3
-    cargo test --features pyo3,serde
-    cargo test --doc {{packages}} {{features}}
 
 # Test documentation generation
 test-doc:  (docs '')
