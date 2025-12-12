@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.26](https://github.com/oxibus/automotive_diag/compare/v0.1.25...v0.1.26) - 2025-12-12
+
+### Other
+
+- include doip, justfile fixes, bump deps ([#67](https://github.com/oxibus/automotive_diag/pull/67))
+
 ## [0.1.25](https://github.com/oxibus/automotive_diag/compare/v0.1.24...v0.1.25) - 2025-10-10
 
 ### Other
