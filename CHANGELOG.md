@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.26](https://github.com/oxibus/automotive_diag/compare/v0.1.25...v0.1.26) - 2025-12-12
+
+### Other
+
+All part of ([#67](https://github.com/oxibus/automotive_diag/pull/67)):
+- include `doip` feature as part of the default
+- minor cleanup of the justfile recipes
+- bump pyo3 dep version
+- bump MSRV to 1.74
+
 ## [0.1.25](https://github.com/oxibus/automotive_diag/compare/v0.1.24...v0.1.25) - 2025-10-10
 
 ### Other
